@@ -1,0 +1,1 @@
+// app settings such as server url and other app constants
