@@ -66,7 +66,7 @@ export class StockLineChart extends Component {
 
                 <View>
                     <LineChart
-                        style={{ height: 200 }}
+                        style={{ height: 200, zIndex: 2 }}
                         data={data}
                         svg={{ stroke: "#99c794", strokeWidth: 2 }}
                         contentInset={{ top: 0, bottom: 20 }}

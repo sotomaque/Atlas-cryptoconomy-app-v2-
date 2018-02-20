@@ -5,7 +5,7 @@ import { StockLineTickerStyles } from "./styles";
 export class StockLineTicker extends Component {
     render() {
         const {
-            container,
+            tickerContainer,
             text,
             tickerTotalContainer,
             tickerTotalSymbol,
@@ -15,7 +15,7 @@ export class StockLineTicker extends Component {
         } = StockLineTickerStyles;
 
         return (
-            <View style={container}>
+            <View style={tickerContainer}>
                 <View style={tickerTotalContainer}>
                     <Text style={tickerTotalSymbol}>$</Text>
                     <Text style={tickerTotalMainAmount}>1400</Text>

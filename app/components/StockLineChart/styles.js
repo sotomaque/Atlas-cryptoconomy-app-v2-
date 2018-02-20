@@ -9,15 +9,16 @@ export const StockLineFilterStyles = StyleSheet.create({
     },
     text: {
         color: "#fff",
-        fontSize: 12
+        fontSize: 12,
+        fontWeight: 'bold'
     }
 });
 
 export const StockLineTickerStyles = StyleSheet.create({
-    container: {
+    tickerContainer: {
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "center"
     },
     tickerTotalContainer: {
         flexDirection:"row",
@@ -26,15 +27,11 @@ export const StockLineTickerStyles = StyleSheet.create({
     },
     tickerTotalSymbol: {
         fontSize: 22,
-        height: 22,
-        color: "#fff",
-        alignItems: "baseline"
+        color: "#fff"
     },
     tickerTotalMainAmount: {
         fontSize: 42,
-        height: 42,
-        color: "#fff",
-        alignItems: "baseline"
+        color: "#fff"
     },
     tickerAuxillary: {
         fontSize: 12,

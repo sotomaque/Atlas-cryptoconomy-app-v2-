@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import { StockLineChart } from "./app/components/StockLineChart/index";
+
+import Portfolio from './app/screens/Portfolio';
 
 const Props = {};
 export default class App extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <StockLineChart />
+                <Portfolio />
             </View>
         );
     }
