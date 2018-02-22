@@ -1,15 +1,47 @@
-import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import React, { Component } from 'react';
+import { ActivityIndicator, View, StyleSheet } from 'react-native';
+import { Provider } from 'react-redux'; // Added Redux-Perist Config
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import { persistStore } from 'redux-persist'; // See configureStore for persist settings
+import { configureStore } from './app/config/configureStore';
+import InitRouter from './app/screens/InitRouter.js';
+// More Redux-Persist
+const store = configureStore();
+const perst = persistStore(
+  store,
+  null,
+  () => {}
+);
 
-import Portfolio from './app/screens/Portfolio';
-
-const Props = {};
+const props = {};
 export default class App extends Component {
+
+    // Added the remote bugger to stop the "Remote debugger is in a
+    // background tab which may cause apps to perform slowly." from popping
+    // up whenever the app is ran in the simulator. -Pedro
+    componentWillMount() {
+      console.ignoredYellowBox = ['Remote debugger'];
+    }
+
+
+    // This function is called while PersistGate grabs the local data from device
+    // Consider it a place holder, we should have a pic of the logo when loading
+    loadingFunc() {
+      return (
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+      );
+    }
     render() {
         return (
-            <View style={styles.container}>
-                <Portfolio />
-            </View>
+
+          <Provider store={store}>
+              <PersistGate loading={this.loadingFunc()} persistor={perst}>
+                <InitRouter />
+              </PersistGate>
+          </Provider>
+
         );
     }
 }
@@ -17,8 +49,8 @@ export default class App extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#252b2e"
+        justifyContent: 'center',
+        alignItems: 'center',
+      
     }
 });
