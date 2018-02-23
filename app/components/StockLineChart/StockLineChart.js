@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { View, Dimensions } from "react-native";
-import { LineChart } from "react-native-svg-charts";
+import { View, Dimensions, PanResponder } from "react-native";
+//import { LineChart } from "react-native-svg-charts";
+import Chart from '../chart.js';
 
 import  StockLineFilter  from "./StockLineFilter";
 import { StockLineTicker } from "./StockLineTicker";
@@ -11,9 +12,33 @@ export class StockLineChart extends Component {
 
 	state = {
 	stockList: [],
-	stockData: []
+	stockData: [],
+	xVal: 0
 	}
 
+	componentWillMount() {
+		this.panResponder = PanResponder.create({
+		onMoveShouldSetResponderCapture: () => true,
+		onMoveShouldSetPanResponderCapture: () => true,
+		onPanResponderGrant: (evt, gestureState) => {
+		//	console.log('PanResponder start');
+		},
+		onPanResponderRelease: (evt, gestureState) => {
+		//	console.log('end PanResponder');
+			this.setState({ xVal: -1 });
+		},
+		onMoveShouldSetPanResponder: (e, gestureState) => {
+
+		},
+		onPanResponderMove: (e, gestureState) => {
+			const { nativeEvent } = e;
+		// console.log(gestureState.dx);   // to get total distance moved since gesture start.
+	//   console.log(nativeEvent.locationX);
+		this.setState({ xVal: nativeEvent.locationX });
+		}
+		});
+
+	}
 	componentDidMount() {
 		var self = this;
 		console.log('Log 0: ', self);
@@ -30,7 +55,7 @@ export class StockLineChart extends Component {
 
 				});
 			})
-		}, 5000);
+		}, 1000);
 
 
 
@@ -38,10 +63,19 @@ export class StockLineChart extends Component {
 
 	}
 
+/*
+/*
+	<LineChart
+			style={{ height: 200, zIndex: 2 }}
+			data={this.props.stockData}
+			svg={{ stroke: "#99c794", strokeWidth: 2 }}
+			contentInset={{ top: 0, bottom: 20 }}
+			showGrid={false}
+			animate={false}
+	/>
+{*/
 	render() {
-
-
-			console.log('Start stockLineChart Log: ', this.props);
+		//	console.log('Start stockLineChart Log: ', this.props);
 			let width = Dimensions.get("window").width; // full device width, captured at runtime
 	        return (
 	            <View style={{ flexDirection: "column", width: width }}>
@@ -49,15 +83,12 @@ export class StockLineChart extends Component {
 	                    <StockLineTicker />
 	                </View>
 
-	                <View>
-	                    <LineChart
-	                        style={{ height: 200, zIndex: 2 }}
-	                        data={this.state.stockList}
-	                        svg={{ stroke: "#99c794", strokeWidth: 2 }}
-	                        contentInset={{ top: 0, bottom: 20 }}
-	                        showGrid={false}
-	                        animate={false}
-	                    />
+	                <View style={{ height: 100 }} {...this.panResponder.panHandlers}>
+											  <Chart
+													xVal={this.state.xVal}
+													data={this.props.stockData}
+												/>
+
 	                </View>
 
 	                <View>
