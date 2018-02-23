@@ -1,14 +1,22 @@
 // redux actions
 
-export function updateFilter( filter ){
+export function updateFilter(filter) {
 	return {
-		type : filter
-	}
+		type: filter
+	};
 }
 
-export function sendChartData( val ){
+export function sendChartData(val) {
 	return {
 		type: 'SEND_DATA',
 		payload: val
-	}
+	};
+}
+
+// Sends value from selected point in a graph.
+export function sendValueFromPoint(val) {
+	return {
+		type: 'SEND_VALUE_FROM_POINT',
+		payload: val
+	};
 }
