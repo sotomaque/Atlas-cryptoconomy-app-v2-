@@ -5,3 +5,10 @@ export function updateFilter( filter ){
 		type : filter
 	}
 }
+
+export function sendChartData( val ){
+	return {
+		type: 'SEND_DATA',
+		payload: val
+	}
+}

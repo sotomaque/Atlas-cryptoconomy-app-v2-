@@ -5,41 +5,43 @@ import { LineChart } from "react-native-svg-charts";
 import  StockLineFilter  from "./StockLineFilter";
 import { StockLineTicker } from "./StockLineTicker";
 import { connect } from 'react-redux';
-
+import { sendChartData } from '../../actions';
 
 export class StockLineChart extends Component {
-	
-	constructor(props){
-		super(props);
-		
-		this.state = {
-			stockList : []
-		}
-	}
 
+	state = {
+	stockList: [],
+	stockData: []
+	}
 
 	componentDidMount() {
 		var self = this;
+		console.log('Log 0: ', self);
 		console.log('componentDidMount', this.props.stockList,self)
 		setTimeout(() => {
+			//console.log('componentDidMount', this.props.stockList,self)
+			console.log('Log 1: ', self);
 			return self.props.stockList
-			.then(function(res){
+			.then(function(res) {
+				console.log('Log 2: ', self);
+				self.props.sendChartData(res);
 				self.setState({
-					stockList : res
-				})
-			})
-		    }, 500);
-		
-		
-		
-	    
-		
-	}
-	
-	render() {
-       
+					stockList : res,
 
-			
+				});
+			})
+		}, 5000);
+
+
+
+
+
+	}
+
+	render() {
+
+
+			console.log('Start stockLineChart Log: ', this.props);
 			let width = Dimensions.get("window").width; // full device width, captured at runtime
 	        return (
 	            <View style={{ flexDirection: "column", width: width }}>
@@ -64,17 +66,19 @@ export class StockLineChart extends Component {
 	            </View>
 	           )
 
-        
+
     }
 }
 
 // references
 // https://github.com/JesperLekland/react-native-svg-charts#common-props
 
-export const StockLineChartWrapper = connect(
-	(store) => ({
-		filter 		: store.stockFilterReducer.filter
-		,stockList 	: store.stockFilterReducer.stockList
-	}))
-(StockLineChart)
+function mapStateToProps(store) {
+  return {
+		filter: store.stockFilterReducer.filter,
+		stockList: store.stockFilterReducer.stockList,
+		stockData: store.stockFilterReducer.stockData
+  };
+}
 
+export const StockLineChartWrapper = connect(mapStateToProps, { sendChartData })(StockLineChart);
