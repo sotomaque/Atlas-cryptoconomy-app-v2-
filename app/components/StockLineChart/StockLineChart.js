@@ -27,7 +27,6 @@ export class StockLineChart extends Component {
 				self.setState({
 					stockList : res
 				})
-				return cryptoApi.trimDataSetToList(res.Data)
 			})
 		    }, 500);
 		
