@@ -59,14 +59,14 @@ var cryptoApi = {
 												.replace('/@AGGREGATE/'	, aggreate)
 		console.log('finalUrl', finalUrl);
 		return fetch( cryptoApi.DEFAULT_ENDPOINT + finalUrl )
-//		.then(function(res){
-//			return res.json()
-//		})
-//		.then(function(res){
-//			var list = cryptoApi.trimDataSetToList(res.Data)
-//			console.log(list);
-//			return cryptoApi.trimDataSetToList(res.Data)
-//		})
+		.then(function(res){
+			return res.json()
+		})
+		.then(function(res){
+			var list = cryptoApi.trimDataSetToList(res.Data)
+			console.log(list);
+			return cryptoApi.trimDataSetToList(res.Data)
+		})
 	}//getHistoricalData
 	
 	,trimDataSetToList		: function(arr){
