@@ -3,3 +3,4 @@
 // NOTE: only presentation components go here. Parent components which deal with state, should go in /src/state.
 
 export { StockLineChart } from './StockLineChart';
+export { StockLineChartWrapper } from './StockLineChart';

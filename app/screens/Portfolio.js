@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import { StockLineChart } from '../components/StockLineChart';
+import { StockLineChartWrapper } from '../components/StockLineChart';
 import { Header } from '../components/Header';
 
 export default class Portfolio extends Component {
@@ -12,7 +12,7 @@ export default class Portfolio extends Component {
                     <Header headerText={'Portfolio'} />
                 </View>
                 <View>
-                    <StockLineChart />
+                    <StockLineChartWrapper />
                 </View>
             </View>
         );

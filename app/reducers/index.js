@@ -4,11 +4,13 @@
 import userInfo from './userInfo';
 import persistedState from './persistedState';
 import guiInfo from './guiInfo';
+import stockFilterReducer from './stockerFilter';
 
 const rootReducer = {
-    userInfo,
-    persistedState,
-    guiInfo
+    userInfo
+    ,persistedState
+    ,guiInfo
+    ,stockFilterReducer
 };
 
 export default rootReducer;
