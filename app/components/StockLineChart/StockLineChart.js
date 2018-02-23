@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { View, Dimensions, PanResponder } from "react-native";
+import React, { Component } from 'react';
+import { View, Dimensions, PanResponder } from 'react-native';
+import { connect } from 'react-redux';
 //import { LineChart } from "react-native-svg-charts";
 import Chart from '../chart.js';
+import StockLineFilter from './StockLineFilter';
+import { StockLineTicker } from './StockLineTicker';
 
-import  StockLineFilter  from "./StockLineFilter";
-import { StockLineTicker } from "./StockLineTicker";
-import { connect } from 'react-redux';
 import { sendChartData } from '../../actions';
 
 export class StockLineChart extends Component {
@@ -16,54 +16,53 @@ export class StockLineChart extends Component {
 	xVal: 0
 	}
 
+
 	componentWillMount() {
 		this.panResponder = PanResponder.create({
-		onMoveShouldSetResponderCapture: () => true,
-		onMoveShouldSetPanResponderCapture: () => true,
-		onPanResponderGrant: (evt, gestureState) => {
-		//	console.log('PanResponder start');
-		},
-		onPanResponderRelease: (evt, gestureState) => {
-		//	console.log('end PanResponder');
-			this.setState({ xVal: -1 });
-		},
+			onMoveShouldSetResponderCapture: () => true,
+			onMoveShouldSetPanResponderCapture: () => true,
+			/*
+			onPanResponderGrant: (evt, gestureState) => {
+			//	console.log('PanResponder start');
+			},
+			*/
+			onPanResponderRelease: () => {
+				this.setState({ xVal: -1 });
+				console.log(this.props.selectedPoint);
+				},
+
+		/*
 		onMoveShouldSetPanResponder: (e, gestureState) => {
 
 		},
-		onPanResponderMove: (e, gestureState) => {
-			const { nativeEvent } = e;
-		// console.log(gestureState.dx);   // to get total distance moved since gesture start.
-	//   console.log(nativeEvent.locationX);
-		this.setState({ xVal: nativeEvent.locationX });
-		}
+		*/
+			onPanResponderMove: (e) => {
+				const { nativeEvent } = e;
+				// console.log(gestureState.dx);   // to get total distance moved since gesture start.
+				this.setState({ xVal: nativeEvent.locationX });
+				}
 		});
-
 	}
+
 	componentDidMount() {
-		var self = this;
-		console.log('Log 0: ', self);
-		console.log('componentDidMount', this.props.stockList,self)
 		setTimeout(() => {
-			//console.log('componentDidMount', this.props.stockList,self)
-			console.log('Log 1: ', self);
-			return self.props.stockList
-			.then(function(res) {
-				console.log('Log 2: ', self);
-				self.props.sendChartData(res);
-				self.setState({
-					stockList : res,
-
+			return this.props.stockList
+				.then((res) => {
+					this.props.sendChartData(res);
+					this.setState({
+						stockList: res,
+					});
 				});
-			})
 		}, 1000);
-
-
-
-
-
 	}
 
-/*
+	getPointToSend() {
+		console.log(this.props.endPoint, this.state.xVal, this.props.stockData);
+		if (this.state.xVal < 1) {
+			return this.props.endPoint;
+			}
+		return this.props.selectedPoint;
+	}
 /*
 	<LineChart
 			style={{ height: 200, zIndex: 2 }}
@@ -75,29 +74,26 @@ export class StockLineChart extends Component {
 	/>
 {*/
 	render() {
-		//	console.log('Start stockLineChart Log: ', this.props);
-			let width = Dimensions.get("window").width; // full device width, captured at runtime
-	        return (
-	            <View style={{ flexDirection: "column", width: width }}>
-	                <View>
-	                    <StockLineTicker />
-	                </View>
+			const width = Dimensions.get('window').width; // full device width, captured at runtime
+			return (
+				<View style={{ flexDirection: 'column', width }}>
 
-	                <View style={{ height: 100 }} {...this.panResponder.panHandlers}>
-											  <Chart
-													xVal={this.state.xVal}
-													data={this.props.stockData}
-												/>
+					<View>
+						<StockLineTicker data={this.getPointToSend()} />
+					</View>
 
-	                </View>
+					<View style={{ height: 300 }} {...this.panResponder.panHandlers}>
+						<Chart
+							xVal={this.state.xVal}
+							data={this.props.stockData}
+						/>
+					</View>
 
-	                <View>
-	                    <StockLineFilter />
-	                </View>
-	            </View>
-	           )
-
-
+					<View>
+						<StockLineFilter />
+					</View>
+				</View>
+			);
     }
 }
 
@@ -108,7 +104,9 @@ function mapStateToProps(store) {
   return {
 		filter: store.stockFilterReducer.filter,
 		stockList: store.stockFilterReducer.stockList,
-		stockData: store.stockFilterReducer.stockData
+		stockData: store.stockFilterReducer.stockData,
+		selectedPoint: store.stockFilterReducer.selectedPoint,
+		endPoint: store.stockFilterReducer.endPoint
   };
 }
 

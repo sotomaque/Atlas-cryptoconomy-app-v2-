@@ -4,7 +4,6 @@ import {
   LayoutAnimation,
   StyleSheet,
   View,
-  Text
 } from 'react-native';
 import { connect } from 'react-redux';
 import {
@@ -14,26 +13,20 @@ import {
   Shape
 } from 'react-native/Libraries/ART/ReactNativeART';
 import { StraightLine } from './StraightLine.js';
+import { sendValueFromPoint } from '../../actions';
 
  class Line extends Component {
 
-  props: {
-    values: Array<number>,
-    xVal: number,
-    fillColor: string,
-    strokeColor: string,
-    strokeWidth: number,
-  };
-
   static defaultProps = {
-    fillColor: 'rgba(103, 58, 183, 1)',       // solid violet color
-    strokeColor: 'rgba(103, 58, 183, 0.25)',  // semi-transparent violet
-    strokeWidth: 8,
+    //fillColor: 'rgba(103, 58, 183, 1)',       // solid violet color
+    fillColor: '#F5B041',
+    strokeColor: '#F8C471',
+  //  strokeColor: 'rgba(103, 58, 183, 0.25)',  // semi-transparent violet
+    strokeWidth: 1,                           // Width of in-between graph
   };
 
   state = {
-    // set initial width to screen width so when animated it stays constant,
-    // try setting it to zero and see what happens on initial load
+
     width: Dimensions.get('window').width,
     // set initial height to zero so when updated to actual height and
     // animated, the chart raises from the bottom to the top of the container
@@ -43,15 +36,48 @@ import { StraightLine } from './StraightLine.js';
   };
 
   componentWillMount() {
-
-    //  console.log(x);
       this.updateArrayClosest();
-
-    //  this.state.arrayClosest.concat({ xPos: x, yVal: number });
-
-
   }
 
+  componentWillUpdate() {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    //  console.log('Num: ', this.getClosestTo(this.state.arrayClosest, this.props.xVal));
+    this.state.selectedVal = this.getClosestTo(this.state.arrayClosest, this.props.xVal);
+    this.props.sendValueFromPoint(this.state.selectedVal);
+    this.updateArrayClosest();
+  }
+
+  onLayout = (event: Object) => {
+    // pull out width and height out of event.nativeEvent.layout
+    const {
+      nativeEvent: {
+        layout: {
+          width,
+          height
+        }
+      }
+    } = event;
+    // update the state
+    this.setState({
+      width,
+      height,
+    });
+  };
+  getClosestTo(array, goal) {
+    let selected = 10000;
+    let obj;
+
+    array.forEach((num) => {
+      const diff = Math.abs(num.xPos - goal);
+
+      if (diff < selected) {
+        selected = diff;
+        obj = num;
+      }
+    });
+
+    return obj.yVal;
+  }
   updateArrayClosest() {
     const {
       width,
@@ -67,50 +93,18 @@ import { StraightLine } from './StraightLine.js';
 //  console.log('Array: ', this.state.arrayClosest);
   }
 
-  componentWillUpdate() {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-
-//  console.log('Num: ', this.getClosestTo(this.state.arrayClosest, this.props.xVal));
-  this.state.selectedVal = this.getClosestTo(this.state.arrayClosest, this.props.xVal);
-  this.updateArrayClosest();
-  }
-
-  getClosestTo(array, goal) {
-    let selected = 10000;
-    let obj;
-
-    array.forEach((num) => {
-      const diff = Math.abs(num.xPos - goal);
-
-      if (diff < selected) {
-        selected = diff;
-        obj = num;
-      }
-
-    });
-
-    return obj.yVal;
-  }
-  // Handle container view's onLayout event to get its width and height after rendered and
-  // update the state so the component can render the chart using actual width and height
-  onLayout = (event: Object) => {
-    // pull out width and height out of event.nativeEvent.layout
-    const {
-      nativeEvent: {
-        layout: {
-          width,
-          height
-        }
-      }
-    } = event;
-    // update the state
-    this.setState({
-      width,
-      height,
-    })
+  props: {
+    xVal: number,
+    fillColor: string,
+    strokeColor: string,
+    strokeWidth: number,
   };
 
-  buildPath = (values: Array<number>): Path => {
+  // Handle container view's onLayout event to get its width and height after rendered and
+  // update the state so the component can render the chart using actual width and height
+
+
+  buildPath = (): Path => {
     const {
       strokeWidth,
     } = this.props;
@@ -119,39 +113,31 @@ import { StraightLine } from './StraightLine.js';
       height,
     } = this.state;
 
-    let firstPoint: boolean = true,
-      // holds x and y coordinates of the previous point when iterating
-      previous: { x: number, y: number };
+    let firstPoint: boolean = true;
+    let previous: { x: number, y: number };
 
-    const
-      minValue = Math.min(...this.props.stockData),
-      maxValue = Math.max(...this.props.stockData) - minValue,
+    const minValue = Math.min(...this.props.stockData);
+    const maxValue = Math.max(...this.props.stockData) - minValue;
       // step between each value point on horizontal (x) axis
-      stepX = width / (this.props.stockData.length - 1 || 1),
+    const stepX = width / (this.props.stockData.length - 1 || 1);
       // step between each value point on vertical (y) axis
-      stepY = maxValue
-        ? (height - strokeWidth * 2) / maxValue
-        : 0,
+    const stepY = maxValue ? (height - (strokeWidth * 2)) / maxValue : 0;
       // adjust values so that min value becomes 0 and goes to the bottom edge
-      adjustedValues = this.props.stockData.map(value => value - minValue)
-    ;
+    const adjustedValues = this.props.stockData.map(value => value - minValue);
 
-    let path = Path()
+    const path = Path().moveTo(-strokeWidth, strokeWidth);
     // start from the left bottom corner so we could fill the area with color
-      .moveTo(-strokeWidth, strokeWidth);
 
     adjustedValues.forEach((number, index) => {
-
-      let x = index * stepX,
-        y = -number * stepY - strokeWidth;
+      const x = index * stepX;
+      const y = (-number * stepY) - strokeWidth;
 
       if (firstPoint) {
         // straight line to the first point
         path.lineTo(-strokeWidth, y);
-      }
-      else {
+      } else {
         // make curved line
-        path.curveTo(previous.x + stepX / 3, previous.y, x - stepX / 3, y, x, y);
+        path.curveTo(previous.x + (stepX / 3), previous.y, x - (stepX / 3), y, x, y);
       }
       // save current x and y coordinates for the next point
       previous = { x, y };
@@ -166,7 +152,6 @@ import { StraightLine } from './StraightLine.js';
 
   render() {
     const {
-      values,
       fillColor,
       strokeColor,
       strokeWidth,
@@ -195,9 +180,7 @@ import { StraightLine } from './StraightLine.js';
           <StraightLine xVal={xVal} />
 
         </Surface>
-        <Text>
-          {this.state.selectedVal}
-        </Text>
+
       </View>
     );
   }
@@ -220,4 +203,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, null)(Line);
+export default connect(mapStateToProps, { sendValueFromPoint })(Line);
