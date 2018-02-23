@@ -17,21 +17,25 @@ export class StockLineChart extends Component {
 		}
 	}
 
-//
-//	componentDidMount() {
-//	    var self = this;
-//		return this.props.stockList
-//		.then(function(res){
-//			return res.json()
-//		})
-//		.then(function(res){
-//			var list = cryptoApi.trimDataSetToList(res.Data)
-//			self.setState({
-//				stockList : res
-//			})
-//			return cryptoApi.trimDataSetToList(res.Data)
-//		})
-//	}
+
+	componentDidMount() {
+		var self = this;
+		console.log('componentDidMount', this.props.stockList,self)
+		setTimeout(() => {
+			return self.props.stockList
+			.then(function(res){
+				self.setState({
+					stockList : res
+				})
+				return cryptoApi.trimDataSetToList(res.Data)
+			})
+		    }, 500);
+		
+		
+		
+	    
+		
+	}
 	
 	render() {
        

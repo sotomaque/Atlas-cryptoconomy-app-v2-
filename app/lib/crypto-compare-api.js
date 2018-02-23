@@ -64,7 +64,6 @@ var cryptoApi = {
 		})
 		.then(function(res){
 			var list = cryptoApi.trimDataSetToList(res.Data)
-			console.log(list);
 			return cryptoApi.trimDataSetToList(res.Data)
 		})
 	}//getHistoricalData

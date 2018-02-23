@@ -2,7 +2,7 @@ import cryptoApi from '../../app/lib/crypto-compare-api'
 
 const initialState = {
 	filter		: 	'DAY'
-	,stockList	:	[50,50]
+	,stockList	:	cryptoApi.getHistoricalData({ coinName : 'BTC', filter : 'DAY'})
 };
 
 export default function stockFilterReducer(state = initialState, action) {
