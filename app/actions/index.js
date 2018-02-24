@@ -1,7 +1,7 @@
 // redux actions
 
-export function updateFilter( filter ){
+export function updateFilter(filter) {
 	return {
-		type : filter
-	}
+		type: filter
+		};
 }
