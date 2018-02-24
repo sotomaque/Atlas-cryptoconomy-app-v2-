@@ -1,12 +1,15 @@
-import React, { Component } from "react";
-import { View, Button, Text } from "react-native";
-import { StockLineTickerStyles } from "./styles";
-
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
+import { StockLineTickerStyles } from './styles';
+//
 export class StockLineTicker extends Component {
+
+    props: {
+      data: number
+    };
     render() {
         const {
             tickerContainer,
-            text,
             tickerTotalContainer,
             tickerTotalSymbol,
             tickerTotalMainAmount,
@@ -18,7 +21,7 @@ export class StockLineTicker extends Component {
             <View style={tickerContainer}>
                 <View style={tickerTotalContainer}>
                     <Text style={tickerTotalSymbol}>$</Text>
-                    <Text style={tickerTotalMainAmount}>1400</Text>
+                    <Text style={tickerTotalMainAmount}>{this.props.data}</Text>
                     <Text style={tickerTotalSymbol}>.00</Text>
                 </View>
                 <View style={tickerTotalContainer}>
