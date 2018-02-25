@@ -86,19 +86,22 @@ var cryptoApi = {
 			return res.json()
 		})
 		.then(function(res){
-			var list = cryptoApi.trimDataSetToList(res.Data, timeFlag)
+			var list = cryptoApi.trimDataSetToList(res.Data, timeFlag, option.filter);
+			console.log('getHistoricalData-dataResponce', list);
 			return list;
 		})
 	}//getHistoricalData
 
-	,trimDataSetToList		: function(arr, timeFlag){
-
-		console.log('trimDataSetToList', arr);
-		
+	,trimDataSetToList		: function(arr, timeFlag, filter){
+		console.log('trimDataSetToList', arr ,timeFlag, filter);
 		if(timeFlag){
+			if(!filter){
+				console.error('Cannot process this without proper filter');
+				return;
+			}
 			return arr.map(function( dataPoint ){
 				return { 'close' : dataPoint.close,
-					'time'	: cryptoApi.dateFormater(dataPoint.time*1000, option.filter)}
+					'time'	: cryptoApi.dateFormater(dataPoint.time*1000, filter)}
 			})
 		}
 		else {
@@ -131,7 +134,7 @@ var cryptoApi = {
 		}
 
 		return dateStr;
-	}
+	}// dateFormater
 }
 
 module.exports = cryptoApi;

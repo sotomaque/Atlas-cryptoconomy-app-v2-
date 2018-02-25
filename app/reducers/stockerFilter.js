@@ -2,7 +2,8 @@ import cryptoApi from '../../app/lib/crypto-compare-api';
 
 const initialState = {
 	filter: 'DAY',
-	stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: 'DAY' }),
+	//stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: 'DAY', enableTime : true}),
+	stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: 'DAY'}),
 	stockData: [0, 0],
 	selectedPoint: 0,	// Selected Value, an x-value of the graph that is grabbed from the PanResponder
 	endPoint: 0
