@@ -40,6 +40,7 @@ import { sendValueFromPoint } from '../../actions';
   }
 
   componentWillUpdate() {
+  //  this.setState({ height: 0 });
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     //  console.log('Num: ', this.getClosestTo(this.state.arrayClosest, this.props.xVal));
     this.state.selectedVal = this.getClosestTo(this.state.arrayClosest, this.props.xVal);

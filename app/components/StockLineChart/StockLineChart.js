@@ -28,7 +28,7 @@ export class StockLineChart extends Component {
 			*/
 			onPanResponderRelease: () => {
 				this.setState({ xVal: -1 });
-				console.log(this.props.selectedPoint);
+				//console.log(this.props.selectedPoint);
 				},
 
 		/*
@@ -57,7 +57,7 @@ export class StockLineChart extends Component {
 	}
 
 	getPointToSend() {
-		console.log(this.props.endPoint, this.state.xVal, this.props.stockData);
+		//console.log(this.props.endPoint, this.state.xVal, this.props.stockData);
 		if (this.state.xVal < 1) {
 			return this.props.endPoint;
 			}
