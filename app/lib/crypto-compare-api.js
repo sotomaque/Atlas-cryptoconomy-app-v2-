@@ -1,3 +1,9 @@
+/***
+ * @author Qian
+ * 
+ * @functions getHistoricalData 
+ * 
+ */
 
 var cryptoApi = {
 
@@ -6,11 +12,17 @@ var cryptoApi = {
 	,HISTORICAL_DATA: 'histo/@FILTER/?fsym=/@COIN_NAME/&tsym=USD&limit=/@LIMIT/&aggregate=/@AGGREGATE/'
 	,NUM_DATA_POINTS: 2000
 
-	// public calls
-	,getHistoricalData	: function( option ){
-
+	/**
+	 * @param option 
+	 * @example
+	 * getHistoricalData	{ coinName	:	'BTC'
+	 * 						,filter		:	'DAY'
+	 * 						,enableTime	:	true}
+	 * 
+	 * @returns promise 
+	 */
+	,getHistoricalData	: function (option) {
 		console.log('getHistoricalData', option);
-
 		if( !( option.coinName && option.filter ) ){
 			console.error('Coin Name and Filter required')
 			return;
@@ -20,7 +32,8 @@ var cryptoApi = {
 		,aggreate	= ''
 		,coinName	= option.coinName
 		,limit		= option.limit || cryptoApi.NUM_DATA_POINTS
-
+		,timeFlag	= option.enableTime || false
+		
 		switch(option.filter){
 			case 'DAY' :
 				filter 		= 	'minute'
@@ -45,7 +58,7 @@ var cryptoApi = {
 			case '6MONTH':
 				filter		= 	'day'
 				,aggreate	= 	'1'
-				,limit		=		'180'
+				,limit		=	'180'
 				break;
 			case '1YEAR':
 				filter		=	'day'
@@ -53,8 +66,8 @@ var cryptoApi = {
 				,limit		=	'365'
 				break;
 			case 'MAX':
-				filter		= 'day'
-				,aggreate =	'10'
+				filter		= 	'day'
+				,aggreate 	=	'10'
 				,allData	=	'true'
 				break;
 			default	:
@@ -73,20 +86,52 @@ var cryptoApi = {
 			return res.json()
 		})
 		.then(function(res){
-			var list = cryptoApi.trimDataSetToList(res.Data)
-			return cryptoApi.trimDataSetToList(res.Data)
+			var list = cryptoApi.trimDataSetToList(res.Data, timeFlag)
+			return list;
 		})
 	}//getHistoricalData
 
-	,trimDataSetToList		: function(arr){
+	,trimDataSetToList		: function(arr, timeFlag){
 
 		console.log('trimDataSetToList', arr);
-
-		return arr.map(function( dataPoint ){
-			return dataPoint.close
-		})
+		
+		if(timeFlag){
+			return arr.map(function( dataPoint ){
+				return { 'close' : dataPoint.close,
+					'time'	: cryptoApi.dateFormater(dataPoint.time*1000, option.filter)}
+			})
+		}
+		else {
+			return arr.map(function( dataPoint ){
+				return dataPoint.close
+			})
+		}
 	}// trimDataSet
 
+	,dateFormater					: function(date, filter){
+		var dateStr = ''
+
+		switch( filter ){
+			case 'DAY'	:
+			case 'WEEK' :
+				console.log( )
+				dateStr = new Date(date).toLocaleString('en-US',
+							{ hour: 'numeric'
+							, minute: 'numeric'
+							, month: 'short'
+							, day: 'numeric'
+							, hour12: true })
+							break;
+			default :
+				dateStr = new Date(date).toLocaleString('en-US',
+							{month: 'short'
+							,	day: 'numeric'
+							, hour12: true })
+							break;
+		}
+
+		return dateStr;
+	}
 }
 
 module.exports = cryptoApi;
