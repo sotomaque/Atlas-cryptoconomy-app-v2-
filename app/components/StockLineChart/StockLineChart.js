@@ -5,8 +5,11 @@ import { connect } from 'react-redux';
 import Chart from '../chart.js';
 import StockLineFilter from './StockLineFilter';
 import { StockLineTicker } from './StockLineTicker';
-import { CoinList } from './CoinList';
+import CoinList from '../CoinList/CoinList';
 import { sendChartData } from '../../actions';
+
+import cryptoApi from '../../../app/lib/crypto-compare-api';
+
 
 export class StockLineChart extends Component {
 
@@ -45,15 +48,14 @@ export class StockLineChart extends Component {
 	}
 
 	componentDidMount() {
-		setTimeout(() => {
-			return this.props.stockList
-				.then((res) => {
-					this.props.sendChartData(res);
-					this.setState({
-						stockList: res,
-					});
+		return cryptoApi.getHistoricalData({ filter: 'DAY',
+			coinName: 'BTC' })
+			.then((res) => {
+				this.props.sendChartData(res);
+				this.setState({
+					stockList: res,
 				});
-		}, 1000);
+			});
 	}
 
 	getPointToSend() {

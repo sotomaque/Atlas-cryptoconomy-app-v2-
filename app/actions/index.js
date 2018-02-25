@@ -13,3 +13,11 @@ export function sendValueFromPoint(val) {
 		payload: val
 	};
 }
+
+//Sends value from selected point in a graph.
+export function sendStockListData(val) {
+	return {
+		type: 'SEND_STOCK_LIST_DATA',
+		payload: val
+	};
+}

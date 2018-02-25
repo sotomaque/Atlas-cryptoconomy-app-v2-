@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Dimensions, PanResponder } from 'react-native';
+import { View, Dimensions, Text } from 'react-native';
 import { connect } from 'react-redux';
 import  Icon  from 'react-native-vector-icons/FontAwesome';
 
@@ -8,9 +8,12 @@ import { CoinListStyles } from './styles';
 import { sendChartData } from '../../actions';
 
 
-export class CoinList extends Component {
+export class SingleCoinDisplay extends Component {
 
-
+	constructor(props){
+		super(props);
+		console.log('SingleCoinDisplay', props);
+	}
 
 	// componentWillMount() {
 	// 	this.panResponder = PanResponder.create({
@@ -54,8 +57,10 @@ export class CoinList extends Component {
 	render() {
 			const width = Dimensions.get('window').width; // full device width, captured at runtime
 			return (
-				<View style={{ flexDirection: 'column', width }}>
-						<Icon name="bitcoin" size={30} color="#900" />
+				<View style={{flexDirection:'row', flexWrap:'wrap'}}>
+					<Icon name={this.props.data.url} size={30} color="#4F8EF7"/>
+					<Text>{this.props.data.key}</Text>
+					<Text>{this.props.data.price}</Text>
 				</View>
 			);
     }
@@ -63,15 +68,5 @@ export class CoinList extends Component {
 
 // references
 // https://github.com/JesperLekland/react-native-svg-charts#common-props
-
-function mapStateToProps(store) {
-  return {
-		filter: store.stockFilterReducer.filter,
-		stockList: store.stockFilterReducer.stockList,
-		stockData: store.stockFilterReducer.stockData,
-		selectedPoint: store.stockFilterReducer.selectedPoint,
-		endPoint: store.stockFilterReducer.endPoint
-  };
-}
 
 //export const StockLineChartWrapper = connect(mapStateToProps, { sendChartData })(StockLineChart);

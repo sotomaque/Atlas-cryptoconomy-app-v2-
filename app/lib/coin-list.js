@@ -29,8 +29,21 @@ var coinList = {
 				}
 			}
 			
-			console.log('getCoinListDetail', priceDatas);
-			return priceDatas;
+			// convert item to list
+			var priceDataArry = [];
+			
+			for( var key in priceDatas ){
+				var value = priceDatas[key];
+				if(value){
+					priceDataArry.push({
+						key			: key
+						,url		: value.url
+						,price		: value.USD
+					})
+				}
+			}
+			console.log('getCoinListDetail', priceDataArry);
+			return priceDataArry;
 		});
 	}
 }

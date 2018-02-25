@@ -3,7 +3,7 @@ import cryptoApi from '../../app/lib/crypto-compare-api';
 const initialState = {
 	filter: 'DAY',
 	//stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: 'DAY', enableTime : true}),
-	stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: 'DAY'}),
+	stockList: [0],
 	stockData: [0, 0],
 	selectedPoint: 0,	// Selected Value, an x-value of the graph that is grabbed from the PanResponder
 	endPoint: 0
@@ -38,6 +38,12 @@ export default function stockFilterReducer(state = initialState, action) {
 		case 'SEND_VALUE_FROM_POINT':
 				return { ...state,
 					selectedPoint: action.payload };
+		case 'SEND_STOCK_LIST_DATA': {
+				return {
+					...state, 
+					stockList: action.payload
+				};
+		}
     default:
       return state;
   }
