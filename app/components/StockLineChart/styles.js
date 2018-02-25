@@ -43,3 +43,10 @@ export const StockLineTickerStyles = StyleSheet.create({
         color: "#D4d4d4"
     }
 });
+
+export const CoinListStyles = StyleSheet.create({
+    container: {
+        flexDirection: "row",
+        justifyContent: "space-around"
+    },
+})

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Chart from '../chart.js';
 import StockLineFilter from './StockLineFilter';
 import { StockLineTicker } from './StockLineTicker';
-
+import { CoinList } from './CoinList';
 import { sendChartData } from '../../actions';
 
 export class StockLineChart extends Component {
@@ -92,6 +92,11 @@ export class StockLineChart extends Component {
 					<View>
 						<StockLineFilter />
 					</View>
+
+					<View>
+						<CoinList />
+					</View>
+
 				</View>
 			);
     }

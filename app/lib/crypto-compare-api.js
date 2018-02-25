@@ -10,8 +10,9 @@ var cryptoApi = {
 	// define constants
 	DEFAULT_ENDPOINT: 'https://min-api.cryptocompare.com/data/'
 	,HISTORICAL_DATA: 'histo/@FILTER/?fsym=/@COIN_NAME/&tsym=USD&limit=/@LIMIT/&aggregate=/@AGGREGATE/'
+	,PRICE_DATA		: 'pricemulti?fsyms=/@COIN_NAMES/&tsyms=USD'
 	,NUM_DATA_POINTS: 2000
-
+	
 	/**
 	 * @param option 
 	 * @example
@@ -92,6 +93,21 @@ var cryptoApi = {
 		})
 	}//getHistoricalData
 
+	,getPriceData			: function(coinList) {
+		if(!coinList) {
+			console.error('Invalid request');
+			return; 
+		}
+		
+		let coinNames 	= coinList.join()
+		,finalUrl 		= cryptoApi.PRICE_DATA.replace('/@COIN_NAMES/'	, coinNames);
+		
+		return fetch( cryptoApi.DEFAULT_ENDPOINT + finalUrl )
+		.then(function(res){
+			return res.json()
+		})
+	}//getPriceData
+	
 	,trimDataSetToList		: function(arr, timeFlag, filter){
 		console.log('trimDataSetToList', arr ,timeFlag, filter);
 		if(timeFlag){

@@ -4,12 +4,15 @@ import { connect } from 'react-redux';
 
 import { StockLineFilterStyles } from './styles';
 import { sendChartData } from '../../actions';
+
 import cryptoApi from '../../../app/lib/crypto-compare-api';
+import coinList	from '../../../app/lib/coin-list';
 
 class StockLineFilter extends Component {
 
 	constructor(props){
 		super(props);
+		coinList.getCoinListDetail(['ETH', 'BTC']);
 	}
 
 	/***
