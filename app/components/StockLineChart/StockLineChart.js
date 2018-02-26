@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Dimensions, PanResponder, ScrollView } from 'react-native';
+import { View, Dimensions, PanResponder } from 'react-native';
 import { connect } from 'react-redux';
 import Chart from '../Chart.js';
 import StockLineFilter from './StockLineFilter';
@@ -60,7 +60,7 @@ export class StockLineChart extends Component {
 	render() {
 			const width = Dimensions.get('window').width; // full device width, captured at runtime
 			return (
-				<ScrollView style={{ flexDirection: 'column', width }}>
+				<View style={{ flexDirection: 'column', width }}>
 
 					<View>
 						<StockLineTicker data={this.getPointToSend()} />
@@ -77,7 +77,7 @@ export class StockLineChart extends Component {
 						<StockLineFilter />
 					</View>
 
-				</ScrollView>
+				</View>
 			);
     }
 }

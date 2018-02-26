@@ -7,14 +7,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 // Import Components to set to different Routes.
 import Portfolio from './Portfolio.js';
+import PortfolioStack from './PortfolioStack.js';
 // import ProfileScreen from './ProfileScreen.js';
 // import PaperTradingScreen from './PaperTradingScreen.js';
 
 //  This Router sets the tab menu for the whole app
 export const RouterComponent = TabNavigator(
     {
-        profile: {
-            screen: Portfolio,
+        home: {
+            screen: PortfolioStack,
             navigationOptions: {
                 tabBarIcon: (
                     <Icon name="home" size={20} color="#fff" />
@@ -41,7 +42,7 @@ export const RouterComponent = TabNavigator(
         },
     },
     {
-        initialRouteName: 'portfolio', // default route
+        initialRouteName: 'home', // default route
         animationEnabled: true,
         tabBarPosition: 'bottom',
         tabBarOptions: {

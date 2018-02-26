@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StockLineChartWrapper } from '../components/StockLineChart';
 import { Header } from '../components/Header';
 import CoinList from '../components/CoinList/CoinList';
+// import PortfolioRouter from './PortfolioStack.js';
 
 export default class Portfolio extends Component {
   state = { isOn: true };
@@ -18,19 +19,22 @@ export default class Portfolio extends Component {
         return (
           <View style={styles.portfolioContainer}>
                 <LinearGradient colors={['#1294D5', '#125AD5']} style={styles.linearGradient}>
+                  <View>
+                    <Header
+                      headerText='Portfolio'
+                      navigation={this.props.navigation}
+                    />
+                  </View>
                     <ScrollView
                       onScrollBeginDrag={() => this.setIsOn(false)}
                       onScrollEndDrag={() => this.setIsOn(true)}
                     >
-                        <View>
-                            <Header headerText='Portfolio' />
-                        </View>
-                        <View>
-                            <StockLineChartWrapper isOn={this.state.isOn} />
-                        </View>
-                        <View>
-                            <CoinList />
-                        </View>
+                      <View>
+                        <StockLineChartWrapper isOn={this.state.isOn} />
+                      </View>
+                      <View>
+                        <CoinList />
+                      </View>
                     </ScrollView>
                 </LinearGradient>
           </View>
