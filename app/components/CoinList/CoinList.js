@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Dimensions, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
 import  Icon  from 'react-native-vector-icons/FontAwesome';
+import TimerMixin from 'react-timer-mixin';
 
 //import { LineChart } from "react-native-svg-charts";
 import { CoinListStyles } from './styles';
@@ -64,7 +65,7 @@ class CoinList extends Component {
 				}}
 			>
 				<FlatList
-					
+
 					data={userCoinList}
 					renderItem={({ item }) => (
           <Coin
