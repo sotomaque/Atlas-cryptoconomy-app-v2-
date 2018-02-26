@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Dimensions, PanResponder } from 'react-native';
+import { View, Dimensions, PanResponder, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 //import { LineChart } from "react-native-svg-charts";
 import Chart from '../chart.js';
@@ -78,13 +78,13 @@ export class StockLineChart extends Component {
 	render() {
 			const width = Dimensions.get('window').width; // full device width, captured at runtime
 			return (
-				<View style={{ flexDirection: 'column', width }}>
+				<ScrollView style={{ flexDirection: 'column', width }}>
 
 					<View>
 						<StockLineTicker data={this.getPointToSend()} />
 					</View>
 
-					<View style={{ height: 300 }} {...this.panResponder.panHandlers}>
+					<View style={{ height: 150 }} {...this.panResponder.panHandlers}>
 						<Chart
 							xVal={this.state.xVal}
 							data={this.props.stockData}
@@ -99,7 +99,7 @@ export class StockLineChart extends Component {
 						<CoinList />
 					</View>
 
-				</View>
+				</ScrollView>
 			);
     }
 }

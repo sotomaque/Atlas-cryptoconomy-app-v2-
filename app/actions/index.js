@@ -21,3 +21,10 @@ export function sendStockListData(val) {
 		payload: val
 	};
 }
+
+export function getValue(coinName) {
+	return {
+		type: 'GET_COIN_VALUE',
+		payload: coinName
+	};
+}

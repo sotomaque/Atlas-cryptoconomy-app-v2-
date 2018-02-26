@@ -5,68 +5,95 @@ import  Icon  from 'react-native-vector-icons/FontAwesome';
 
 //import { LineChart } from "react-native-svg-charts";
 import { CoinListStyles } from './styles';
-import { sendStockListData } from '../../actions';
+import { sendChartData, sendStockListData } from '../../actions';
+
 import { SingleCoinDisplay } from './SingleCoinDisplay';
-
+import { Coin } from './Coin.js';
 import coinList	from '../../../app/lib/coin-list';
+import cryptoApi from '../../../app/lib/crypto-compare-api';
 
-
+const userCoinList = [{ ticker: 'BTC', name: 'Bitcoin' }, { ticker: 'ETH', name: 'Ethereum' }];
 class CoinList extends Component {
 
+	componentDidMount() {
+		return coinList.getCoinListDetail(['BTC', 'ETH'])
+			.then((res) => {
+				console.log('componentDidMount', res);
+				this.props.sendStockListData(res);
+			});
+	}
 
-
-	// componentWillMount() {
-	// 	this.panResponder = PanResponder.create({
-	// 		onMoveShouldSetResponderCapture: () => true,
-	// 		onMoveShouldSetPanResponderCapture: () => true,
-	// 		/*
-	// 		onPanResponderGrant: (evt, gestureState) => {
-	// 		//	console.log('PanResponder start');
-	// 		},
-	// 		*/
-	// 		onPanResponderRelease: () => {
-	// 			this.setState({ xVal: -1 });
-	// 			//console.log(this.props.selectedPoint);
-	// 			},
-	//
-	// 	/*
-	// 	onMoveShouldSetPanResponder: (e, gestureState) => {
-	//
-	// 	},
-	// 	*/
-	// 		onPanResponderMove: (e) => {
-	// 			const { nativeEvent } = e;
-	// 			// console.log(gestureState.dx);   // to get total distance moved since gesture start.
-	// 			this.setState({ xVal: nativeEvent.locationX });
-	// 			}
-	// 	});
-	// }
-
-	 componentDidMount() {
- 		return coinList.getCoinListDetail(['BTC', 'ETH'])
- 			.then((res) => {
- 				console.log('componentDidMount', res);
- 				this.props.sendStockListData(res);
- 			});
-	 }
+	grabChart(symbol) {
+		console.log('why');
+		return cryptoApi.getHistoricalData({ filter: 'DAY',
+			coinName: `${symbol}` })
+			.then((res) => {
+				this.props.sendChartData(res);
+				this.setState({
+					stockList: res,
+				});
+			});
+	}
 
 	render() {
+		/*
 			const width = Dimensions.get('window').width; // full device width, captured at runtime
 			return (
-				<View style={{ flexDirection: 'column', width }}>
+				<View style={{ backgroundColor: 'blue', flexDirection: 'column', width }}>
 					<FlatList
 						data={this.props.stockList}
-						renderItem={({item, index})=>{
-							return (<SingleCoinDisplay data={item}/>)
-						}}>
+						keyExtractor={item => item.key}
+						renderItem={ ({ item, index }) => {
+						return (<SingleCoinDisplay data={item} />)
+					}};
 					</FlatList>
 				</View>
 			);
     }
+	*/
+		const width = Dimensions.get('window').width;
+		return (
+			<View
+				style={{
+				borderRadius: 10,
+				padding: 10,
+				width: (width - 5) / 1.5,
+				justifyContent: 'center',
+				marginLeft: 0,
+				flex: 1
+				}}
+			>
+				<FlatList
+					
+					data={userCoinList}
+					renderItem={({ item }) => (
+          <Coin
+            name={item.name}
+						symbol={item.ticker}
+						price='100'
+						onPress={() => this.grabChart(`${item.ticker}`)}
+          />
+					)}
+					keyExtractor={item => item.ticker}
+				/>
+			</View>
+	);
+	}
 }
-
-// references
-// https://github.com/JesperLekland/react-native-svg-charts#common-props
+/*
+<Coin
+	name='Bitcoin'
+	symbol='BTC'
+	price='$50'
+	onPress={() => this.grabChart('BTC')}
+/>
+<Coin
+	name='Ethereum'
+	symbol='ETH'
+	price='$60'
+		onPress={() => this.grabChart('ETH')}
+/>
+*/
 
 function mapStateToProps(store) {
   return {
@@ -78,4 +105,4 @@ function mapStateToProps(store) {
   };
 }
 
-export default connect(mapStateToProps, { sendStockListData })(CoinList);
+export default connect(mapStateToProps, { sendChartData, sendStockListData })(CoinList);

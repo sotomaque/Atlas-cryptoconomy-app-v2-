@@ -10,8 +10,8 @@ const initialState = {
 };
 
 export default function stockFilterReducer(state = initialState, action) {
-
   switch (action.type) {
+		
     case 'DAY':
 				return { ...state,
 					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: 'DAY' }) };
@@ -40,7 +40,7 @@ export default function stockFilterReducer(state = initialState, action) {
 					selectedPoint: action.payload };
 		case 'SEND_STOCK_LIST_DATA': {
 				return {
-					...state, 
+					...state,
 					stockList: action.payload
 				};
 		}
