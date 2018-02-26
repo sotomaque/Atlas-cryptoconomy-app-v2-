@@ -5,12 +5,15 @@ let width = Dimensions.get("window").width; // full device width, captured at ru
 export const StockLineFilterStyles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        justifyContent: "space-around"
+        justifyContent: "space-around",
+        paddingBottom: 14
     },
     text: {
         color: "#fff",
         fontSize: 12,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        // borderBottomWidth: 1,
+        // borderBottomColor: 'white'
     }
 });
 
@@ -21,21 +24,22 @@ export const StockLineTickerStyles = StyleSheet.create({
         alignItems: "center"
     },
     tickerTotalContainer: {
-        flexDirection:"row",
-        alignItems: "baseline",
-        marginBottom: 4
+        flexDirection: "row",
+        // alignItems: "baseline",
+        // marginBottom: 2
     },
     tickerTotalSymbol: {
-        fontSize: 22,
+        fontSize: 26,
+        marginTop: 4,
         color: "#fff"
     },
     tickerTotalMainAmount: {
-        fontSize: 42,
+        fontSize: 36,
         color: "#fff"
     },
     tickerAuxillary: {
         fontSize: 12,
-        color: "#99c794",
+        color: "#55FF40",
         marginRight: 5
     },
     tickerFilterText: {

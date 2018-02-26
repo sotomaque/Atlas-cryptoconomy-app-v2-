@@ -6,16 +6,14 @@ export const styles = {
         fontWeight: 'bold'
     }, 
     viewStyle: {
-        backgroundColor: '#252b2e',
-        justifyContent: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
         height: 80,
-        paddingTop: 35,
-        marginBottom: 20,
-        // shadowColor: '#000',
-        // shadowOffset: { width: 0, height: 2 },
-        // shadowOpacity: 0.2,
-        // elevation: 2,
-        position: 'relative'
+        paddingTop: 25,
+        marginBottom: 10,
+        position: 'relative',
+        marginLeft: 10,
+        marginRight: 10
     }
 }

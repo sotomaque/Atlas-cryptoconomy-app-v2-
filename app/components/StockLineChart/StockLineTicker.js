@@ -22,7 +22,7 @@ export class StockLineTicker extends Component {
                 <View style={tickerTotalContainer}>
                     <Text style={tickerTotalSymbol}>$</Text>
                     <Text style={tickerTotalMainAmount}>{this.props.data}</Text>
-                    <Text style={tickerTotalSymbol}>.00</Text>
+                    {/* <Text style={tickerTotalMainAmount}>.00</Text> */}
                 </View>
                 <View style={tickerTotalContainer}>
                     <Text style={tickerAuxillary}>+106.11</Text>

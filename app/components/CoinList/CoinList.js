@@ -41,39 +41,36 @@ class CoinList extends Component {
 	// 	});
 	// }
 	componentDidMount() {
-		
-		this.updateList()
+		this.updateList();
 	}
 
-	 
-	timeout(){
-		var self = this;
-		setTimeout(function(){
-			self.updateList()
+	timeout() {
+		const self = this;
+		setTimeout(() => {
+			self.updateList();
 		}, 10000); 
 	}
-	 
+	
 	updateList(){
 		coinList.getCoinListDetail(['BTC', 'ETH'])
 			.then((res) => {
 				this.props.sendStockListData(res);
 				this.timeout();
 			});
-
 	}
 	
 	render() {
-			const width = Dimensions.get('window').width; // full device width, captured at runtime
-			return (
-				<View style={{ flexDirection: 'column', width }}>
-					<FlatList
-						data={this.props.stockList}
-						renderItem={({item, index})=>{
-							return (<SingleCoinDisplay data={item}/>)
-						}}>
-					</FlatList>
-				</View>
-			);
+		const width = Dimensions.get('window').width; // full device width, captured at runtime
+		return (
+			<View style={{ flexDirection: 'column', width, backgroundColor: 'white' }}>
+				<FlatList
+					data={this.props.stockList}
+					renderItem={({item, index})=>{
+						return (<SingleCoinDisplay data={item}/>)
+					}}>
+				</FlatList>
+			</View>
+		);
     }
 }
 

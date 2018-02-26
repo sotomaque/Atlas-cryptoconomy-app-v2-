@@ -6,7 +6,6 @@ import {
 import Line from './chart/line.js';
 
 export default class Chart extends Component {
-  //<Line values={[40, 30, 70, 60, 80, 70, 40, 70, 50]} />
   props: {
     xVal: number,
     data: Array<number>,
@@ -27,10 +26,8 @@ export default class Chart extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 55, // take 38% of the screen height
-    backgroundColor: '#252b2e',
-    paddingTop: 20
-  //  paddingLeft: 5,
-  //  paddingRight: 5
+    flex: 55,
+    paddingTop: 10,
+    paddingBottom: 10
   },
 });

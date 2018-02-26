@@ -18,10 +18,7 @@ import { sendValueFromPoint } from '../../actions';
  class Line extends Component {
 
   static defaultProps = {
-    //fillColor: 'rgba(103, 58, 183, 1)',       // solid violet color
-    fillColor: '#F5B041',
-    strokeColor: '#F8C471',
-  //  strokeColor: 'rgba(103, 58, 183, 0.25)',  // semi-transparent violet
+    strokeColor: 'white',
     strokeWidth: 1,                           // Width of in-between graph
   };
 

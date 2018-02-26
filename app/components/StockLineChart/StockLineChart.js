@@ -14,9 +14,9 @@ import cryptoApi from '../../../app/lib/crypto-compare-api';
 export class StockLineChart extends Component {
 
 	state = {
-	stockList: [],
-	stockData: [],
-	xVal: 0
+		stockList: [],
+		stockData: [],
+		xVal: 0
 	}
 
 
@@ -24,26 +24,13 @@ export class StockLineChart extends Component {
 		this.panResponder = PanResponder.create({
 			onMoveShouldSetResponderCapture: () => true,
 			onMoveShouldSetPanResponderCapture: () => true,
-			/*
-			onPanResponderGrant: (evt, gestureState) => {
-			//	console.log('PanResponder start');
-			},
-			*/
 			onPanResponderRelease: () => {
 				this.setState({ xVal: -1 });
-				//console.log(this.props.selectedPoint);
-				},
-
-		/*
-		onMoveShouldSetPanResponder: (e, gestureState) => {
-
-		},
-		*/
+			},
 			onPanResponderMove: (e) => {
 				const { nativeEvent } = e;
-				// console.log(gestureState.dx);   // to get total distance moved since gesture start.
 				this.setState({ xVal: nativeEvent.locationX });
-				}
+			}
 		});
 	}
 
@@ -59,32 +46,21 @@ export class StockLineChart extends Component {
 	}
 
 	getPointToSend() {
-		//console.log(this.props.endPoint, this.state.xVal, this.props.stockData);
 		if (this.state.xVal < 1) {
 			return this.props.endPoint;
 			}
 		return this.props.selectedPoint;
 	}
-/*
-	<LineChart
-			style={{ height: 200, zIndex: 2 }}
-			data={this.props.stockData}
-			svg={{ stroke: "#99c794", strokeWidth: 2 }}
-			contentInset={{ top: 0, bottom: 20 }}
-			showGrid={false}
-			animate={false}
-	/>
-{*/
+
 	render() {
-			const width = Dimensions.get('window').width; // full device width, captured at runtime
 			return (
-				<View style={{ flexDirection: 'column', width }}>
+				<View style={{ flexDirection: 'column' }}>
 
 					<View>
 						<StockLineTicker data={this.getPointToSend()} />
 					</View>
 
-					<View style={{ height: 300 }} {...this.panResponder.panHandlers}>
+					<View style={{ height: 250 }} {...this.panResponder.panHandlers}>
 						<Chart
 							xVal={this.state.xVal}
 							data={this.props.stockData}
@@ -94,11 +70,6 @@ export class StockLineChart extends Component {
 					<View>
 						<StockLineFilter />
 					</View>
-
-					<View>
-						<CoinList />
-					</View>
-
 				</View>
 			);
     }
