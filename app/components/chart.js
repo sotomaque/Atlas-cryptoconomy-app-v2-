@@ -21,13 +21,12 @@ export default class Chart extends Component {
       </View>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 55,
     paddingTop: 10,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
 });

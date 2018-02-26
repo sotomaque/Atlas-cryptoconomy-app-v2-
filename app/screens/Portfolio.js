@@ -9,16 +9,24 @@ import { Header } from '../components/Header';
 import CoinList from '../components/CoinList/CoinList';
 
 export default class Portfolio extends Component {
-    render() {
+  state = { isOn: true };
+  setIsOn(val) {
+    this.setState({ isOn: val });
+	}
+
+  render() {
         return (
           <View style={styles.portfolioContainer}>
                 <LinearGradient colors={['#1294D5', '#125AD5']} style={styles.linearGradient}>
-                    <ScrollView>
+                    <ScrollView
+                      onScrollBeginDrag={() => this.setIsOn(false)}
+                      onScrollEndDrag={() => this.setIsOn(true)}
+                    >
                         <View>
                             <Header headerText='Portfolio' />
                         </View>
                         <View>
-                            <StockLineChartWrapper />
+                            <StockLineChartWrapper isOn={this.state.isOn} />
                         </View>
                         <View>
                             <CoinList />
@@ -33,13 +41,13 @@ export default class Portfolio extends Component {
 const styles = StyleSheet.create({
     portfolioContainer: {
         flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
     },
     linearGradient: {
-        flex: 1
+        flex: 1,
     },
     chartContainer: {
         paddingLeft: 6,
-        paddingRight: 6
-    }
+        paddingRight: 6,
+    },
 });

@@ -3,7 +3,6 @@ import { View, Text } from 'react-native';
 import { StockLineTickerStyles } from './styles';
 //
 export class StockLineTicker extends Component {
-
     props: {
       data: number
     };
@@ -14,7 +13,7 @@ export class StockLineTicker extends Component {
             tickerTotalSymbol,
             tickerTotalMainAmount,
             tickerAuxillary,
-            tickerFilterText
+            tickerFilterText,
         } = StockLineTickerStyles;
 
         return (

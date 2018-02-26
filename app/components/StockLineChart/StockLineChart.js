@@ -21,11 +21,13 @@ export class StockLineChart extends Component {
 			onMoveShouldSetResponderCapture: () => true,
 			onMoveShouldSetPanResponderCapture: () => true,
 			onPanResponderRelease: () => {
-				this.setState({ xVal: -1 });
+				this.setState({ xVal: -10 });
 			},
-			onPanResponderMove: (e) => {
+			onPanResponderMove: (e, gesture) => {
 				const { nativeEvent } = e;
-				this.setState({ xVal: nativeEvent.locationX });
+				if (Math.abs(gesture.dx) > 5) {
+					this.setState({ xVal: nativeEvent.locationX });
+				}
 			},
 		});
 	}
@@ -44,11 +46,16 @@ export class StockLineChart extends Component {
 	}
 
 	getPointToSend() {
-		if (this.state.xVal < 1) {
+		if (this.state.xVal < 1 || this.props.isOn === false) {
+			this.state.xVal = -10;
 			return this.props.endPoint;
 			}
 		return this.props.selectedPoint;
 	}
+
+	props: {
+		isOn: boolean,
+		};
 
 	render() {
 			const width = Dimensions.get('window').width; // full device width, captured at runtime
