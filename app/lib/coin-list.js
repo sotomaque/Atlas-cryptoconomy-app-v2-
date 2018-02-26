@@ -32,7 +32,7 @@ var coinList = {
 						key				: key
 						,url			: coinList.DEFAULT_COIN_LIST_ICON[key].url
 						,price			: '$' + value.USD.PRICE
-						,percentChange	: ((value.USD.PRICE-value.USD.OPENDAY) / value.USD.OPENDAY).toFixed(2) + '%'
+						,percentChange	: ((value.USD.PRICE-value.USD.OPENDAY)*100 / value.USD.OPENDAY).toFixed(2) + '%'
 					})
 				}
 			}

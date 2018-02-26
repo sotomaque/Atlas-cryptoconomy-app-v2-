@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Dimensions, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
 import  Icon  from 'react-native-vector-icons/FontAwesome';
+import TimerMixin from 'react-timer-mixin';
 
 //import { LineChart } from "react-native-svg-charts";
 import { CoinListStyles } from './styles';
@@ -12,8 +13,6 @@ import coinList	from '../../../app/lib/coin-list';
 
 
 class CoinList extends Component {
-
-
 
 	// componentWillMount() {
 	// 	this.panResponder = PanResponder.create({
@@ -41,15 +40,28 @@ class CoinList extends Component {
 	// 			}
 	// 	});
 	// }
+	componentDidMount() {
+		
+		this.updateList()
+	}
 
-	 componentDidMount() {
- 		return coinList.getCoinListDetail(['BTC', 'ETH'])
- 			.then((res) => {
- 				console.log('componentDidMount', res);
- 				this.props.sendStockListData(res);
- 			});
-	 }
+	 
+	timeout(){
+		var self = this;
+		setTimeout(function(){
+			self.updateList()
+		}, 10000); 
+	}
+	 
+	updateList(){
+		coinList.getCoinListDetail(['BTC', 'ETH'])
+			.then((res) => {
+				this.props.sendStockListData(res);
+				this.timeout();
+			});
 
+	}
+	
 	render() {
 			const width = Dimensions.get('window').width; // full device width, captured at runtime
 			return (
