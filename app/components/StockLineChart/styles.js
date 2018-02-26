@@ -25,16 +25,14 @@ export const StockLineTickerStyles = StyleSheet.create({
     },
     tickerTotalContainer: {
         flexDirection: "row",
-        // alignItems: "baseline",
-        // marginBottom: 2
+        alignItems: "center",
     },
     tickerTotalSymbol: {
-        fontSize: 26,
-        marginTop: 4,
+        fontSize: 20,
         color: "#fff"
     },
     tickerTotalMainAmount: {
-        fontSize: 36,
+        fontSize: 30,
         color: "#fff"
     },
     tickerAuxillary: {

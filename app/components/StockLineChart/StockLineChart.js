@@ -60,7 +60,7 @@ export class StockLineChart extends Component {
 						<StockLineTicker data={this.getPointToSend()} />
 					</View>
 
-					<View style={{ height: 250 }} {...this.panResponder.panHandlers}>
+					<View style={{ height: 180, marginLeft: 12, marginRight: 12 }} {...this.panResponder.panHandlers}>
 						<Chart
 							xVal={this.state.xVal}
 							data={this.props.stockData}
