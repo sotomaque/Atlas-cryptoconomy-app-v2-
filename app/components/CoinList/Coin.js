@@ -21,8 +21,6 @@ export class Coin extends Component {
       symbol,
       name,
       price,
-      change,
-      active,
     } = this.props;
 			return (
         <TouchableOpacity
