@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { View, Dimensions, PanResponder, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-//import { LineChart } from "react-native-svg-charts";
-import Chart from '../chart.js';
+import Chart from '../Chart.js';
 import StockLineFilter from './StockLineFilter';
 import { StockLineTicker } from './StockLineTicker';
-import CoinList from '../CoinList/CoinList';
+// import CoinList from '../CoinList/CoinList';
 import { sendChartData } from '../../actions';
 
 import cryptoApi from '../../../app/lib/crypto-compare-api';
@@ -15,7 +14,7 @@ export class StockLineChart extends Component {
 	state = {
 		stockList: [],
 		stockData: [],
-		xVal: 0,
+		xVal: -10,
 	}
 	componentWillMount() {
 		this.panResponder = PanResponder.create({
@@ -52,7 +51,7 @@ export class StockLineChart extends Component {
 	}
 
 	render() {
-		  const width = Dimensions.get('window').width; // full device width, captured at runtime
+			const width = Dimensions.get('window').width; // full device width, captured at runtime
 			return (
 				<ScrollView style={{ flexDirection: 'column', width }}>
 
@@ -69,10 +68,6 @@ export class StockLineChart extends Component {
 
 					<View>
 						<StockLineFilter />
-					</View>
-
-					<View>
-						<CoinList />
 					</View>
 
 				</ScrollView>

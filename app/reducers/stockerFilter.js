@@ -2,46 +2,68 @@ import cryptoApi from '../../app/lib/crypto-compare-api';
 
 const initialState = {
 	filter: 'DAY',
-	//stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: 'DAY', enableTime : true}),
+	selectedCoin: 'BTC',
+	// stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: 'DAY', enableTime : true}),
 	stockList: [0],
 	stockData: [0, 0],
 	selectedPoint: 0,	// Selected Value, an x-value of the graph that is grabbed from the PanResponder
-	endPoint: 0
+	endPoint: 0,
 };
 
 export default function stockFilterReducer(state = initialState, action) {
   switch (action.type) {
-		
+		case 'CHANGE_COIN_TYPE': {
+			return {
+				...state,
+				selectedCoin: action.payload,
+			};
+		}
     case 'DAY':
-				return { ...state,
-					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: 'DAY' }) };
+				return {
+					...state,
+					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: state.filter }),
+				};
     case 'WEEK':
-        return { ...state,
-					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: 'WEEK' }) };
+        return {
+					...state,
+					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: state.filter }),
+				};
     case 'MONTH':
-        return { ...state,
-					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: 'MONTH' }) };
+        return {
+					...state,
+					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: state.filter }),
+				};
     case '3MONTH':
-        return { ...state,
-					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: '3MONTH' }) };
+        return {
+					...state,
+					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: state.filter }),
+				};
     case '6MONTH':
-        return { ...state,
-					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: '6MONTH' }) };
+        return {
+					...state,
+					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: state.filter }),
+				};
     case '1YEAR':
-        return { ...state,
-					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: '1YEAR' }) };
+        return {
+					...state,
+					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: state.filter }),
+				};
 		case 'SEND_DATA': {
-				return { ...state,
+				return {
+					...state,
 					stockData: action.payload,
-					endPoint: action.payload.slice(-1).pop() };
+					endPoint: action.payload.slice(-1).pop(),
+				};
 				}
 		case 'SEND_VALUE_FROM_POINT':
-				return { ...state,
-					selectedPoint: action.payload };
+				return {
+					...state,
+					selectedPoint: action.payload,
+				};
 		case 'SEND_STOCK_LIST_DATA': {
 				return {
 					...state,
-					stockList: action.payload
+					stockList: action.payload,
 				};
 		}
     default:

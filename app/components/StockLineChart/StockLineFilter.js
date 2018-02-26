@@ -8,22 +8,15 @@ import { sendChartData } from '../../actions';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
 
 class StockLineFilter extends Component {
-
-	constructor(props){
-		super(props);
-	}
-
-	/***
-	 *	@Param : option
-	 *
-	 */
 	onFilterStockChart(option) {
-		cryptoApi.getHistoricalData({ ...option,
-			coinName: 'BTC' })
+		cryptoApi.getHistoricalData({
+			...option,
+			coinName: this.props.selectedCoin,
+		})
 			.then((res) => {
 				this.props.sendChartData(res);
 			});
-	}//onFilterStockChart
+	}
 
     render() {
         const { container, text } = StockLineFilterStyles;
@@ -48,12 +41,9 @@ class StockLineFilter extends Component {
 						<View>
 						<Text onPress={() => this.onFilterStockChart({ filter: '1YEAR' })} style={text}>1Y</Text>
 						</View>
-                <View>
-                    <Text
-						onPress={() => this.onFilterStockChart({ filter: 'MAX' })}
-						style={text}>MAX
-					</Text>
-                </View>
+						<View>
+            <Text onPress={() => this.onFilterStockChart({ filter: 'MAX' })} style={text}>MAX</Text>
+						</View>
             </View>
         );
     }
@@ -66,7 +56,8 @@ function mapStateToProps(store) {
 		stockList: store.stockFilterReducer.stockList,
 		stockData: store.stockFilterReducer.stockData,
 		selectedPoint: store.stockFilterReducer.selectedPoint,
-		endPoint: store.stockFilterReducer.endPoint
+		endPoint: store.stockFilterReducer.endPoint,
+		selectedCoin: store.stockFilterReducer.selectedCoin,
   };
 }
 

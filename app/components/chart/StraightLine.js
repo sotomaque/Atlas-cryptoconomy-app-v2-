@@ -1,8 +1,8 @@
 import React from 'react';
-import {Path, Group, Shape} from 'react-native/Libraries/ART/ReactNativeART';
+import { Path, Group, Shape } from 'react-native/Libraries/ART/ReactNativeART';
 
 const StraightLine = ({
-  xVal = 100
+  xVal = 100,
 }) => {
   const path = Path()
     .moveTo(xVal, 0)
@@ -11,9 +11,9 @@ const StraightLine = ({
 
   return (
     <Group width={500} height={500}>
-      <Shape d={path} stroke="#55FF40" strokeWidth={1}/>
+      <Shape d={path} stroke="#55FF40" strokeWidth={1} />
     </Group>
   );
 };
 
-export {StraightLine};
+export { StraightLine };

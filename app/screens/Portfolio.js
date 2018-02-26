@@ -20,9 +20,9 @@ export default class Portfolio extends Component {
                         <View>
                             <StockLineChartWrapper />
                         </View>
-                        {/* <View>
+                        <View>
                             <CoinList />
-                        </View> */}
+                        </View>
                     </ScrollView>
                 </LinearGradient>
           </View>

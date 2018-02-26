@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Dimensions, Text, TouchableOpacity, StyleSheet } from 'react-native';
-//import { connect } from 'react-redux';
-//import  Icon  from 'react-native-vector-icons/FontAwesome';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+// import { connect } from 'react-redux';
+// import  Icon  from 'react-native-vector-icons/FontAwesome';
 
 
 export class Coin extends Component {
@@ -10,13 +10,13 @@ export class Coin extends Component {
       symbol: string,
       name: string,
       price: number,
-      change: number,
-      active: boolean,
+    //  change: number,
+    //  active: boolean,
       onPress: Function,
     };
 
 	render() {
-			//const width = Dimensions.get('window').width; // full device width, captured at runtime
+			// const width = Dimensions.get('window').width; // full device width, captured at runtime
       const {
       symbol,
       name,
@@ -27,26 +27,24 @@ export class Coin extends Component {
             onPress={() => this.props.onPress()}
         >
           <View style={styles.row}>
-         <Text style={styles.text} numberOfLines={1}>
-           {name}
-         </Text>
+            <Text style={styles.text} numberOfLines={1}>
+              {name}
+            </Text>
 
+          <View style={styles.row}>
+            <Text style={[styles.text, styles.name]} numberOfLines={1}>
+              {symbol}
+            </Text>
+          </View>
 
-         <View style={styles.row}>
-           <Text style={[styles.text, styles.name]} numberOfLines={1}>
-             {symbol}
-           </Text>
+          <View style={styles.right}>
+            <Text style={styles.text} numberOfLines={1}>
+              {price}
+            </Text>
+          </View>
 
-        </View>
-
-        <View style={styles.right}>
-          <Text style={styles.text} numberOfLines={1}>
-            {price}
-          </Text>
-        </View>
-
-       </View>
-				</TouchableOpacity>
+          </View>
+        </TouchableOpacity>
 			);
     }
 }
@@ -55,7 +53,7 @@ export class Coin extends Component {
 const styles = StyleSheet.create({
 
   active: {
-    backgroundColor: 'rgba(255,255,255,0.05)',  // highlight selected coin
+    backgroundColor: 'rgba(255,255,255,0.05)', // highlight selected coin
   },
   row: {
     flexDirection: 'row',
@@ -76,6 +74,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '300',
-    paddingLeft: 5
+    paddingLeft: 5,
   },
 });
