@@ -12,14 +12,11 @@ import cryptoApi from '../../../app/lib/crypto-compare-api';
 
 
 export class StockLineChart extends Component {
-
 	state = {
 		stockList: [],
 		stockData: [],
-		xVal: 0
+		xVal: 0,
 	}
-
-
 	componentWillMount() {
 		this.panResponder = PanResponder.create({
 			onMoveShouldSetResponderCapture: () => true,
@@ -30,13 +27,15 @@ export class StockLineChart extends Component {
 			onPanResponderMove: (e) => {
 				const { nativeEvent } = e;
 				this.setState({ xVal: nativeEvent.locationX });
-			}
+			},
 		});
 	}
 
 	componentDidMount() {
-		return cryptoApi.getHistoricalData({ filter: 'DAY',
-			coinName: 'BTC' })
+		return cryptoApi.getHistoricalData({
+			filter: 'DAY',
+			coinName: 'BTC',
+		})
 			.then((res) => {
 				this.props.sendChartData(res);
 				this.setState({
@@ -53,6 +52,7 @@ export class StockLineChart extends Component {
 	}
 
 	render() {
+		  const width = Dimensions.get('window').width; // full device width, captured at runtime
 			return (
 				<ScrollView style={{ flexDirection: 'column', width }}>
 
@@ -89,7 +89,7 @@ function mapStateToProps(store) {
 		stockList: store.stockFilterReducer.stockList,
 		stockData: store.stockFilterReducer.stockData,
 		selectedPoint: store.stockFilterReducer.selectedPoint,
-		endPoint: store.stockFilterReducer.endPoint
+		endPoint: store.stockFilterReducer.endPoint,
   };
 }
 

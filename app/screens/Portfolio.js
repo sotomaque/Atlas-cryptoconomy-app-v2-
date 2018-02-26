@@ -1,31 +1,31 @@
 // system imports
-import React, {Component} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import React, { Component } from 'react';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 // app imports
-import {StockLineChartWrapper} from '../components/StockLineChart';
-import {Header} from '../components/Header';
+import { StockLineChartWrapper } from '../components/StockLineChart';
+import { Header } from '../components/Header';
 import CoinList from '../components/CoinList/CoinList';
 
 export default class Portfolio extends Component {
     render() {
         return (
-            <View style={styles.portfolioContainer}>
+          <View style={styles.portfolioContainer}>
                 <LinearGradient colors={['#1294D5', '#125AD5']} style={styles.linearGradient}>
                     <ScrollView>
                         <View>
-                            <Header headerText={'Portfolio'}/>
+                            <Header headerText='Portfolio' />
                         </View>
                         <View>
-                            <StockLineChartWrapper/>
+                            <StockLineChartWrapper />
                         </View>
                         {/* <View>
                             <CoinList />
                         </View> */}
                     </ScrollView>
                 </LinearGradient>
-            </View>
+          </View>
         );
     }
 }

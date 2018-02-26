@@ -1,0 +1,22 @@
+ {
+     "env": {
+         "node": true,
+         "browser": true,
+         "es6": true
+     },
+     "parser": "babel-eslint",
+     "extends": "airbnb",
+     "rules": {
+       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+       "react/prefer-stateless-function": [<enabled>, { "ignorePureComponents": <ignorePureComponents> }],
+       "react/no-unused-state": false,
+       "no-tabs": 0,
+       "indent": 0,
+       "react/prop-types": 0,
+       "react/jsx-indent": 0,
+       "no-use-before-define": 0,
+       "prefer-destructuring": 0,
+       "jsx-quotes": 0
+       }
+
+ }
