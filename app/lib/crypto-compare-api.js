@@ -10,7 +10,7 @@ var cryptoApi = {
 	// define constants
 	DEFAULT_ENDPOINT: 'https://min-api.cryptocompare.com/data/'
 	,HISTORICAL_DATA: 'histo/@FILTER/?fsym=/@COIN_NAME/&tsym=USD&limit=/@LIMIT/&aggregate=/@AGGREGATE/'
-	,PRICE_DATA		: 'pricemulti?fsyms=/@COIN_NAMES/&tsyms=USD'
+	,PRICE_DATA		: 'pricemultifull?fsyms=/@COIN_NAMES/&tsyms=USD'
 	,NUM_DATA_POINTS: 2000
 	
 	/**
@@ -143,8 +143,8 @@ var cryptoApi = {
 							break;
 			default :
 				dateStr = new Date(date).toLocaleString('en-US',
-							{month: 'short'
-							,	day: 'numeric'
+							{ month: 'short'
+							, day: 'numeric'
 							, hour12: true })
 							break;
 		}

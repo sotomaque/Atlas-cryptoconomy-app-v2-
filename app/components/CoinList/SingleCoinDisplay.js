@@ -61,6 +61,7 @@ export class SingleCoinDisplay extends Component {
 					<Icon name={this.props.data.url} size={30} color="#4F8EF7"/>
 					<Text>{this.props.data.key}</Text>
 					<Text>{this.props.data.price}</Text>
+					<Text>{this.props.data.percentChange}</Text>
 				</View>
 			);
     }

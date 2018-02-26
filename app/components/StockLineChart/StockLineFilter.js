@@ -50,11 +50,9 @@ class StockLineFilter extends Component {
 						</View>
                 <View>
                     <Text
-											onPress={() => this.onFilterStockChart({ filter: 'MAX' })}
-											style={text}
-                    >
-											MAX
-										</Text>
+						onPress={() => this.onFilterStockChart({ filter: 'MAX' })}
+						style={text}>MAX
+					</Text>
                 </View>
             </View>
         );

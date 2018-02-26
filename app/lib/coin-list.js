@@ -20,25 +20,19 @@ var coinList = {
 		}
 		
 		return cryptoApi.getPriceData(coinListArry).then(function(priceDatas){
-			for( let coinName in priceDatas ){
-				if(priceDatas[coinName]){
-					// attach image link
-					if(coinList.DEFAULT_COIN_LIST_ICON[coinName]){
-						priceDatas[coinName].url = coinList.DEFAULT_COIN_LIST_ICON[coinName].url;
-					}
-				}
-			}
+			console.log('getPriceData', priceDatas)
 			
 			// convert item to list
 			var priceDataArry = [];
 			
-			for( var key in priceDatas ){
-				var value = priceDatas[key];
+			for( var key in priceDatas.RAW ){
+				var value = priceDatas.RAW[key];
 				if(value){
 					priceDataArry.push({
-						key			: key
-						,url		: value.url
-						,price		: value.USD
+						key				: key
+						,url			: coinList.DEFAULT_COIN_LIST_ICON[key].url
+						,price			: '$' + value.USD.PRICE
+						,percentChange	: ((value.USD.PRICE-value.USD.OPENDAY) / value.USD.OPENDAY).toFixed(2) + '%'
 					})
 				}
 			}
