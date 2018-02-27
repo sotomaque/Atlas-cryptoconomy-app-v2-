@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Dimensions, PanResponder } from 'react-native';
 import { connect } from 'react-redux';
-import Chart from '../Chart.js';
+import Chart from '../chart';
 import StockLineFilter from './StockLineFilter';
 import { StockLineTicker } from './StockLineTicker';
 // import CoinList from '../CoinList/CoinList';
