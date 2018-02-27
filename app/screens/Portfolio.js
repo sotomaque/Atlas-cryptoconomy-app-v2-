@@ -12,7 +12,7 @@ import CoinList from '../components/CoinList/CoinList';
 export default class Portfolio extends Component {
   state = { isOn: true };
   setIsOn(val) {
-    this.setState({ isOn: val });
+    this.setState({ isOn: val }); // For pan responder reseting a theme
 	}
 
   render() {

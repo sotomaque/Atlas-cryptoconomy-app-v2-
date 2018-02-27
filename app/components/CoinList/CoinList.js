@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Dimensions, FlatList, Text } from 'react-native';
+import { View, Dimensions, FlatList, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import TimerMixin from 'react-timer-mixin';
@@ -14,14 +14,9 @@ import cryptoApi from '../../../app/lib/crypto-compare-api';
 
 const userCoinList = [{ ticker: 'BTC', name: 'Bitcoin' }, { ticker: 'ETH', name: 'Ethereum' }];
 class CoinList extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      isPriceDisplayed: true,
-    };
-  }
-
+	state = {
+		isPriceDisplayed: true,
+	}
 	componentDidMount() {
 		return coinList.getCoinListDetail(['BTC', 'ETH'])
 			.then((res) => {
@@ -31,10 +26,20 @@ class CoinList extends Component {
 	}
 
 	onTogglePrice() {
-		this.setState((preState) => {
-			console.log('onTogglePrice', preState);
-			return { isPriceDisplayed: !preState.isPriceDisplayed };
-		});
+		console.log(this.state);
+		this.setState({ isPriceDisplayed: !this.state.isPriceDisplayed });
+	}
+
+	priceOrPercent(item) {
+		console.log("If this is undefined, something is broken: ", item);
+		if(item !== undefined) {
+
+		if (this.state.isPriceDisplayed === true) {
+			return item.price;
+		}
+		return item.percentChange;
+		}
+		return null;
 	}
 
 	grabChart(symbol) {
@@ -67,6 +72,7 @@ class CoinList extends Component {
 				<FlatList
 
 					data={this.props.stockList}
+					keyExtractor={item => item.ticker}
 					renderItem={({ item }) => (
 					<View>
 	          <Coin
@@ -76,10 +82,14 @@ class CoinList extends Component {
 							percentChange={item.percentChange}
 							onPress={() => this.grabChart(`${item.ticker}`)}
 	          />
-							<Text onPress={() => { this.onTogglePrice(); }}>{this.state.isPriceDisplayed ? item.price : item.percentChange}</Text>
+						<TouchableOpacity onPress={() => this.onTogglePrice(item)}>
+							<Text>
+								{this.priceOrPercent()}
+							</Text>
+						</TouchableOpacity>
 					</View>
 					)}
-					keyExtractor={item => item.ticker}
+
 				/>
 			</View>
 	);
