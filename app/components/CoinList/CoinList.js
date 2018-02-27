@@ -73,9 +73,7 @@ class CoinList extends Component {
 							percentChange={item.percentChange}
 							onPress={() => this.grabChart(`${item.ticker}`)}
 	          />
-						<Text onPress={() => { this.onTogglePrice(); }}>
-							{this.state.isPriceDisplayed ? item.price : item.percentChange}
-						</Text>
+							<Text onPress={() => { this.onTogglePrice(); }}>{this.state.isPriceDisplayed ? item.price : item.percentChange}</Text>
 					</View>
 					)}
 					keyExtractor={item => item.ticker}

@@ -1,4 +1,6 @@
 // redux actions
+import { SEND_TICKER_AND_NAME } from '../config/constants.js';
+
 export function sendChartData(val) {
 	return {
 		type: 'SEND_DATA',
@@ -33,5 +35,19 @@ export function changeCoin(coinName) {
 	return {
 		type: 'CHANGE_COIN_TYPE',
 		payload: coinName,
+	};
+}
+
+export function sendTickerAndName(coinTicker, coinName) {
+	return {
+		type: SEND_TICKER_AND_NAME,
+		payload: { ticker: coinTicker, name: coinName },
+	};
+}
+
+export function changePriceDisplay(isPriceDisplayed) {
+	return {
+		type: 'CHANGE_PRICE_DISPLAY',
+		payload: isPriceDisplayed,
 	};
 }

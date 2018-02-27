@@ -1,4 +1,4 @@
-// Default, used for reduxPersist. -Pedro 
+// Default, used for reduxPersist. -Pedro
 
 import {
   /*
@@ -13,7 +13,7 @@ import {
 
 
 const initialState = {
-  rehydrated: false
+  rehydrated: false,
 };
 
 export default function persistedState(state = initialState, action) {
