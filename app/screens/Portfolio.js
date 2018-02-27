@@ -33,7 +33,9 @@ export default class Portfolio extends Component {
                         <StockLineChartWrapper isOn={this.state.isOn} />
                       </View>
                       <View>
-                        <CoinList />
+                        <CoinList
+                        nav={this.props.navigation}
+                        />
                       </View>
                     </ScrollView>
                 </LinearGradient>

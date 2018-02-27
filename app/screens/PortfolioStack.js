@@ -1,16 +1,11 @@
 // import React from 'react';
 
 import { StackNavigator } from 'react-navigation';
-import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
-// Used this as an example. Placeholder Icons
-// import Icon from 'react-native-vector-icons/FontAwesome';
 
-// Import Components to set to different Routes.
+
 import Portfolio from './Portfolio.js';
 import CoinScreen from './Coin.js';
-// import ProfileScreen from './ProfileScreen.js';
-// import PaperTradingScreen from './PaperTradingScreen.js';
-
+import CoinFullPage from '../components/CoinList/CoinFullPage.js';
 //  This Router sets the tab menu for the whole app
 export const RouterComponent = StackNavigator(
     {
@@ -26,6 +21,11 @@ export const RouterComponent = StackNavigator(
               header: null,
             },
         },
+        coinpage: {
+            screen: CoinFullPage,
+            navigationOptions: {
+              header: null,
+            },
         search: {
             screen: Portfolio,
             navigationOptions: {
@@ -33,16 +33,10 @@ export const RouterComponent = StackNavigator(
             },
         },
     },
-    {
-        initialRouteName: 'main', // default route
-        animationEnabled: true,
     },
     {
-    transitionConfig: () => ({
-      screenInterpolator: (sceneProps) => {
-        return CardStackStyleInterpolator.forVertical(sceneProps);
-      },
-    }),
+    initialRouteName: 'main', // default route
+    animationEnabled: true,
   },
 );
 

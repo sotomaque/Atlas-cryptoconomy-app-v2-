@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 // import { LineChart } from "react-native-svg-charts";
 // import { CoinListStyles } from './styles';
-import { sendChartData, sendStockListData, changeCoin } from '../../actions';
+import { sendChartData, sendStockListData, changeCoin, sendTickerAndName } from '../../actions';
 
 import { Coin } from './Coin.js';
 import coinList	from '../../../app/lib/coin-list';
@@ -22,7 +22,12 @@ class CoinList extends Component {
 			});
 	}
 
-	grabChart(symbol) {
+	props: {
+		nav: Object
+	}
+
+	grabChart(ticker, name) {
+		/*
 		this.props.changeCoin(symbol);
 		return cryptoApi.getHistoricalData({
 			filter: 'DAY',
@@ -34,6 +39,10 @@ class CoinList extends Component {
 					stockList: res,
 				});
 			});
+			*/
+		console.log(this.props);
+		this.props.sendTickerAndName(ticker, name);
+		this.props.nav.navigate('coinpage');
 	}
 
 	render() {
@@ -57,7 +66,7 @@ class CoinList extends Component {
             name={item.name}
 						symbol={item.ticker}
 						price='100'
-						onPress={() => this.grabChart(`${item.ticker}`)}
+						onPress={() => this.grabChart(item.ticker, item.name)}
           />
 					)}
 					keyExtractor={item => item.ticker}
@@ -77,4 +86,4 @@ function mapStateToProps(store) {
   };
 }
 
-export default connect(mapStateToProps, { sendChartData, sendStockListData, changeCoin })(CoinList);
+export default connect(mapStateToProps, { sendChartData, sendStockListData, changeCoin, sendTickerAndName })(CoinList);
