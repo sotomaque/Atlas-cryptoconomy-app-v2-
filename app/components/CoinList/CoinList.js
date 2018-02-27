@@ -12,26 +12,33 @@ import { Coin } from './Coin.js';
 import coinList	from '../../../app/lib/coin-list';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
 
-const userCoinList = [{ ticker: 'BTC', name: 'Bitcoin' }, { ticker: 'ETH', name: 'Ethereum' }];
+//const userCoinList = [{ ticker: 'BTC', name: 'Bitcoin' }, { ticker: 'ETH', name: 'Ethereum' }];
 class CoinList extends Component {
 	state = {
 		isPriceDisplayed: true,
+		userCoinList: [],
 	}
-	componentDidMount() {
+
+	componentWillMount() {
 		return coinList.getCoinListDetail(['BTC', 'ETH'])
 			.then((res) => {
-				console.log('componentDidMount', res);
+				console.log('test Config: componentDidMount', res);
 				this.props.sendStockListData(res);
+				res.map( (item) => {
+					this.setState({ userCoinList: [...this.state.userCoinList, item] });
+					console.log('State printed:', this.state);
+				},
+					);
 			});
 	}
 
 	onTogglePrice() {
-		console.log(this.state);
+		console.log('flipped bool', this.state);
 		this.setState({ isPriceDisplayed: !this.state.isPriceDisplayed });
 	}
 
 	priceOrPercent(item) {
-		console.log("If this is undefined, something is broken: ", item);
+		console.log("re-endered: ", item);
 		if(item !== undefined) {
 
 		if (this.state.isPriceDisplayed === true) {
@@ -42,6 +49,19 @@ class CoinList extends Component {
 		return null;
 	}
 
+	getPrice(ticker) {
+		this.props.changeCoin(ticker);
+		cryptoApi.getHistoricalData({
+			filter: 'DAY',
+			coinName: `${ticker}`,
+		})
+			.then((res) => {
+
+				const lastNum = res.slice(-1).pop();
+				console.log('oh?', lastNum);
+				return lastNum;
+			});
+	}
 	grabChart(symbol) {
 		this.props.changeCoin(symbol);
 		return cryptoApi.getHistoricalData({
@@ -71,20 +91,21 @@ class CoinList extends Component {
 			>
 				<FlatList
 
-					data={this.props.stockList}
+					data={this.state.userCoinList}
 					keyExtractor={item => item.ticker}
+					extraData={this.state.isPriceDisplayed}
 					renderItem={({ item }) => (
 					<View>
-	          <Coin
-	            name={item.name}
+						<Coin
+							name={item.name}
 							symbol={item.ticker}
 							price={item.price}
 							percentChange={item.percentChange}
 							onPress={() => this.grabChart(`${item.ticker}`)}
-	          />
+						/>
 						<TouchableOpacity onPress={() => this.onTogglePrice(item)}>
 							<Text>
-								{this.priceOrPercent()}
+								{this.priceOrPercent(item)}
 							</Text>
 						</TouchableOpacity>
 					</View>
