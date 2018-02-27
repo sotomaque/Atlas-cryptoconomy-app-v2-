@@ -8,7 +8,6 @@ const initialState = {
 	stockData: [0, 0],
 	selectedPoint: 0,	// Selected Value, an x-value of the graph that is grabbed from the PanResponder
 	endPoint: 0,
-	isPriceDisplayed: true,
 };
 
 export default function stockFilterReducer(state = initialState, action) {
@@ -65,12 +64,6 @@ export default function stockFilterReducer(state = initialState, action) {
 				return {
 					...state,
 					stockList: action.payload,
-				};
-		}
-		case 'CHANGE_PRICE_DISPLAY': {
-				return {
-					...state,
-					isPriceDisplayed: action.payload,
 				};
 		}
     default:

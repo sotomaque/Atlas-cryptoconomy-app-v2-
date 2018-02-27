@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 // import { LineChart } from "react-native-svg-charts";
 // import { CoinListStyles } from './styles';
-import { sendChartData, sendStockListData, changeCoin } from '../../actions';
+import { sendChartData, sendStockListData, changeCoin, sendTickerAndName } from '../../actions';
 
 import { Coin } from './Coin.js';
 import coinList	from '../../../app/lib/coin-list';
@@ -46,6 +46,9 @@ class CoinList extends Component {
 			.then((res) => {
 				this.props.sendChartData(res);
 			});
+			console.log(this.props);
+			this.props.sendTickerAndName(ticker, name);
+			this.props.nav.navigate('coinpage');
 	}
 
 	render() {
@@ -93,4 +96,4 @@ function mapStateToProps(store) {
   };
 }
 
-export default connect(mapStateToProps, { sendChartData, sendStockListData, changeCoin })(CoinList);
+export default connect(mapStateToProps, { sendChartData, sendStockListData, changeCoin, sendTickerAndName })(CoinList);

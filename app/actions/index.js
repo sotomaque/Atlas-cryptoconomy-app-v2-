@@ -44,10 +44,3 @@ export function sendTickerAndName(coinTicker, coinName) {
 		payload: { ticker: coinTicker, name: coinName },
 	};
 }
-
-export function changePriceDisplay(isPriceDisplayed) {
-	return {
-		type: 'CHANGE_PRICE_DISPLAY',
-		payload: isPriceDisplayed,
-	};
-}
