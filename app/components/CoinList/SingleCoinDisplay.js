@@ -10,10 +10,6 @@ import { sendChartData } from '../../actions';
 
 export class SingleCoinDisplay extends Component {
 
-	constructor(props){
-		super(props);
-		console.log('SingleCoinDisplay', props);
-	}
 
 	// componentWillMount() {
 	// 	this.panResponder = PanResponder.create({
@@ -55,10 +51,9 @@ export class SingleCoinDisplay extends Component {
 	// }
 
 	render() {
-			const width = Dimensions.get('window').width; // full device width, captured at runtime
 			return (
-				<View style={{flexDirection:'row', flexWrap:'wrap'}}>
-					<Icon name={this.props.data.url} size={30} color="#4F8EF7"/>
+				<View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+					<Icon name={this.props.data.url} size={30} color="#4F8EF7" />
 					<Text>{this.props.data.key}</Text>
 					<Text>{this.props.data.price}</Text>
 					<Text>{this.props.data.percentChange}</Text>

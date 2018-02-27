@@ -5,32 +5,33 @@ var coinList = {
 	//TODO : Storing the coin image link in the database
 	,DEFAULT_COIN_LIST_ICON		: {
 		'ETH': {
-			'url': 'ethereum'
+			'url': 'Ethereum'
 		}
 		,'BTC':{
-			'url': 'btc'
+			'url': 'Bitcoin'
 		}
 	}
-		
-	
+
+
 	,getCoinListDetail		: function(coinListArry) {
 		if(!coinListArry){
 			console.error('Invalid list');
 			return;
 		}
-		
+
 		return cryptoApi.getPriceData(coinListArry).then(function(priceDatas){
 			console.log('getPriceData', priceDatas)
-			
+
 			// convert item to list
 			var priceDataArry = [];
-			
+
 			for( var key in priceDatas.RAW ){
 				var value = priceDatas.RAW[key];
 				if(value){
 					priceDataArry.push({
 						key				: key
-						,url			: coinList.DEFAULT_COIN_LIST_ICON[key].url
+						,ticker				: key
+						,name			: coinList.DEFAULT_COIN_LIST_ICON[key].url
 						,price			: '$' + value.USD.PRICE
 						,percentChange	: ((value.USD.PRICE-value.USD.OPENDAY)*100 / value.USD.OPENDAY).toFixed(2) + '%'
 					})

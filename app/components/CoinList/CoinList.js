@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Dimensions, FlatList } from 'react-native';
+import { View, Dimensions, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import TimerMixin from 'react-timer-mixin';
@@ -14,12 +14,27 @@ import cryptoApi from '../../../app/lib/crypto-compare-api';
 
 const userCoinList = [{ ticker: 'BTC', name: 'Bitcoin' }, { ticker: 'ETH', name: 'Ethereum' }];
 class CoinList extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isPriceDisplayed: true,
+    };
+  }
+
 	componentDidMount() {
 		return coinList.getCoinListDetail(['BTC', 'ETH'])
 			.then((res) => {
 				console.log('componentDidMount', res);
 				this.props.sendStockListData(res);
 			});
+	}
+
+	onTogglePrice() {
+		this.setState((preState) => {
+			console.log('onTogglePrice', preState);
+			return { isPriceDisplayed: !preState.isPriceDisplayed };
+		});
 	}
 
 	grabChart(symbol) {
@@ -30,9 +45,6 @@ class CoinList extends Component {
 		})
 			.then((res) => {
 				this.props.sendChartData(res);
-				this.setState({
-					stockList: res,
-				});
 			});
 	}
 
@@ -51,14 +63,20 @@ class CoinList extends Component {
 			>
 				<FlatList
 
-					data={userCoinList}
+					data={this.props.stockList}
 					renderItem={({ item }) => (
-          <Coin
-            name={item.name}
-						symbol={item.ticker}
-						price='100'
-						onPress={() => this.grabChart(`${item.ticker}`)}
-          />
+					<View>
+	          <Coin
+	            name={item.name}
+							symbol={item.ticker}
+							price={item.price}
+							percentChange={item.percentChange}
+							onPress={() => this.grabChart(`${item.ticker}`)}
+	          />
+						<Text onPress={() => { this.onTogglePrice(); }}>
+							{this.state.isPriceDisplayed ? item.price : item.percentChange}
+						</Text>
+					</View>
 					)}
 					keyExtractor={item => item.ticker}
 				/>

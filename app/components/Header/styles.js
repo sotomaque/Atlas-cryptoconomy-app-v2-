@@ -4,7 +4,7 @@ export const styles = {
         fontSize: 20,
         color: '#fff',
         fontWeight: 'bold'
-    }, 
+    },
     viewStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
