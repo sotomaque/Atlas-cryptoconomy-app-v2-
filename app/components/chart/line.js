@@ -1,12 +1,11 @@
-import React, {Component} from 'react';
-import {Dimensions, LayoutAnimation, StyleSheet, View} from 'react-native';
-import {connect} from 'react-redux';
-import {Group, Path, Surface, Shape} from 'react-native/Libraries/ART/ReactNativeART';
-import {StraightLine} from './StraightLine.js';
-import {sendValueFromPoint} from '../../actions';
+import React, { Component } from 'react';
+import { Dimensions, LayoutAnimation, StyleSheet, View } from 'react-native';
+import { connect } from 'react-redux';
+import { Group, Path, Surface, Shape } from 'react-native/Libraries/ART/ReactNativeART';
+import { StraightLine } from './StraightLine.js';
+import { sendValueFromPoint } from '../../actions';
 
 class Line extends Component {
-
   static defaultProps = {
     strokeColor: 'white',
     strokeWidth: 1, // Width of in-between graph
