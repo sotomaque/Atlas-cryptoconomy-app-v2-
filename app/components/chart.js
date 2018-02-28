@@ -4,7 +4,7 @@ import {
   View,
 } from 'react-native';
 // import Line from './chart/Line.js';
-import Line from './chart/Line.js';
+import Line from './chart/line';
 
 export default class Chart extends Component {
   props: {
