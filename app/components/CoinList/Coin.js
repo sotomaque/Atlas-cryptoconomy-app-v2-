@@ -5,46 +5,49 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 
 export class Coin extends Component {
-
   props: {
       symbol: string,
       name: string,
-      price: number,
-    //  change: number,
+      priceChange: number,
+  //    change: number,
     //  active: boolean,
       onPress: Function,
+      onPressPrice: Function
     };
 
 	render() {
-			// const width = Dimensions.get('window').width; // full device width, captured at runtime
+//      const width = Dimensions.get('window').width; // full device width, captured at runtime
       const {
       symbol,
       name,
-      price,
+      priceChange,
     } = this.props;
 			return (
-        <TouchableOpacity
-            onPress={() => this.props.onPress()}
-        >
-          <View style={styles.row}>
-            <Text style={styles.text} numberOfLines={1}>
-              {name}
-            </Text>
+          <View>
+            <View style={styles.row}>
+              <TouchableOpacity
+                  onPress={() => this.props.onPress()}
+              >
+              <Text style={styles.text} numberOfLines={1}>
+                {name}
+              </Text>
 
-          <View style={styles.row}>
-            <Text style={[styles.text, styles.name]} numberOfLines={1}>
-              {symbol}
-            </Text>
-          </View>
+              <View style={styles.row}>
+                <Text style={[styles.text, styles.name]} numberOfLines={1}>
+                  {symbol}
+                </Text>
+              </View>
+              </TouchableOpacity>
 
-          <View style={styles.right}>
-            <Text style={styles.text} numberOfLines={1}>
-              {price}
-            </Text>
+              <View style={styles.right}>
+                <TouchableOpacity onPress={() => this.props.onPressPrice()}>
+                  <Text style={styles.text} numberOfLines={1}>
+                    {priceChange}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
-
-          </View>
-        </TouchableOpacity>
 			);
     }
 }

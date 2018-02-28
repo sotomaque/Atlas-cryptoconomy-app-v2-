@@ -22,7 +22,11 @@ export default class Portfolio extends Component {
                   <View>
                     <Header
                       headerText='Portfolio'
-                      navigation={this.props.navigation}
+                  //    navigation={this.props.navigation}
+                      nameLeft="user-circle"
+                      nameRight="search"
+                      onPressLeft={() => this.props.navigation.navigate('profile')}
+                      onPressRight={() => {}}
                     />
                   </View>
                     <ScrollView

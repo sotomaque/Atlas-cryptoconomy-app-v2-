@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
+import { StockLineChartWrapper } from '../../components/StockLineChart';
+import { Header } from '../../components/Header';
+
 // import { sendTickerAndName } from '../../actions';
 
 // import  Icon  from 'react-native-vector-icons/FontAwesome';
 
 
 class CoinFullPage extends Component {
+	state = { isOn: true };
+  setIsOn(val) {
+    this.setState({ isOn: val }); // For pan responder reseting a theme
+	}
 	render() {
 			// const width = Dimensions.get('window').width; // full device width, captured at runtime
       const {
@@ -15,35 +23,43 @@ class CoinFullPage extends Component {
       price,
     } = this.props;
 			return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={styles.text} numberOfLines={1}>
-            {name}
-          </Text>
-
-          <View style={styles.row}>
-            <Text style={[styles.text, styles.name]} numberOfLines={1}>
-              {ticker}
-            </Text>
-          </View>
-
-          <View style={styles.right}>
-            <Text style={styles.text} numberOfLines={1}>
-              {price}
-            </Text>
-          </View>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.goBack()}
-          >
-            <Text>Press here to go back</Text>
-          </TouchableOpacity>
-        </View>
+				<View style={styles.portfolioContainer}>
+								<LinearGradient colors={['#1294D5', '#125AD5']} style={styles.linearGradient}>
+									<View>
+										<Header
+											headerText={name}
+                      nameLeft="arrow-circle-left"
+                      nameRight="search"
+                      onPressLeft={() => this.props.navigation.goBack()}
+                      onPressRight={() => {}}
+										/>
+									</View>
+									<ScrollView
+											onScrollBeginDrag={() => this.setIsOn(false)}
+											onScrollEndDrag={() => this.setIsOn(true)}
+									>
+											<View>
+												<StockLineChartWrapper isOn={this.state.isOn} />
+											</View>
+									</ScrollView>
+								</LinearGradient>
+				</View>
 			);
     }
 }
 
-
 const styles = StyleSheet.create({
-
+    portfolioContainer: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    linearGradient: {
+        flex: 1,
+    },
+    chartContainer: {
+        paddingLeft: 6,
+        paddingRight: 6,
+    },
 });
 
 const mapStateToProps = (state) => {

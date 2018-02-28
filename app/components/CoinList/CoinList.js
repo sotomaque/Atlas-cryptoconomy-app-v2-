@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Dimensions, FlatList, Text, TouchableOpacity } from 'react-native';
+import { View, Dimensions, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 // import TimerMixin from 'react-timer-mixin';
@@ -12,7 +12,7 @@ import { Coin } from './Coin.js';
 import coinList	from '../../../app/lib/coin-list';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
 
-//const userCoinList = [{ ticker: 'BTC', name: 'Bitcoin' }, { ticker: 'ETH', name: 'Ethereum' }];
+const userCoinTickerList = ['BTC', 'ETH'];
 class CoinList extends Component {
 	state = {
 		isPriceDisplayed: true,
@@ -20,33 +20,17 @@ class CoinList extends Component {
 	}
 
 	componentWillMount() {
-		return coinList.getCoinListDetail(['BTC', 'ETH'])
+		return coinList.getCoinListDetail(userCoinTickerList)
 			.then((res) => {
-				console.log('test Config: componentDidMount', res);
 				this.props.sendStockListData(res);
-				res.map( (item) => {
-					this.setState({ userCoinList: [...this.state.userCoinList, item] });
-					console.log('State printed:', this.state);
-				},
-					);
+				res.map((item) => {
+					return this.setState({ userCoinList: [...this.state.userCoinList, item] });
+				});
 			});
 	}
 
 	onTogglePrice() {
-		console.log('flipped bool', this.state);
 		this.setState({ isPriceDisplayed: !this.state.isPriceDisplayed });
-	}
-
-	priceOrPercent(item) {
-		console.log("re-endered: ", item);
-		if(item !== undefined) {
-
-		if (this.state.isPriceDisplayed === true) {
-			return item.price;
-		}
-		return item.percentChange;
-		}
-		return null;
 	}
 
 	getPrice(ticker) {
@@ -56,13 +40,22 @@ class CoinList extends Component {
 			coinName: `${ticker}`,
 		})
 			.then((res) => {
-
 				const lastNum = res.slice(-1).pop();
-				console.log('oh?', lastNum);
 				return lastNum;
 			});
 	}
-	grabChart(symbol) {
+
+	priceOrPercent(item) {
+		if (item !== undefined) {
+			if (this.state.isPriceDisplayed === true) {
+			return item.price;
+			}
+			return item.percentChange;
+		}
+		return null;
+	}
+	grabChart(ticker, name) {
+		/*
 		this.props.changeCoin(symbol);
 		return cryptoApi.getHistoricalData({
 			filter: 'DAY',
@@ -71,9 +64,9 @@ class CoinList extends Component {
 			.then((res) => {
 				this.props.sendChartData(res);
 			});
-			console.log(this.props);
-			this.props.sendTickerAndName(ticker, name);
-			this.props.nav.navigate('coinpage');
+			*/
+		this.props.sendTickerAndName(ticker, name);
+		this.props.nav.navigate('coinpage');
 	}
 
 	render() {
@@ -83,7 +76,7 @@ class CoinList extends Component {
 				style={{
 				borderRadius: 10,
 				padding: 10,
-				width: (width - 5) / 1.5,
+				width: (width / 1.1),
 				justifyContent: 'center',
 				marginLeft: 0,
 				flex: 1,
@@ -99,15 +92,11 @@ class CoinList extends Component {
 						<Coin
 							name={item.name}
 							symbol={item.ticker}
-							price={item.price}
-							percentChange={item.percentChange}
-							onPress={() => this.grabChart(`${item.ticker}`)}
+							priceChange={this.priceOrPercent(item)}
+							change={item.percentChange}
+							onPress={() => this.grabChart(item.ticker, item.name)}
+							onPressPrice={() => this.onTogglePrice(item)}
 						/>
-						<TouchableOpacity onPress={() => this.onTogglePrice(item)}>
-							<Text>
-								{this.priceOrPercent(item)}
-							</Text>
-						</TouchableOpacity>
 					</View>
 					)}
 
