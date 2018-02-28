@@ -18,7 +18,6 @@ class CoinList extends Component {
 		isPriceDisplayed: true,
 		userCoinList: [],
 	}
-
 	componentWillMount() {
 		//coinList.getCoinListDetail(userCoinTickerList, coinList.IS_DISPLAY_ALL)
 		return coinList.getCoinListDetail(userCoinTickerList)

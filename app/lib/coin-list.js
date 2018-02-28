@@ -13,6 +13,66 @@ var coinList = {
 	}
 	,IS_DISPLAY_ALL				: 'displayAll'
 
+	,getUserHistoryData		: function(){
+		var transactions = [
+			{
+				time : 1519712040
+				,holding : 3
+				,coinName : 'BTC'
+			}
+			,{
+				time : 1519743970
+				,holding : 2
+				,coinName : 'BTC'
+			}
+			,{
+				time : 1519793520
+				,holding : 1
+				,coinName : 'BTC'
+			}
+		]
+
+		, option = {coinName : 'BTC', filter : 'DAY'}
+		,	userHistoryData = [];
+		return cryptoApi.getHistoricalData(option, cryptoApi.IS_UNPROCESSED_DATA)
+		.then(function(res){
+			// get back day historical data and coin specific transaction
+			//var timelapse = ( res.TimeTo - res.TimeFrom ) / res.Data.length
+			coinTransaction = transactions.filter(function(tran){
+				return tran.coinName == option.coinName;
+			})
+
+			var currentTransactionCounter = 0;
+			var currentHolding = coinTransaction[currentTransactionCounter].holding;
+			for( var index in res.Data ){
+				var dataPoint = res.Data[index];
+				if(dataPoint.time > coinTransaction[currentTransactionCounter].time){
+					if(currentTransactionCounter + 1 < transactions.length){
+						currentTransactionCounter += 1;
+						currentHolding += coinTransaction[currentTransactionCounter].holding;
+					};
+				}
+				if(userHistoryData[index]){
+					userHistoryData[index] = {
+						//'time' : cryptoApi.dateFormater(dataPoint.time*1000, option.filter),
+						'close' : (userHistoryData[index].close + parseFloat(dataPoint.close * currentHolding).toFixed(2)).toFixed(2)
+					}
+				}
+				else{
+					userHistoryData.push(
+							//'time' : cryptoApi.dateFormater(dataPoint.time*1000, option.filter),
+						parseFloat(parseFloat(parseFloat(dataPoint.close * currentHolding).toFixed(2)).toFixed(2))
+					)
+				}
+				;
+
+			}
+			console.log('getUserHistoryData', userHistoryData)
+			return userHistoryData;
+		})
+
+	}//getUserHistoryData
+
 
 	,getCoinListDetail		: function(coinListArry, isDisplayAll) {
 		if(!coinListArry){

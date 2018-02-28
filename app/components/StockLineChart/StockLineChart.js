@@ -8,6 +8,7 @@ import { StockLineTicker } from './StockLineTicker';
 import { sendChartData } from '../../actions';
 
 import cryptoApi from '../../../app/lib/crypto-compare-api';
+import coinList	from '../../../app/lib/coin-list';
 
 
 export class StockLineChart extends Component {
@@ -16,6 +17,7 @@ export class StockLineChart extends Component {
 		stockData: [],
 		xVal: -10,
 	}
+
 	componentWillMount() {
 		this.panResponder = PanResponder.create({
 			onMoveShouldSetResponderCapture: () => true,
@@ -33,11 +35,8 @@ export class StockLineChart extends Component {
 	}
 
 	componentDidMount() {
-		return cryptoApi
-		.getHistoricalData({
-			filter: 'DAY',
-			coinName: 'BTC',
-		})
+		return coinList
+		.getUserHistoryData()
 			.then((res) => {
 				this.props.sendChartData(res);
 				this.setState({

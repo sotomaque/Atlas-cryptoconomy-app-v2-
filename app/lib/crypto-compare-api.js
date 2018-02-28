@@ -12,7 +12,7 @@ var cryptoApi = {
 	, HISTORICAL_DATA: 'histo/@FILTER/?fsym=/@COIN_NAME/&tsym=USD&limit=/@LIMIT/&aggregate=/@AGGREGATE/'
 	, PRICE_DATA		: 'pricemultifull?fsyms=/@COIN_NAMES/&tsyms=USD'
 	, NUM_DATA_POINTS: 2000
-
+	, IS_UNPROCESSED_DATA: 'unprocessedData'
 	/**
 	 * @param option
 	 * @example
@@ -22,7 +22,7 @@ var cryptoApi = {
 	 *
 	 * @returns promise
 	 */
-	,getHistoricalData (option) {
+	,getHistoricalData (option, isUnprocessedData) {
 		console.log('getHistoricalData', option);
 		if( !( option.coinName && option.filter ) ){
 			console.error('Coin Name and Filter required')
@@ -82,25 +82,34 @@ var cryptoApi = {
 												.replace('/@LIMIT/'		, limit)
 												.replace('/@AGGREGATE/'	, aggreate)
 		console.log('finalUrl', finalUrl);
-		return fetch( cryptoApi.DEFAULT_ENDPOINT + finalUrl )
-		.then((res) => {
-			return res.json()
-		})
-		.then(function(res){
-			return cryptoApi.getPriceData(option.coinName)
-			.then((latest) => {
-				console.log('Adding the latest data point',
-				{'close':latest.RAW[option.coinName].USD.PRICE,
-				'time':latest.RAW[option.coinName].USD.LASTUPDATE});
-				res.Data.push({ 'close':latest.RAW[option.coinName].USD.PRICE, 'time':latest.RAW[option.coinName].USD.LASTUPDATE});
-				return res;
+
+		if(isUnprocessedData && isUnprocessedData == cryptoApi.IS_UNPROCESSED_DATA){
+			return fetch( cryptoApi.DEFAULT_ENDPOINT + finalUrl )
+			.then((res) => {
+				return res.json()
 			})
-			.then((res)=>{
-				var list = cryptoApi.trimDataSetToList(res.Data, timeFlag, option.filter);
-				console.log('getHistoricalData-dataResponce', list);
-				return list;
+		}
+		else{
+			return fetch( cryptoApi.DEFAULT_ENDPOINT + finalUrl )
+			.then((res) => {
+				return res.json()
 			})
-		})
+			.then(function(res){
+				return cryptoApi.getPriceData(option.coinName)
+				.then((latest) => {
+					console.log('Adding the latest data point',
+					{'close':latest.RAW[option.coinName].USD.PRICE,
+					'time':latest.RAW[option.coinName].USD.LASTUPDATE});
+					res.Data.push({ 'close':latest.RAW[option.coinName].USD.PRICE, 'time':latest.RAW[option.coinName].USD.LASTUPDATE});
+					return res;
+				})
+				.then((res)=>{
+					var list = cryptoApi.trimDataSetToList(res.Data, timeFlag, option.filter);
+					console.log('getHistoricalData-dataResponce', list);
+					return list;
+				})
+			})
+		}
 
 	}//getHistoricalData
 
