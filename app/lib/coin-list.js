@@ -11,10 +11,15 @@ var coinList = {
 			'url': 'Bitcoin'
 		}
 	}
+	,IS_DISPLAY_ALL				: 'displayAll'
 
 
-	,getCoinListDetail		: function(coinListArry) {
+	,getCoinListDetail		: function(coinListArry, isDisplayAll) {
 		if(!coinListArry){
+			if(isDisplayAll && isDisplayAll == coinList.IS_DISPLAY_ALL && Array.isArray(coinListArry)){
+				console.error('Attempted getting too much data');
+				return;
+			}
 			console.error('Invalid list');
 			return;
 		}
@@ -23,22 +28,27 @@ var coinList = {
 			console.log('getPriceData', priceDatas)
 
 			// convert item to list
-			var priceDataArry = [];
 
-			for( var key in priceDatas.RAW ){
-				var value = priceDatas.RAW[key];
-				if(value){
-					priceDataArry.push({
-						key				: key
-						,ticker				: key
-						,name			: coinList.DEFAULT_COIN_LIST_ICON[key].url || ''
-						,price			: '$' + value.USD.PRICE
-						,percentChange	: ((value.USD.PRICE-value.USD.OPENDAY)*100 / value.USD.OPENDAY).toFixed(2) + '%'
-					})
-				}
+			if(isDisplayAll && isDisplayAll == coinList.IS_DISPLAY_ALL){
+				return priceDatas.DISPLAY;
 			}
-			console.log('getCoinListDetail', priceDataArry);
-			return priceDataArry;
+			else{
+				var priceDataArry = [];
+				for( var key in priceDatas.RAW ){
+					var value = priceDatas.RAW[key];
+					if(value){
+						priceDataArry.push({
+							key				: key
+							,ticker				: key
+							,name			: coinList.DEFAULT_COIN_LIST_ICON[key] ? coinList.DEFAULT_COIN_LIST_ICON[key].url : ''
+							,price			: '$' + value.USD.PRICE
+							,percentChange	: ((value.USD.PRICE-value.USD.OPENDAY)*100 / value.USD.OPENDAY).toFixed(2) + '%'
+						})
+					}
+				}
+				console.log('getCoinListDetail', priceDataArry);
+				return priceDataArry;
+			}
 		});
 	}
 }

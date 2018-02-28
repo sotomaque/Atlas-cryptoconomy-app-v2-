@@ -12,7 +12,7 @@ import { Coin } from './Coin.js';
 import coinList	from '../../../app/lib/coin-list';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
 
-const userCoinTickerList = ['BTC', 'ETH'];
+const userCoinTickerList = ['BTC', 'ETH', 'XRP'];
 class CoinList extends Component {
 	state = {
 		isPriceDisplayed: true,
