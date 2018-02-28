@@ -6,8 +6,7 @@ import { connect } from 'react-redux';
 
 // import { LineChart } from "react-native-svg-charts";
 // import { CoinListStyles } from './styles';
-import { sendChartData, sendStockListData, changeCoin, sendTickerAndName } from '../../actions';
-
+import { sendChartData, sendStockListData, changeCoin, sendTickerAndName, resetToUserHistory } from '../../actions';
 import { Coin } from './Coin.js';
 import coinList	from '../../../app/lib/coin-list';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
@@ -19,14 +18,20 @@ class CoinList extends Component {
 		userCoinList: [],
 	}
 	componentWillMount() {
-		//coinList.getCoinListDetail(userCoinTickerList, coinList.IS_DISPLAY_ALL)
-		return coinList.getCoinListDetail(userCoinTickerList)
+		// coinList.getCoinListDetail(userCoinTickerList, coinList.IS_DISPLAY_ALL)
+		coinList.getCoinListDetail(userCoinTickerList)
 			.then((res) => {
-				this.props.sendStockListData(res);
+		//		this.props.sendStockListData(res);
 				res.map((item) => {
 					return this.setState({ userCoinList: [...this.state.userCoinList, item] });
 				});
 			});
+	//		this.props.resetToUserHistory();
+		return coinList
+			.getUserHistoryData()
+				.then((res) => {
+					this.props.sendChartData(res);
+				});
 	}
 
 	onTogglePrice() {
@@ -116,4 +121,13 @@ function mapStateToProps(store) {
   };
 }
 
-export default connect(mapStateToProps, { sendChartData, sendStockListData, changeCoin, sendTickerAndName })(CoinList);
+export default connect(
+	mapStateToProps,
+	{
+		sendChartData,
+		sendStockListData,
+		changeCoin,
+		sendTickerAndName,
+		resetToUserHistory,
+	},
+	)(CoinList);

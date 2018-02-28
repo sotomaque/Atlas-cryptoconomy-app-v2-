@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
+import cryptoApi from '../../../app/lib/crypto-compare-api';
 import { StockLineChartWrapper } from '../../components/StockLineChart';
 import { Header } from '../../components/Header';
-
+import { sendChartData } from '../../actions';
+import coinList	from '../../../app/lib/coin-list';
 // import { sendTickerAndName } from '../../actions';
 
 // import  Icon  from 'react-native-vector-icons/FontAwesome';
@@ -12,15 +14,41 @@ import { Header } from '../../components/Header';
 
 class CoinFullPage extends Component {
 	state = { isOn: true };
-  setIsOn(val) {
+
+
+	componentWillMount() {
+		return cryptoApi.getHistoricalData({
+			filter: 'DAY',
+			coinName: `${this.props.ticker}`,
+		})
+			.then((res) => {
+				this.props.sendChartData(res);
+			});
+	}
+
+	setIsOn(val) {
     this.setState({ isOn: val }); // For pan responder reseting a theme
+	}
+
+	goBack() {
+		// This is inefficient as hell, I made a reducer that
+		// will do this all in one funciton call, but we'll need
+		// spomething better than coinList.getUserHistoryData
+		// as a way of grabbing userTransaction history, hopefully
+		// it'll be on Redux by then.
+		coinList
+			.getUserHistoryData()
+				.then((res) => {
+					this.props.sendChartData(res);
+				});
+		this.props.navigation.goBack();
 	}
 	render() {
 			// const width = Dimensions.get('window').width; // full device width, captured at runtime
       const {
-      ticker,
+  //    ticker,
       name,
-      price,
+  //    price,
     } = this.props;
 			return (
 				<View style={styles.portfolioContainer}>
@@ -30,7 +58,7 @@ class CoinFullPage extends Component {
 											headerText={name}
                       nameLeft="arrow-circle-left"
                       nameRight="search"
-                      onPressLeft={() => this.props.navigation.goBack()}
+                      onPressLeft={() => this.goBack()}
                       onPressRight={() => {}}
 										/>
 									</View>
@@ -52,6 +80,7 @@ const styles = StyleSheet.create({
     portfolioContainer: {
         flex: 1,
         backgroundColor: '#fff',
+
     },
     linearGradient: {
         flex: 1,
@@ -67,4 +96,4 @@ const mapStateToProps = (state) => {
   return { name, ticker };
 };
 
-export default connect(mapStateToProps, { })(CoinFullPage);
+export default connect(mapStateToProps, { sendChartData })(CoinFullPage);

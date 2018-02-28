@@ -15,6 +15,9 @@ export default class Portfolio extends Component {
     this.setState({ isOn: val }); // For pan responder reseting a theme
 	}
 
+  componentWillMount() {
+    
+  }
   render() {
         return (
           <View style={styles.portfolioContainer}>

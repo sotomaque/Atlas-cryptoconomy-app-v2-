@@ -1,5 +1,5 @@
 // redux actions
-import { SEND_TICKER_AND_NAME } from '../config/constants.js';
+import { SEND_TICKER_AND_NAME, RESET_TO_USER_TRANSACTIONS } from '../config/constants.js';
 
 export function sendChartData(val) {
 	return {
@@ -42,5 +42,11 @@ export function sendTickerAndName(coinTicker, coinName) {
 	return {
 		type: SEND_TICKER_AND_NAME,
 		payload: { ticker: coinTicker, name: coinName },
+	};
+}
+
+export function resetToUserHistory() {
+	return {
+		type: RESET_TO_USER_TRANSACTIONS,	// WILL HAVE PAYLOAD OF USER EVENTUALLY(?)
 	};
 }

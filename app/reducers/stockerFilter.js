@@ -1,4 +1,6 @@
 import cryptoApi from '../../app/lib/crypto-compare-api';
+// import coinList	from '../../app/lib/coin-list';
+import { RESET_TO_USER_TRANSACTIONS } from '../config/constants.js';
 
 const initialState = {
 	filter: 'DAY',
@@ -65,6 +67,17 @@ export default function stockFilterReducer(state = initialState, action) {
 					...state,
 					stockList: action.payload,
 				};
+		}
+		case RESET_TO_USER_TRANSACTIONS: {
+			/*
+			coinList
+						.getUserHistoryData().then((res) => {
+				return {
+					...state,
+					stockList: res,
+				};
+			}); */
+			break;
 		}
     default:
       return state;

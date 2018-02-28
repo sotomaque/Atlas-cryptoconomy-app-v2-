@@ -49,8 +49,8 @@ export const RouterComponent = TabNavigator(
             activeTintColor: 'tomato',
             showLabel: false,
             tabBarHideShadow: true,
-            activeBackgroundColor: '#3c1053', // Sets active tab color.
-            inactiveBackgroundColor: '#3c1053', // Sets inactive tab color.
+            activeBackgroundColor: '#125AD5', // Sets active tab color.
+            inactiveBackgroundColor: '#125AD5', // Sets inactive tab color.
             style: {
                 borderTopWidth: 0,
             },

@@ -34,7 +34,7 @@ export class StockLineChart extends Component {
 		});
 	}
 
-	componentDidMount() {
+	componentDidMount() { /*
 		return coinList
 		.getUserHistoryData()
 			.then((res) => {
@@ -43,6 +43,7 @@ export class StockLineChart extends Component {
 					stockList: res,
 				});
 			});
+			*/
 	}
 
 	getPointToSend() {
@@ -69,7 +70,8 @@ export class StockLineChart extends Component {
 					<View style={{ height: 240 }} {...this.panResponder.panHandlers}>
 						<Chart
 							xVal={this.state.xVal}
-							data={this.props.stockData} />
+							data={this.props.stockData}
+						/>
 					</View>
 
 					<View>
