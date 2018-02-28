@@ -33,7 +33,8 @@ export class StockLineChart extends Component {
 	}
 
 	componentDidMount() {
-		return cryptoApi.getHistoricalData({
+		return cryptoApi
+		.getHistoricalData({
 			filter: 'DAY',
 			coinName: 'BTC',
 		})
@@ -66,11 +67,10 @@ export class StockLineChart extends Component {
 						<StockLineTicker data={this.getPointToSend()} />
 					</View>
 
-					<View style={{ height: 150 }} {...this.panResponder.panHandlers}>
+					<View style={{ height: 240 }} {...this.panResponder.panHandlers}>
 						<Chart
 							xVal={this.state.xVal}
-							data={this.props.stockData}
-						/>
+							data={this.props.stockData} />
 					</View>
 
 					<View>
