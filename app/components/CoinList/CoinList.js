@@ -20,6 +20,7 @@ class CoinList extends Component {
 	}
 
 	componentWillMount() {
+		//coinList.getCoinListDetail(userCoinTickerList, coinList.IS_DISPLAY_ALL)
 		return coinList.getCoinListDetail(userCoinTickerList)
 			.then((res) => {
 				this.props.sendStockListData(res);
