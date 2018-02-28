@@ -1,28 +1,28 @@
-/***
+/** *
  * @author Qian
- * 
- * @functions getHistoricalData 
- * 
+ *
+ * @functions getHistoricalData
+ *
  */
 
 var cryptoApi = {
 
 	// define constants
 	DEFAULT_ENDPOINT: 'https://min-api.cryptocompare.com/data/'
-	,HISTORICAL_DATA: 'histo/@FILTER/?fsym=/@COIN_NAME/&tsym=USD&limit=/@LIMIT/&aggregate=/@AGGREGATE/'
-	,PRICE_DATA		: 'pricemultifull?fsyms=/@COIN_NAMES/&tsyms=USD'
-	,NUM_DATA_POINTS: 2000
-	
+	, HISTORICAL_DATA: 'histo/@FILTER/?fsym=/@COIN_NAME/&tsym=USD&limit=/@LIMIT/&aggregate=/@AGGREGATE/'
+	, PRICE_DATA		: 'pricemultifull?fsyms=/@COIN_NAMES/&tsyms=USD'
+	, NUM_DATA_POINTS: 2000
+
 	/**
-	 * @param option 
+	 * @param option
 	 * @example
 	 * getHistoricalData	{ coinName	:	'BTC'
 	 * 						,filter		:	'DAY'
 	 * 						,enableTime	:	true}
-	 * 
-	 * @returns promise 
+	 *
+	 * @returns promise
 	 */
-	,getHistoricalData	: function (option) {
+	,getHistoricalData (option) {
 		console.log('getHistoricalData', option);
 		if( !( option.coinName && option.filter ) ){
 			console.error('Coin Name and Filter required')
@@ -34,7 +34,7 @@ var cryptoApi = {
 		,coinName	= option.coinName
 		,limit		= option.limit || cryptoApi.NUM_DATA_POINTS
 		,timeFlag	= option.enableTime || false
-		
+
 		switch(option.filter){
 			case 'DAY' :
 				filter 		= 	'minute'
@@ -83,31 +83,42 @@ var cryptoApi = {
 												.replace('/@AGGREGATE/'	, aggreate)
 		console.log('finalUrl', finalUrl);
 		return fetch( cryptoApi.DEFAULT_ENDPOINT + finalUrl )
-		.then(function(res){
+		.then((res) => {
 			return res.json()
 		})
 		.then(function(res){
-			var list = cryptoApi.trimDataSetToList(res.Data, timeFlag, option.filter);
-			console.log('getHistoricalData-dataResponce', list);
-			return list;
+			return cryptoApi.getPriceData(option.coinName)
+			.then((latest) => {
+				console.log('Adding the latest data point',
+				{'close':latest.RAW[option.coinName].USD.PRICE,
+				'time':latest.RAW[option.coinName].USD.LASTUPDATE});
+				res.Data.push({ 'close':latest.RAW[option.coinName].USD.PRICE, 'time':latest.RAW[option.coinName].USD.LASTUPDATE});
+				return res;
+			})
+			.then((res)=>{
+				var list = cryptoApi.trimDataSetToList(res.Data, timeFlag, option.filter);
+				console.log('getHistoricalData-dataResponce', list);
+				return list;
+			})
 		})
+
 	}//getHistoricalData
 
 	,getPriceData			: function(coinList) {
 		if(!coinList) {
 			console.error('Invalid request');
-			return; 
+			return;
 		}
-		
-		let coinNames 	= coinList.join()
+
+		let coinNames 	= Array.isArray(coinList) ? coinList.join() : coinList
 		,finalUrl 		= cryptoApi.PRICE_DATA.replace('/@COIN_NAMES/'	, coinNames);
-		
+
 		return fetch( cryptoApi.DEFAULT_ENDPOINT + finalUrl )
 		.then(function(res){
 			return res.json()
 		})
 	}//getPriceData
-	
+
 	,trimDataSetToList		: function(arr, timeFlag, filter){
 		console.log('trimDataSetToList', arr ,timeFlag, filter);
 		if(timeFlag){
