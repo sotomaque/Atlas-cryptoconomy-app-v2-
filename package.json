@@ -9,7 +9,6 @@
   "dependencies": {
     "ajv": "^6.2.0",
     "art": "^0.10.1",
-    "aws-amplify": "^0.2.0",
     "react": "16.2.0",
     "react-cryptocoins": "^1.0.11",
     "react-native": "0.53.0",

@@ -7,8 +7,8 @@ import { StockLineTicker } from './StockLineTicker';
 // import CoinList from '../CoinList/CoinList';
 import { sendChartData } from '../../actions';
 
-import cryptoApi from '../../../app/lib/crypto-compare-api';
-import coinList	from '../../../app/lib/coin-list';
+// import cryptoApi from '../../../app/lib/crypto-compare-api';
+// import coinList	from '../../../app/lib/coin-list';
 
 
 export class StockLineChart extends Component {
