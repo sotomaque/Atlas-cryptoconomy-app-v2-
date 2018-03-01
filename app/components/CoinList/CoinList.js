@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 // import { LineChart } from "react-native-svg-charts";
 // import { CoinListStyles } from './styles';
-import { sendChartData, sendStockListData, changeCoin, sendTickerAndName, resetToUserHistory } from '../../actions';
+import { sendChartData, resetChart, sendStockListData, changeCoin, sendTickerAndName, resetToUserHistory } from '../../actions';
 import { Coin } from './Coin.js';
 import coinList	from '../../../app/lib/coin-list';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
@@ -60,6 +60,9 @@ class CoinList extends Component {
 		return null;
 	}
 	grabChart(ticker, name) {
+
+		this.props.resetChart();
+		this.props.changeCoin(ticker);	// Sets filter to usew with selectedCoin
 		this.props.sendTickerAndName(ticker, name);
 		this.props.nav.navigate('coinpage');
 	}
@@ -119,5 +122,6 @@ export default connect(
 		changeCoin,
 		sendTickerAndName,
 		resetToUserHistory,
+		resetChart
 	},
 	)(CoinList);

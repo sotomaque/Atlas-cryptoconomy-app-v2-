@@ -1,23 +1,27 @@
 // system imports
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 
 // app imports
 import { StockLineChartWrapper } from '../components/StockLineChart';
 import { Header } from '../components/Header';
 import CoinList from '../components/CoinList/CoinList';
+import { scrollingisEnabled } from '../actions';
+
 // import PortfolioRouter from './PortfolioStack.js';
 
-export default class Portfolio extends Component {
-  state = { isOn: true };
-  setIsOn(val) {
-    this.setState({ isOn: val }); // For pan responder reseting a theme
-	}
+class Portfolio extends Component {
+  // state = { isOn: true };
 
   componentWillMount() {
-    
   }
+
+  setScrolling(val) {
+    this.props.scrollingisEnabled(val);
+  }
+
   render() {
         return (
           <View style={styles.portfolioContainer}>
@@ -32,11 +36,12 @@ export default class Portfolio extends Component {
                     />
                   </View>
                     <ScrollView
-                      onScrollBeginDrag={() => this.setIsOn(false)}
-                      onScrollEndDrag={() => this.setIsOn(true)}
+                      scrollEnabled={this.props.scrollEnabledValue}
+                  //    onScrollBeginDrag={() => this.setIsOn(false)}
+                  //    onScrollEndDrag={() => this.setIsOn(true)}
                     >
                       <View>
-                        <StockLineChartWrapper isOn={this.state.isOn} />
+                        <StockLineChartWrapper />
                       </View>
                       <View>
                         <CoinList
@@ -63,3 +68,12 @@ const styles = StyleSheet.create({
         paddingRight: 6,
     },
 });
+
+function mapStateToProps(store) {
+  return {
+		filter: store.stockFilterReducer.filter,
+		scrollEnabledValue: store.guiInfo.scrollingEnabled,
+  };
+}
+
+export default connect(mapStateToProps, { scrollingisEnabled })(Portfolio);

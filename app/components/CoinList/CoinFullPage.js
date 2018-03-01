@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
 import { StockLineChartWrapper } from '../../components/StockLineChart';
 import { Header } from '../../components/Header';
-import { sendChartData } from '../../actions';
+import { sendChartData, resetChart } from '../../actions';
 import coinList	from '../../../app/lib/coin-list';
 // import { sendTickerAndName } from '../../actions';
 
@@ -13,7 +13,7 @@ import coinList	from '../../../app/lib/coin-list';
 
 
 class CoinFullPage extends Component {
-	state = { isOn: true };
+	// state = { isOn: true };
 
 
 	componentWillMount() {
@@ -26,9 +26,10 @@ class CoinFullPage extends Component {
 			});
 	}
 
+/*
 	setIsOn(val) {
     this.setState({ isOn: val }); // For pan responder reseting a theme
-	}
+	} */
 
 	goBack() {
 		// This is inefficient as hell, I made a reducer that
@@ -36,6 +37,7 @@ class CoinFullPage extends Component {
 		// spomething better than coinList.getUserHistoryData
 		// as a way of grabbing userTransaction history, hopefully
 		// it'll be on Redux by then.
+		this.props.resetChart();
 		coinList
 			.getUserHistoryData()
 				.then((res) => {
@@ -62,12 +64,9 @@ class CoinFullPage extends Component {
                       onPressRight={() => {}}
 										/>
 									</View>
-									<ScrollView
-											onScrollBeginDrag={() => this.setIsOn(false)}
-											onScrollEndDrag={() => this.setIsOn(true)}
-									>
+									<ScrollView scrollEnabled={this.props.scrollEnabled}>
 											<View>
-												<StockLineChartWrapper isOn={this.state.isOn} />
+												<StockLineChartWrapper />
 											</View>
 									</ScrollView>
 								</LinearGradient>
@@ -93,7 +92,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { name, ticker } = state.coinPageReducer;
-  return { name, ticker };
+	const scrollEnabled = state.guiInfo.scrollingEnabled;
+  return { name, ticker, scrollEnabled };
 };
 
-export default connect(mapStateToProps, { sendChartData })(CoinFullPage);
+export default connect(mapStateToProps, { sendChartData, resetChart })(CoinFullPage);

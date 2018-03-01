@@ -1,6 +1,6 @@
 import cryptoApi from '../../app/lib/crypto-compare-api';
 // import coinList	from '../../app/lib/coin-list';
-import { UPDATE_CHART_CHANGE, RESET_TO_USER_TRANSACTIONS } from '../config/constants.js';
+import { UPDATE_CHART_CHANGE, RESET_TO_USER_TRANSACTIONS, RESET_CHART } from '../config/constants.js';
 
 const initialState = {
 	filter: 'DAY',
@@ -85,6 +85,12 @@ export default function stockFilterReducer(state = initialState, action) {
 				};
 			}); */
 			break;
+		}
+		case RESET_CHART: {
+			return {
+				...state,
+				stockData: [0],
+			};
 		}
     default:
       return state;

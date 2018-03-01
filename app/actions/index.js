@@ -1,5 +1,11 @@
 // redux actions
-import { SEND_TICKER_AND_NAME, RESET_TO_USER_TRANSACTIONS, CHART_TIME_INTERVAL } from '../config/constants.js';
+import {
+	SEND_TICKER_AND_NAME,
+	RESET_TO_USER_TRANSACTIONS,
+	CHART_TIME_INTERVAL,
+	RESET_CHART,
+	SWITCH_SCROLLING,
+} from '../config/constants.js';
 import coinList from '../../app/lib/coin-list.js';
 
 export function sendChartData(val, filter) {
@@ -58,5 +64,18 @@ export function sendTickerAndName(coinTicker, coinName) {
 export function resetToUserHistory() {
 	return {
 		type: RESET_TO_USER_TRANSACTIONS,	// WILL HAVE PAYLOAD OF USER EVENTUALLY(?)
+	};
+}
+
+export function resetChart() {
+	return {
+		type: RESET_CHART,
+	};
+}
+
+export function scrollingisEnabled(value) {
+	return {
+		type: SWITCH_SCROLLING,
+		payload: value,
 	};
 }

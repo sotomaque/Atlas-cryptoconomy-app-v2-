@@ -5,7 +5,7 @@ import Chart from '../chart';
 import StockLineFilter from './StockLineFilter';
 import { StockLineTicker } from './StockLineTicker';
 // import CoinList from '../CoinList/CoinList';
-import { sendChartData } from '../../actions';
+import { sendChartData, scrollingisEnabled } from '../../actions';
 
 // import cryptoApi from '../../../app/lib/crypto-compare-api';
 // import coinList	from '../../../app/lib/coin-list';
@@ -24,6 +24,10 @@ export class StockLineChart extends Component {
 			onMoveShouldSetPanResponderCapture: () => true,
 			onPanResponderRelease: () => {
 				this.setState({ xVal: -10 });
+				this.props.scrollingisEnabled(true);
+			},
+			onPanResponderGrant: () => {
+				this.props.scrollingisEnabled(false);
 			},
 			onPanResponderMove: (e, gesture) => {
 				const { nativeEvent } = e;
@@ -47,16 +51,13 @@ export class StockLineChart extends Component {
 	}
 
 	getPointToSend() {
-		if (this.state.xVal < 1 || this.props.isOn === false) {
+		// || this.props.isOn === false
+		if (this.state.xVal < 1) {
 			this.state.xVal = -10;
 			return this.props.endPoint;
 			}
 		return this.props.selectedPoint;
 	}
-
-	props: {
-		isOn: boolean,
-		};
 
 	render() {
 			const width = Dimensions.get('window').width; // full device width, captured at runtime
@@ -101,7 +102,8 @@ function mapStateToProps(store) {
 		chartAmountChange: store.stockFilterReducer.chartAmountChange,
 		chartPercentChange: store.stockFilterReducer.chartPercentChange,
 		chartTimeInterval: store.stockFilterReducer.chartTimeInterval,
+		scrollEnabledValue: store.guiInfo.scrollingEnabled,
   };
 }
 
-export const StockLineChartWrapper = connect(mapStateToProps, { sendChartData })(StockLineChart);
+export const StockLineChartWrapper = connect(mapStateToProps, { sendChartData, scrollingisEnabled })(StockLineChart);
