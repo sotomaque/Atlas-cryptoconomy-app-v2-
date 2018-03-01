@@ -20,6 +20,7 @@ export const RouterComponent = TabNavigator(
                 tabBarIcon: (
                     <Icon name="home" size={20} color="#fff" />
                 ),
+
             },
         },
         portfolio: {

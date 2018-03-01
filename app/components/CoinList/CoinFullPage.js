@@ -26,11 +26,6 @@ class CoinFullPage extends Component {
 			});
 	}
 
-/*
-	setIsOn(val) {
-    this.setState({ isOn: val }); // For pan responder reseting a theme
-	} */
-
 	goBack() {
 		// This is inefficient as hell, I made a reducer that
 		// will do this all in one funciton call, but we'll need
@@ -79,7 +74,6 @@ const styles = StyleSheet.create({
     portfolioContainer: {
         flex: 1,
         backgroundColor: '#fff',
-
     },
     linearGradient: {
         flex: 1,

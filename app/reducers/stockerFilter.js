@@ -5,7 +5,6 @@ import { UPDATE_CHART_CHANGE, RESET_TO_USER_TRANSACTIONS, RESET_CHART } from '..
 const initialState = {
 	filter: 'DAY',
 	selectedCoin: 'BTC',
-	// stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: 'DAY', enableTime : true}),
 	stockList: [0],
 	stockData: [0, 0],
 	selectedPoint: 0,	// Selected Value, an x-value of the graph that is grabbed from the PanResponder
@@ -90,6 +89,7 @@ export default function stockFilterReducer(state = initialState, action) {
 			return {
 				...state,
 				stockData: [0],
+				endPoint: 0,
 			};
 		}
     default:

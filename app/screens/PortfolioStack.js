@@ -4,15 +4,17 @@ import { StackNavigator } from 'react-navigation';
 
 
 import Portfolio from './Portfolio.js';
-import CoinScreen from './Coin.js';
+import ProfileScreen from './ProfileScreen.js';
 import CoinFullPage from '../components/CoinList/CoinFullPage.js';
 //  This Router sets the tab menu for the whole app
 export const RouterComponent = StackNavigator(
     {
         profile: {
-            screen: CoinScreen,
+            screen: ProfileScreen,
             navigationOptions: {
               header: null,
+              // we don't want the user fucking around in other views when making account
+              tabBarVisible: false,
             },
         },
         main: {
@@ -37,6 +39,7 @@ export const RouterComponent = StackNavigator(
     {
     initialRouteName: 'main', // default route
     animationEnabled: true,
+
   },
 );
 

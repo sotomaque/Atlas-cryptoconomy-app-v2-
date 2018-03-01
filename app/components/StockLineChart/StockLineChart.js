@@ -106,4 +106,10 @@ function mapStateToProps(store) {
   };
 }
 
-export const StockLineChartWrapper = connect(mapStateToProps, { sendChartData, scrollingisEnabled })(StockLineChart);
+export const StockLineChartWrapper = connect(
+	mapStateToProps,
+	{
+		sendChartData,
+		scrollingisEnabled,
+	},
+	)(StockLineChart);
