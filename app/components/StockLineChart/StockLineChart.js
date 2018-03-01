@@ -64,7 +64,12 @@ export class StockLineChart extends Component {
 				<View style={{ flexDirection: 'column', width }}>
 
 					<View>
-						<StockLineTicker data={this.getPointToSend()} />
+						<StockLineTicker
+							ticker={this.getPointToSend()}
+							chartAmountChange={this.props.chartAmountChange}
+							chartPercentChange={this.props.chartPercentChange}
+							chartTimeInterval={this.props.chartTimeInterval}
+						/>
 					</View>
 
 					<View style={{ height: 240 }} {...this.panResponder.panHandlers}>
@@ -93,6 +98,9 @@ function mapStateToProps(store) {
 		stockData: store.stockFilterReducer.stockData,
 		selectedPoint: store.stockFilterReducer.selectedPoint,
 		endPoint: store.stockFilterReducer.endPoint,
+		chartAmountChange: store.stockFilterReducer.chartAmountChange,
+		chartPercentChange: store.stockFilterReducer.chartPercentChange,
+		chartTimeInterval: store.stockFilterReducer.chartTimeInterval,
   };
 }
 

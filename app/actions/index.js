@@ -1,10 +1,20 @@
 // redux actions
-import { SEND_TICKER_AND_NAME, RESET_TO_USER_TRANSACTIONS } from '../config/constants.js';
+import { SEND_TICKER_AND_NAME, RESET_TO_USER_TRANSACTIONS, CHART_TIME_INTERVAL } from '../config/constants.js';
+import coinList from '../../app/lib/coin-list.js';
 
-export function sendChartData(val) {
+export function sendChartData(val, filter) {
+	// additionalData required
+	const chartData = coinList.getChartStat(val);
+
+	const payload = {
+		stockData: val,
+		chartAmountChange: chartData.amountChange,
+		chartPercentChange: chartData.percentChange,
+		chartTimeInterval: CHART_TIME_INTERVAL[filter],
+	};
 	return {
 		type: 'SEND_DATA',
-		payload: val,
+		payload,
 	};
 }
 

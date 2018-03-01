@@ -117,6 +117,16 @@ const coinList = {
 				// console.log('getCoinListDetail', priceDataArry);
 				return priceDataArry;
 		});
+	}, // getCoinListDetail
+
+	getChartStat(arry) {
+		const res = {};
+		const start = arry[0];
+		const end 	= arry.slice(-1).pop();
+		const amountChange = (end - start).toFixed(2);
+		res.amountChange = amountChange > 0 ? `+${amountChange}` : amountChange;
+		res.percentChange = ((end - start) / start).toFixed(2);
+		return res;
 	},
 };
 

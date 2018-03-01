@@ -14,7 +14,7 @@ class StockLineFilter extends Component {
 			coinName: this.props.selectedCoin,
 		})
 			.then((res) => {
-				this.props.sendChartData(res);
+				this.props.sendChartData(res, option.filter);
 			});
 	}
 
@@ -62,4 +62,4 @@ function mapStateToProps(store) {
 }
 
 
-export default connect(mapStateToProps,	{ sendChartData })(StockLineFilter)
+export default connect(mapStateToProps,	{ sendChartData })(StockLineFilter);

@@ -1,6 +1,6 @@
 import cryptoApi from '../../app/lib/crypto-compare-api';
 // import coinList	from '../../app/lib/coin-list';
-import { RESET_TO_USER_TRANSACTIONS } from '../config/constants.js';
+import { UPDATE_CHART_CHANGE, RESET_TO_USER_TRANSACTIONS } from '../config/constants.js';
 
 const initialState = {
 	filter: 'DAY',
@@ -10,6 +10,10 @@ const initialState = {
 	stockData: [0, 0],
 	selectedPoint: 0,	// Selected Value, an x-value of the graph that is grabbed from the PanResponder
 	endPoint: 0,
+	// this data is for the changes under the ticker
+	chartAmountChange: 0,
+	chartPercentChange: 0,
+	chartTimeInterval: '',
 };
 
 export default function stockFilterReducer(state = initialState, action) {
@@ -53,8 +57,11 @@ export default function stockFilterReducer(state = initialState, action) {
 		case 'SEND_DATA': {
 				return {
 					...state,
-					stockData: action.payload,
-					endPoint: action.payload.slice(-1).pop(),
+					stockData: action.payload.stockData,
+					endPoint: action.payload.stockData.slice(-1).pop(),
+					chartAmountChange: action.payload.chartAmountChange,
+					chartPercentChange: action.payload.chartPercentChange,
+					chartTimeInterval: action.payload.chartTimeInterval,
 				};
 				}
 		case 'SEND_VALUE_FROM_POINT':

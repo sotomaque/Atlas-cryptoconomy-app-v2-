@@ -30,7 +30,7 @@ class CoinList extends Component {
 		return coinList
 			.getUserHistoryData()
 				.then((res) => {
-					this.props.sendChartData(res);
+					this.props.sendChartData(res, 'DAY');
 				});
 	}
 
@@ -60,16 +60,6 @@ class CoinList extends Component {
 		return null;
 	}
 	grabChart(ticker, name) {
-		/*
-		this.props.changeCoin(symbol);
-		return cryptoApi.getHistoricalData({
-			filter: 'DAY',
-			coinName: `${symbol}`,
-		})
-			.then((res) => {
-				this.props.sendChartData(res);
-			});
-			*/
 		this.props.sendTickerAndName(ticker, name);
 		this.props.nav.navigate('coinpage');
 	}

@@ -22,7 +22,7 @@ class CoinFullPage extends Component {
 			coinName: `${this.props.ticker}`,
 		})
 			.then((res) => {
-				this.props.sendChartData(res);
+				this.props.sendChartData(res, 'DAY');
 			});
 	}
 
@@ -39,7 +39,7 @@ class CoinFullPage extends Component {
 		coinList
 			.getUserHistoryData()
 				.then((res) => {
-					this.props.sendChartData(res);
+					this.props.sendChartData(res, 'DAY');
 				});
 		this.props.navigation.goBack();
 	}

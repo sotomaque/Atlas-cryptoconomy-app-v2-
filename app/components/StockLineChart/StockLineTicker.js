@@ -4,7 +4,10 @@ import { StockLineTickerStyles } from './styles';
 //
 export class StockLineTicker extends Component {
     props: {
-      data: number
+      ticker: number,
+      chartAmountChange: number,
+      chartPercentChange: number,
+      chartTimeInterval: string,
     };
     render() {
         const {
@@ -20,13 +23,13 @@ export class StockLineTicker extends Component {
             <View style={tickerContainer}>
                 <View style={tickerTotalContainer}>
                     <Text style={tickerTotalSymbol}>$</Text>
-                    <Text style={tickerTotalMainAmount}>{this.props.data}</Text>
+                    <Text style={tickerTotalMainAmount}>{this.props.ticker}</Text>
                     {/* <Text style={tickerTotalMainAmount}>.00</Text> */}
                 </View>
                 <View style={tickerTotalContainer}>
-                    <Text style={tickerAuxillary}>+106.11</Text>
-                    <Text style={tickerAuxillary}>(20.43%)</Text>
-                    <Text style={tickerFilterText}>PAST WEEK</Text>
+                    <Text style={tickerAuxillary}>{this.props.chartAmountChange}</Text>
+                    <Text style={tickerAuxillary}>({this.props.chartPercentChange}%)</Text>
+                    <Text style={tickerFilterText}>{this.props.chartTimeInterval}</Text>
                 </View>
             </View>
         );
