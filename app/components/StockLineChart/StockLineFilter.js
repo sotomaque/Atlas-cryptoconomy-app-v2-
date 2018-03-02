@@ -1,36 +1,65 @@
-import React, { Component } from "react";
-import { View, Button, Text } from "react-native";
-import { StockLineFilterStyles } from "./styles";
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
+import { connect } from 'react-redux';
 
-export class StockLineFilter extends Component {
+import { StockLineFilterStyles } from './styles';
+import { sendChartData } from '../../actions';
+
+import cryptoApi from '../../../app/lib/crypto-compare-api';
+
+class StockLineFilter extends Component {
+	onFilterStockChart(option) {
+		cryptoApi.getHistoricalData({
+			...option,
+			coinName: this.props.selectedCoin,
+		})
+			.then((res) => {
+				this.props.sendChartData(res, option.filter);
+			});
+	}
 
     render() {
         const { container, text } = StockLineFilterStyles;
 
         return (
             <View style={container}>
-                <View>
-                    <Text style={text}>1D</Text>
-                </View>
-                <View>
-                    <Text style={text}>1W</Text>
-                </View>
-                <View>
-                    <Text style={text}>1M</Text>
-                </View>
-                <View>
-                    <Text style={text}>3M</Text>
-                </View>
-                <View>
-                    <Text style={text}>6M</Text>
-                </View>
-                <View>
-                    <Text style={text}>1Y</Text>
-                </View>
-                <View>
-                    <Text style={text}>MAX</Text>
-                </View>
+						<View>
+						<Text onPress={() => this.onFilterStockChart({ filter: 'DAY' })} style={text}>1D</Text>
+						</View>
+						<View>
+						<Text onPress={() => this.onFilterStockChart({ filter: 'WEEK' })} style={text}>1W</Text>
+						</View>
+						<View>
+						<Text onPress={() => this.onFilterStockChart({ filter: 'MONTH' })} style={text}>1M</Text>
+						</View>
+						<View>
+						<Text onPress={() => this.onFilterStockChart({ filter: '3MONTH' })} style={text}>3M</Text>
+						</View>
+						<View>
+						<Text onPress={() => this.onFilterStockChart({ filter: '6MONTH' })} style={text}>6M</Text>
+						</View>
+						<View>
+						<Text onPress={() => this.onFilterStockChart({ filter: '1YEAR' })} style={text}>1Y</Text>
+						</View>
+						<View>
+            <Text onPress={() => this.onFilterStockChart({ filter: 'MAX' })} style={text}>MAX</Text>
+						</View>
             </View>
         );
     }
 }
+
+
+function mapStateToProps(store) {
+  return {
+		filter: store.stockFilterReducer.filter,
+		stockList: store.stockFilterReducer.stockList,
+		stockData: store.stockFilterReducer.stockData,
+		selectedPoint: store.stockFilterReducer.selectedPoint,
+		endPoint: store.stockFilterReducer.endPoint,
+		selectedCoin: store.stockFilterReducer.selectedCoin,
+  };
+}
+
+
+export default connect(mapStateToProps,	{ sendChartData })(StockLineFilter);
