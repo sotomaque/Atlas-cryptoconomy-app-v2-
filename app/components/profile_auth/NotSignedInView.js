@@ -17,12 +17,8 @@ class ProfileView extends Component {
 
 	}
 
-  props: {
-    nav: Object,
-  };
 	goBack() {
-    console.log(this);
-		this.props.navigation.goBack();
+		this.props.screenProps.nav.goBack();	// Goes back to Portfolio screen
 	}
 
 	render() {

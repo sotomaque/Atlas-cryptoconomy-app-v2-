@@ -17,7 +17,7 @@ class ProfileScreen extends Component {
 		if (this.props.isSignedIn === true) {
 			return (<ProfileView nav={this.props.navigation} />);
 		}
-		return <SignRouter nav={this.props.navigation} />;
+		return <SignRouter screenProps={{ nav: this.props.navigation }} />;
 	}
 	render() {
 			return this.ifIsSignedIn();
