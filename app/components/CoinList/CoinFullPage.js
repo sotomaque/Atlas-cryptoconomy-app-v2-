@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Text } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
@@ -63,6 +63,9 @@ class CoinFullPage extends Component {
 											<View>
 												<StockLineChartWrapper />
 											</View>
+											<View>
+												<Text style={styles.statsLabel}>Stats</Text>
+											</View>
 									</ScrollView>
 								</LinearGradient>
 				</View>
@@ -82,6 +85,9 @@ const styles = StyleSheet.create({
         paddingLeft: 6,
         paddingRight: 6,
     },
+		statsLabel: {
+
+		}
 });
 
 const mapStateToProps = (state) => {
