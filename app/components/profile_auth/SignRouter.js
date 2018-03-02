@@ -1,7 +1,8 @@
 import { StackNavigator } from 'react-navigation';
 import NotSignedInView from './NotSignedInView.js';
-// import SignUpView from './sign_views/SignUpView.js';
-// import SignInView from './sign_views/SignInView.js';
+import SignUpView from './SignUpView.js';
+import InitProfileView from './InitProfileView.js';
+import SignInView from './SignInView.js';
 // import ForgotPasswordView from './sign_views/ForgotPasswordView.js';
 
 const myNewBackgroundColor = 'white';
@@ -14,13 +15,13 @@ export const SignRouterComponent = StackNavigator(
       },
      },
   signUpView: {
-    screen: NotSignedInView,
+    screen: SignUpView,
       navigationOptions: {
       header: null,
       },
      },
  signInView: {
-    screen: NotSignedInView,
+    screen: SignInView,
        navigationOptions: {
        header: null,
       },
@@ -31,6 +32,12 @@ export const SignRouterComponent = StackNavigator(
        header: null,
       },
     },
+  initProfile: {
+    screen: InitProfileView,
+       navigationOptions: {
+       header: null,
+      },
+  },
  },
   {
     initialRouteName: 'notSignedIn',

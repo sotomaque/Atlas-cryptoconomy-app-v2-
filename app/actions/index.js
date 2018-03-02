@@ -5,6 +5,7 @@ import {
 	CHART_TIME_INTERVAL,
 	RESET_CHART,
 	SWITCH_SCROLLING,
+	CHANGE_SIGN_IN,
 } from '../config/constants.js';
 import coinList from '../../app/lib/coin-list.js';
 
@@ -76,6 +77,13 @@ export function resetChart() {
 export function scrollingisEnabled(value) {
 	return {
 		type: SWITCH_SCROLLING,
+		payload: value,
+	};
+}
+
+export function changeLoggedIn(value) {
+	return {
+		type: CHANGE_SIGN_IN,
 		payload: value,
 	};
 }

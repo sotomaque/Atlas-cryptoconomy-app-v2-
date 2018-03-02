@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 // import cryptoApi from '../../../app/lib/crypto-compare-api';
@@ -12,6 +12,42 @@ import { Header } from '../../components/Header';
 // import  Icon  from 'react-native-vector-icons/FontAwesome';
 
 
+const signInAndSignUpButtons = (nav) => {
+	return (
+	<View style={{ alignItems: 'flex-end' }}>
+	<TouchableOpacity
+		style={{
+			padding: 15,
+			backgroundColor: 'green',
+			borderRadius: 14,
+			width: 120,
+			alignItems: 'center',
+			marginBottom: 10,
+		}}
+		onPress={() => nav.navigate('signUpView')}
+	>
+		<Text style={{ fontSize: 18, color: 'white' }}>
+			SIGN UP
+		</Text>
+	</TouchableOpacity>
+
+	<TouchableOpacity
+		onPress={() => nav.navigate('signInView')}
+		style={{
+			padding: 15,
+			width: 120,
+			alignItems: 'center',
+			backgroundColor: 'orange',
+			borderRadius: 14,
+		}}
+	>
+		<Text style={{ fontSize: 18, color: 'white' }}>
+			SIGN IN
+		</Text>
+	</TouchableOpacity>
+	</View>
+);
+};
 class ProfileView extends Component {
 	componentWillMount() {
 
@@ -36,10 +72,12 @@ class ProfileView extends Component {
 									<ScrollView
 										contentContainerStyle={styles.tempScrollViewStyle}
 										scrollEnabled={this.props.scrollEnabled}
+										style={{ flex: 1 }}
 									>
 											<Text style={styles.tempTextStyle}>
 												Sign up to get cool new features!
 											</Text>
+											{signInAndSignUpButtons(this.props.navigation)}
 									</ScrollView>
 								</LinearGradient>
 				</View>

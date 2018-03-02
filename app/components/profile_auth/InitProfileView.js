@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, Text, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
+import { View, StyleSheet, ScrollView, Text } from 'react-native';
+ import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 // import cryptoApi from '../../../app/lib/crypto-compare-api';
 // import { StockLineChartWrapper } from '../../components/StockLineChart';
@@ -12,43 +12,26 @@ import { Header } from '../../components/Header';
 // import  Icon  from 'react-native-vector-icons/FontAwesome';
 
 
-class ProfileView extends Component {
-	componentWillMount() {
-
-	}
-
-  props: {
-    nav: Object,
-  };
-	goBack() {
-    console.log(this);
-		this.props.nav.goBack();
-	}
-
+class InitProfileView extends Component {
 	render() {
 			return (
 				<View style={styles.portfolioContainer}>
 								<LinearGradient colors={['#1294D5', '#125AD5']} style={styles.linearGradient}>
 									<View>
 										<Header
-											headerText='Profile'
-                      nameLeft="arrow-circle-left"
-                      onPressRight={() => {}}
-                      onPressLeft={() => this.goBack()}
+											headerText='Create Profile'
+                      onPressRight={() => this.props.changeLoggedIn(true)}
+                      onPressLeft={() => {}}
+                      nameRight="save"
 										/>
 									</View>
 									<ScrollView
 										contentContainerStyle={styles.tempScrollViewStyle}
+										scrollEnabled={this.props.scrollEnabled}
 									>
 											<Text style={styles.tempTextStyle}>
-												Signed in!
+												Cutomize stuff here!
 											</Text>
-											<Text style={styles.tempTextStyle}>
-												{this.props.isSignedIn}
-											</Text>
-											<TouchableOpacity onPress={() => this.props.changeLoggedIn(false)}>
-												<Text>Sign Out</Text>
-											</TouchableOpacity>
 									</ScrollView>
 								</LinearGradient>
 				</View>
@@ -82,10 +65,10 @@ const styles = StyleSheet.create({
 			textAlign: 'center',
 		},
 });
-
+  // Will be useful for setting profile settings.
 const mapStateToProps = (state) => {
   const { isSignedIn } = state.userInfo;
   return { isSignedIn };
 };
 
-export default connect(mapStateToProps, { changeLoggedIn })(ProfileView);
+export default connect(mapStateToProps, { changeLoggedIn })(InitProfileView);
