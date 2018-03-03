@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
+import FBSDK from 'react-native-fbsdk';
 import LinearGradient from 'react-native-linear-gradient';
 import { Header } from '../../components/Header';
 
@@ -40,6 +41,12 @@ const signInAndSignUpButtons = (nav) => {
 	</View>
 );
 };
+
+const {
+  LoginButton,
+  AccessToken
+} = FBSDK;
+
 class ProfileView extends Component {
 	componentWillMount() {
 
@@ -70,6 +77,23 @@ class ProfileView extends Component {
 												Sign up to get cool new features!
 											</Text>
 											{signInAndSignUpButtons(this.props.navigation)}
+											<LoginButton
+												publishPermissions={['publish_actions']}
+												onLoginFinished={
+													(error, result) => {
+														if (error) {
+															alert('login has error: ', result.error);
+														} else if (result.isCancelled) {
+															alert('login is cancelled.');
+														} else {
+															AccessToken.getCurrentAccessToken().then((data) => {
+																	console.log(data);
+																});
+															}
+														}
+													}
+													onLogoutFinished={() => alert('logout.')}
+											/>
 									</ScrollView>
 								</LinearGradient>
 				</View>
