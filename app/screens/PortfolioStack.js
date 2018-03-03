@@ -6,6 +6,7 @@ import { StackNavigator } from 'react-navigation';
 import Portfolio from './Portfolio.js';
 import ProfileScreen from './ProfileScreen.js';
 import CoinFullPage from '../components/CoinList/CoinFullPage.js';
+import Search from './Search.js';
 //  This Router sets the tab menu for the whole app
 export const RouterComponent = StackNavigator(
     {
@@ -23,17 +24,18 @@ export const RouterComponent = StackNavigator(
               header: null,
             },
         },
+        search: {
+              screen: Search,
+              navigationOptions: {
+                header: null,
+              },
+
+        },
         coinpage: {
             screen: CoinFullPage,
             navigationOptions: {
               header: null,
             },
-        search: {
-            screen: Portfolio,
-            navigationOptions: {
-              header: null,
-            },
-        },
     },
     },
     {

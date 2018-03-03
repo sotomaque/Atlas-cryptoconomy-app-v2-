@@ -32,7 +32,7 @@ class Portfolio extends Component {
                       nameLeft="user-circle"
                       nameRight="search"
                       onPressLeft={() => this.props.navigation.navigate('profile')}
-                      onPressRight={() => {}}
+                      onPressRight={() => this.props.navigation.navigate('search')}
                     />
                   </View>
                     <ScrollView

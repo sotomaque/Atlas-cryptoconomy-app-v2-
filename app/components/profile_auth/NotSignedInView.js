@@ -44,7 +44,7 @@ const signInAndSignUpButtons = (nav) => {
 
 const {
   LoginButton,
-  AccessToken
+  AccessToken,
 } = FBSDK;
 
 class ProfileView extends Component {
