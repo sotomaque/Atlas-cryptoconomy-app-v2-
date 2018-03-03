@@ -2,15 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-// import cryptoApi from '../../../app/lib/crypto-compare-api';
-// import { StockLineChartWrapper } from '../../components/StockLineChart';
 import { Header } from '../../components/Header';
-// import { sendChartData, resetChart } from '../../actions';
-// import coinList	from '../../../app/lib/coin-list';
-// import { sendTickerAndName } from '../../actions';
-
-// import  Icon  from 'react-native-vector-icons/FontAwesome';
-
 
 const signInAndSignUpButtons = (nav) => {
 	return (
