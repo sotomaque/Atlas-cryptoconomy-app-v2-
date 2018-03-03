@@ -3,7 +3,7 @@ export const styles = {
     textStyle: {
         fontSize: 20,
         color: '#fff',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     viewStyle: {
         flexDirection: 'row',
@@ -14,6 +14,6 @@ export const styles = {
         marginBottom: 10,
         position: 'relative',
         marginLeft: 10,
-        marginRight: 10
-    }
-}
+        marginRight: 10,
+    },
+};
