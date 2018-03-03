@@ -30,7 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
   public void onCreate() {
   	super.onCreate();
-  	AppEventsLogger.activateApp(this);
+  	AppEventsLogger.activateApp(getApplicationContext());
     SoLoader.init(this, /* native exopackage */ false);
   }
 
@@ -46,7 +46,6 @@ public class MainApplication extends Application implements ReactApplication {
             new MainReactPackage(),
             new FBSDKPackage(mCallbackManager),
             new LinearGradientPackage(),
-	    new FBSDKPackage(mCallbackManager),
             new VectorIconsPackage(),
             new SvgPackage()
       );
