@@ -1,48 +1,42 @@
 // system imports
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Text } from 'react-native';
+import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SearchBar from 'react-native-searchbar';
-import { Header } from '../components/Header';
-
 
 const itemsList = ['Bitcoin', 'Litecoin', 'Ethereum'];
 export default class Search extends Component {
-  state = { items: [] };
-  handleResults(results) {
-  this.setState({ items: results });
-  }
+  state = { items: [], searchText: '' };
+
 
   getResults() {
-    if (this.state.items.length < 1) {
+    if (this.state.items.length < 1 && this.state.searchText === '') {
       return itemsList;
     }
+
     return this.state.items;
   }
-  /*
-  <Header
-    headerText='Search'
-    nameLeft="arrow-circle-left"
-    onPressRight={() => {}}
-    onPressLeft={() => this.props.navigation.goBack()}
-  />
-  */
+
+  handleResults(results) {
+    this.setState({ items: results });
+  }
+
   render() {
         return (
           <View style={styles.portfolioContainer}>
               <LinearGradient colors={['#1294D5', '#125AD5']} style={styles.linearGradient}>
 
                 <SearchBar
-                  ref={ref => this.searchBar = ref}
                   data={itemsList}
-                  handleResults={this.handleResults.bind(this)}
                   backgroundColor='transparent'
+                  handleResults={results => this.handleResults(results)}
                   iconColor='white'
                   textColor='white'
                   selectionColor='white'
                   iOSHideShadow
                   placeholderTextColor='white'
                   showOnLoad
+                  handleChangeText={text => this.setState({ searchText: text })}
                   onBack={() => this.props.navigation.goBack()}
 
                 />
@@ -51,7 +45,15 @@ export default class Search extends Component {
                 <FlatList
                 data={this.getResults()}
                 keyExtractor={item => item}
-                renderItem={({ item }) => (<Text>{item}</Text>)}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('addcoin')}
+                  >
+                    <Text style={{ padding: 20, fontSize: 24, color: 'white' }}>
+                      {item}
+                    </Text>
+                  </TouchableOpacity>
+                )}
                 />
 
               </LinearGradient>

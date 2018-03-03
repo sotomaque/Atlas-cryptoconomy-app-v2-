@@ -3,10 +3,11 @@
 import { StackNavigator } from 'react-navigation';
 
 
-import Portfolio from './Portfolio.js';
+import Portfolio from '../Portfolio.js';
 import ProfileScreen from './ProfileScreen.js';
-import CoinFullPage from '../components/CoinList/CoinFullPage.js';
+import CoinFullPage from '../../components/CoinList/CoinFullPage.js';
 import Search from './Search.js';
+import AddCoinScreen from './AddCoinScreen.js';
 //  This Router sets the tab menu for the whole app
 export const RouterComponent = StackNavigator(
     {
@@ -36,7 +37,13 @@ export const RouterComponent = StackNavigator(
             navigationOptions: {
               header: null,
             },
-    },
+        },
+        addcoin: {
+            screen: AddCoinScreen,
+            navigationOptions: {
+              header: null,
+            },
+        },
     },
     {
     initialRouteName: 'main', // default route

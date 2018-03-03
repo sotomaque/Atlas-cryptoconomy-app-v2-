@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     },
 		statsLabel: {
 
-		}
+		},
 });
 
 const mapStateToProps = (state) => {

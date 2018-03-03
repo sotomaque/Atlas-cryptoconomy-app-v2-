@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import ProfileView from '../components/profile_auth/ProfileView.js';
-import SignRouter from '../components/profile_auth/SignRouter.js';
+import ProfileView from '../../components/profile_auth/ProfileView.js';
+import SignRouter from '../../components/profile_auth/SignRouter.js';
 
 class ProfileScreen extends Component {
 	componentWillMount() {
