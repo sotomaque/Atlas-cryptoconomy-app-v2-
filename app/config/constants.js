@@ -6,7 +6,8 @@ export const RESET_TO_USER_TRANSACTIONS = 'reset_to_user_transactions';
 export const RESET_CHART = 'reset_chart';
 export const SWITCH_SCROLLING = 'switch_scrolling';
 export const CHANGE_FILTER_VALUE = 'change_filter_value';
-
+export const RESET_MINI_CHART_DATA = 'reset_mini_chart_data';
+export const DID_REST_MINI_CHART_DATA = 'did_reset_mini_chart_data';
 
 export const CHART_TIME_INTERVAL = {
   DAY: 'TODAY',

@@ -7,6 +7,8 @@ import {
 	SWITCH_SCROLLING,
 	CHANGE_SIGN_IN,
 	CHANGE_FILTER_VALUE,
+	RESET_MINI_CHART_DATA,
+	DID_REST_MINI_CHART_DATA,
 } from '../config/constants.js';
 import coinList from '../../app/lib/coin-list.js';
 
@@ -92,5 +94,17 @@ export function changeLoggedIn(value) {
 	return {
 		type: CHANGE_SIGN_IN,
 		payload: value,
+	};
+}
+
+export function resetData() {
+	return {
+		type: RESET_MINI_CHART_DATA,
+	};
+}
+
+export function didResetData() {
+	return {
+		type: DID_REST_MINI_CHART_DATA,
 	};
 }

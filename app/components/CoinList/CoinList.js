@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 // import { LineChart } from "react-native-svg-charts";
 // import { CoinListStyles } from './styles';
-import { sendChartData, resetChart, sendStockListData, changeCoin, sendTickerAndName, resetToUserHistory } from '../../actions';
+import { sendChartData, resetChart, sendStockListData, changeCoin, sendTickerAndName, resetToUserHistory, didResetData } from '../../actions';
 import { Coin } from './Coin.js';
 import coinList	from '../../../app/lib/coin-list';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
@@ -15,10 +15,11 @@ const userCoinTickerList = ['BTC', 'ETH', 'XRP'];
 const userCoinHoldingList = { BTC: 3.5, NEO: 10 };
 
 class CoinList extends Component {
-
 	state = {
 		isPriceDisplayed: true,
 		userCoinList: [],
+		state_resetData: false,
+		state_didResetData: true,
 	}
 
 	componentWillMount() {
@@ -40,15 +41,19 @@ class CoinList extends Component {
 				});
 	}
 
+	componentWillReceiveProps() {
+		if (this.props.resetData) {
+			this.getPriceArray();
+		}
+	}
 	onTogglePrice() {
-		console.log(this);
 		this.setState({ isPriceDisplayed: !this.state.isPriceDisplayed });
 	}
 
 	getPrice(ticker) {
 		this.props.changeCoin(ticker);
 		cryptoApi.getHistoricalData({
-			filter: 'DAY',
+			filter: this.props.filter,
 			coinName: `${ticker}`,
 		})
 			.then((res) => {
@@ -60,7 +65,7 @@ class CoinList extends Component {
 	getPriceArray() {
 		this.state.userCoinList.map((item, index) => {
 			return cryptoApi.getHistoricalData({
-				filter: 'DAY',
+				filter: this.props.filter,
 				coinName: `${item.key}`,
 			})
 				.then((res) => {
@@ -71,6 +76,7 @@ class CoinList extends Component {
 					this.setState({ userCoinList: arr });
 				});
 		});
+		this.props.didResetData();
 	}
 
 	grabChart(ticker, name) {
@@ -96,7 +102,7 @@ class CoinList extends Component {
 
 					data={this.state.userCoinList}
 					keyExtractor={item => item.ticker}
-					extraData={[this.state.isPriceDisplayed, this.state.userCoinList]}
+					extraData={[this.props.resetData]}
 					renderItem={({ item }) => (
 					<View style={{ marginRight: 0 }}>
 						<Coin
@@ -126,6 +132,7 @@ function mapStateToProps(store) {
 		stockData: store.stockFilterReducer.stockData,
 		selectedPoint: store.stockFilterReducer.selectedPoint,
 		endPoint: store.stockFilterReducer.endPoint,
+		resetData: store.guiInfo.should_reset_data,
   };
 }
 
@@ -137,6 +144,7 @@ export default connect(
 		changeCoin,
 		sendTickerAndName,
 		resetToUserHistory,
+		didResetData,
 		resetChart,
 	},
 	)(CoinList);
