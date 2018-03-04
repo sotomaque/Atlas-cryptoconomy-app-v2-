@@ -6,6 +6,7 @@ import {
 	RESET_CHART,
 	SWITCH_SCROLLING,
 	CHANGE_SIGN_IN,
+	UPDATE_PORTFOLIO,
 } from '../config/constants.js';
 import coinList from '../../app/lib/coin-list.js';
 

@@ -1,8 +1,8 @@
-/** *
+/*******************************************************************************
  * @author Qian
- *
+ * 
  * @functions getHistoricalData
- *
+ * 
  */
 let cryptoApi = {
 
@@ -15,11 +15,9 @@ let cryptoApi = {
 
 	/**
 	 * @param option
-	 * @example
-	 * getHistoricalData	{ coinName	:	'BTC'
-	 * 						,filter		:	'DAY'
-	 * 						,enableTime	:	true}
-	 *
+	 * @example getHistoricalData { coinName : 'BTC' ,filter : 'DAY' ,enableTime :
+	 *          true}
+	 * 
 	 * @returns promise
 	 */
 	getHistoricalData(option, isUnprocessedData) {
@@ -69,7 +67,7 @@ let cryptoApi = {
 			case 'MAX':
 				filter		= 'day';
 				aggreate 	=	'10';
-				// allData		=	'true';
+				// allData = 'true';
 				break;
 			default:
 				// console.error('Filter not defined');

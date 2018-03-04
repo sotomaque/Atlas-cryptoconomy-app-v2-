@@ -9,13 +9,17 @@ import { sendChartData, scrollingisEnabled } from '../../actions';
 
 // import cryptoApi from '../../../app/lib/crypto-compare-api';
 // import coinList	from '../../../app/lib/coin-list';
-
+import portfolioWorkflow from '../../../app/lib/portfolio-workflow';
 
 export class StockLineChart extends Component {
 	state = {
 		stockList: [],
 		stockData: [],
 		xVal: -10,
+	}
+	constructor(props) {
+		super(props);
+		portfolioWorkflow.makeTransaction();
 	}
 
 	componentWillMount() {

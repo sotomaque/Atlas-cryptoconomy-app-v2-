@@ -11,14 +11,9 @@ import CoinList from '../components/CoinList/CoinList';
 import { scrollingisEnabled } from '../actions';
 
 // import PortfolioRouter from './PortfolioStack.js';
-import restApi from '../lib/rest-api';
 
 class Portfolio extends Component {
   // state = { isOn: true };
-  constructor(props) {
-    super(props);
-    restApi.saveTransaction();
-  }
 
   componentWillMount() {
   }

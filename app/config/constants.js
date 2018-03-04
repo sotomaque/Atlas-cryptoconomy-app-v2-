@@ -6,6 +6,9 @@ export const RESET_TO_USER_TRANSACTIONS = 'reset_to_user_transactions';
 export const RESET_CHART = 'reset_chart';
 export const SWITCH_SCROLLING = 'switch_scrolling';
 
+// portfolio action types
+export const UPDATE_PORTFOLIO = 'update_portfolio';
+
 export const CHART_TIME_INTERVAL = {
   DAY: 'TODAY',
   WEEK: 'PAST WEEK',

@@ -10,18 +10,18 @@ const restApi = {
 
   // saveTransaction
   saveTransaction(transactions, callback) {
-    // transactions = {
-    //   userId: '123',
-    //   txnCoin: 'BTC',
-    //   txnExchange: 'Coinbase',
-    //   txnCurrency: 'USD',
-    //   txnAmount: 1000,
-    //   txnQty: 1,
-    //   coinCurrentPrice: 15000,
-    //   txnType: 'Buy',
-    //   txnDate: '2018-02-18T00:00:00.000Z',
-    //   txnNotes: 'Buy more coins',
-    // };
+    transactions = {
+      userId: '123',
+      txnCoin: 'BTC',
+      txnExchange: 'Coinbase',
+      txnCurrency: 'USD',
+      txnAmount: 1000,
+      txnQty: 1,
+      coinCurrentPrice: 15000,
+      txnType: 'Buy',
+      txnDate: '2018-02-18T00:00:00.000Z',
+      txnNotes: 'Buy more coins',
+    };
     if (!transactions) {
       return;
     }
@@ -77,9 +77,11 @@ const restApi = {
        },
        method: 'POST', // *GET, PUT, DELETE, etc.
     }).then((res) => {
+      console.log('post successful', res);
       return res.json();
     })
     .then((res) => {
+      console.log('post successful', res);
       if (typeof (callback) === 'function') {
         callback(res);
       }
