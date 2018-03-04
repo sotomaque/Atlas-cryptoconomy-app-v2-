@@ -15,18 +15,22 @@ const userCoinTickerList = ['BTC', 'ETH', 'XRP'];
 const userCoinHoldingList = { BTC: 3.5, NEO: 10 };
 
 class CoinList extends Component {
+
 	state = {
 		isPriceDisplayed: true,
 		userCoinList: [],
 	}
+
 	componentWillMount() {
 		// coinList.getCoinListDetail(userCoinTickerList, coinList.IS_DISPLAY_ALL)
 		coinList.getCoinListDetail(userCoinTickerList)
 			.then((res) => {
 		//		this.props.sendStockListData(res);
 				res.map((item) => {
+					// this.priceHistory = [...this.priceHistory, item.ticker: [0, 1]];
 					return this.setState({ userCoinList: [...this.state.userCoinList, item] });
 				});
+				this.getPriceArray();
 			});
 	//		this.props.resetToUserHistory();
 		return coinList
@@ -37,6 +41,7 @@ class CoinList extends Component {
 	}
 
 	onTogglePrice() {
+		console.log(this);
 		this.setState({ isPriceDisplayed: !this.state.isPriceDisplayed });
 	}
 
@@ -50,6 +55,22 @@ class CoinList extends Component {
 				const lastNum = res.slice(-1).pop();
 				return lastNum;
 			});
+	}
+
+	getPriceArray() {
+		this.state.userCoinList.map((item, index) => {
+			return cryptoApi.getHistoricalData({
+				filter: 'DAY',
+				coinName: `${item.key}`,
+			})
+				.then((res) => {
+					const arr = this.state.userCoinList;
+					const newItem = item;
+					newItem.priceArray = res;
+					arr[index] = newItem;
+					this.setState({ userCoinList: arr });
+				});
+		});
 	}
 
 	grabChart(ticker, name) {
@@ -75,7 +96,7 @@ class CoinList extends Component {
 
 					data={this.state.userCoinList}
 					keyExtractor={item => item.ticker}
-					extraData={this.state.isPriceDisplayed}
+					extraData={[this.state.isPriceDisplayed, this.state.userCoinList]}
 					renderItem={({ item }) => (
 					<View style={{ marginRight: 0 }}>
 						<Coin
@@ -87,6 +108,7 @@ class CoinList extends Component {
 							onPressPrice={() => this.onTogglePrice(item)}
 							price={item.price}
 							priceOverPercent={this.state.isPriceDisplayed}
+							stockPoints={item.priceArray}
 						/>
 					</View>
 					)}

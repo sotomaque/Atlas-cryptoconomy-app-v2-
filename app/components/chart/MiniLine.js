@@ -83,7 +83,7 @@ class MiniLine extends Component {
       x : number,
       y : number
     };
-    console.log(this.props);
+  //  console.log(this.props);
     const minValue = Math.min(...this.props.stockData);
     const maxValue = Math.max(...this.props.stockData) - minValue;
     // step between each value point on horizontal (x) axis
@@ -132,7 +132,7 @@ class MiniLine extends Component {
     const fillColor = 'white';
     const strokeWidth = 1;
     // const width = Dimensions.get('window').width;
-    console.log("Width: ",this.state.width);
+  //  console.log("Width: ",this.state.width);
     return (
       <View style={styles.container} onLayout={this.onLayout}>
         <Surface width={this.state.width} height={30}>

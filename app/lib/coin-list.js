@@ -108,6 +108,7 @@ const coinList = {
 						priceDataArry.push({
 							key,
 							ticker: key,
+							priceArray: [0,1,2],
 							name: coinList.DEFAULT_COIN_LIST_ICON[key] ? coinList.DEFAULT_COIN_LIST_ICON[key].url : '',
 							price: `${value.USD.PRICE}`,
 							percentChange: `${((value.USD.PRICE - value.USD.OPENDAY) * 100 / value.USD.OPENDAY).toFixed(2)}%`,

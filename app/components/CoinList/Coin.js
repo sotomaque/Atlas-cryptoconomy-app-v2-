@@ -17,6 +17,7 @@ export class Coin extends Component {
       onPress: Function,
       onPressPrice: Function,
       priceOverPercent: bool,
+      stockPoints: Object,
     };
 
 	render() {
@@ -28,6 +29,7 @@ export class Coin extends Component {
       quantity,
       price,
       priceOverPercent,
+      stockPoints,
     } = this.props;
 
     // If quantity specified, prefix that to ticker
@@ -63,7 +65,7 @@ export class Coin extends Component {
               }}
               >
               <MiniLine
-                stockData={[0, 1, 2, 4, 5]}
+                stockData={stockPoints}
               />
               </View>
               <TouchableOpacity
