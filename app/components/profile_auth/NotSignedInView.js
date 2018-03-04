@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 import FBSDK from 'react-native-fbsdk';
+import firebase, { FacebookAuthProvider } from 'firebase';
 import LinearGradient from 'react-native-linear-gradient';
 import { Header } from '../../components/Header';
 
@@ -86,8 +87,12 @@ class ProfileView extends Component {
 														} else if (result.isCancelled) {
 															alert('login is cancelled.');
 														} else {
-															AccessToken.getCurrentAccessToken().then((data) => {
-																	console.log(data);
+															AccessToken.getCurrentAccessToken().then((token) => {
+																console.log('token: ', token);
+																const cred = firebase.auth.FacebookAuthProvider.credential(token.accessToken);
+																firebase.auth().signInWithCredential(cred).then((user) => {
+																		console.log('User finally got :', user);
+																	});
 																});
 															}
 														}
@@ -101,6 +106,40 @@ class ProfileView extends Component {
     }
 }
 
+/*
+<TouchableOpacity
+	onPress={() =>
+		firebase.auth().signInWithPopup(provider)
+		.then(function(result) { console.log('nice'); })
+	}
+>
+	<Text>
+		sign in
+	</Text>
+</TouchableOpacity>
+*/
+// firebase.auth().signInWithPopup(provider).then(function(result) {
+/*
+<LoginButton
+	publishPermissions={['publish_actions']}
+	onLoginFinished={
+		(error, result) => {
+			if (error) {
+				alert('login has error: ', result.error);
+			} else if (result.isCancelled) {
+				alert('login is cancelled.');
+			} else {
+				AccessToken.getCurrentAccessToken().then((token) => {
+					FacebookAuthProvider.getCredential(token);
+					const credential = provider.credential(token);
+						console.log(token);
+					});
+				}
+			}
+		}
+		onLogoutFinished={() => alert('logout.')}
+/>
+*/
 const styles = StyleSheet.create({
     portfolioContainer: {
         flex: 1,

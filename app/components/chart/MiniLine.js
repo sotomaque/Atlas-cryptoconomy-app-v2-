@@ -1,26 +1,14 @@
 import React, { Component } from 'react';
-import { Dimensions, LayoutAnimation, StyleSheet, View } from 'react-native';
-import { connect } from 'react-redux';
+import { Dimensions, LayoutAnimation, StyleSheet, View, Text } from 'react-native';
+// import { connect } from 'react-redux';
 import { Group, Path, Surface, Shape } from 'react-native/Libraries/ART/ReactNativeART';
-import { StraightLine } from './StraightLine.js';
-import { sendValueFromPoint } from '../../actions';
+// import { sendValueFromPoint } from '../../actions';
 
-class Line extends Component {
-  static defaultProps = {
-    strokeColor: 'white',
-    strokeWidth: 1, // Width of in-between graph
-  };
-
+class MiniLine extends Component {
   state = {
-
-    width: Dimensions
-      .get('window')
-      .width,
-    // set initial height to zero so when updated to actual height and animated, the
-    // chart raises from the bottom to the top of the container
-    height: 0,
+    width: 100,
+    height: 30,
     arrayClosest: [],
-    selectedVal: -1
   };
 
   componentWillMount() {
@@ -32,11 +20,11 @@ class Line extends Component {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     //  console.log('Num: ', this.getClosestTo(this.state.arrayClosest,
     // this.props.xVal));
-    this.state.selectedVal = this.getClosestTo(this.state.arrayClosest, this.props.xVal);
-    this
-      .props
-      .sendValueFromPoint(this.state.selectedVal);
-    this.updateArrayClosest();
+  //  this.state.selectedVal = this.getClosestTo(this.state.arrayClosest, this.props.xVal);
+  //  this
+  //    .props
+    //  .sendValueFromPoint(this.state.selectedVal);
+  //  this.updateArrayClosest();
   }
 
   onLayout = (event : Object) => {
@@ -45,30 +33,17 @@ class Line extends Component {
       nativeEvent: {
         layout: {
           width,
-          height
-        }
-      }
+          height,
+        },
+      },
     } = event;
     // update the state
-    this.setState({width, height});
+//    this.setState({ width, height });
+    this.state.width = width;
   };
-  getClosestTo(array, goal) {
-    let selected = 10000;
-    let obj;
 
-    array.forEach((num) => {
-      const diff = Math.abs(num.xPos - goal);
-
-      if (diff < selected) {
-        selected = diff;
-        obj = num;
-      }
-    });
-
-    return obj.yVal;
-  }
   updateArrayClosest() {
-    const {width} = this.state;
+    const { width } = this.state;
 
     this.state.arrayClosest = [];
     // step between each value point on horizontal (x) axis
@@ -81,18 +56,18 @@ class Line extends Component {
         this.state.arrayClosest = [
           ...this.state.arrayClosest, {
             xPos: x,
-            yVal: number
-          }
+            yVal: number,
+          },
         ];
       });
     //  console.log('Array: ', this.state.arrayClosest);
   }
 
   props : {
-    xVal: number,
     fillColor: string,
     strokeColor: string,
-    strokeWidth: number
+    strokeWidth: number,
+    stockData: Object
   };
 
   // Handle container view's onLayout event to get its width and height after
@@ -100,15 +75,15 @@ class Line extends Component {
   // actual width and height
 
   buildPath = () : Path => {
-    const {strokeWidth} = this.props;
-    const {width, height} = this.state;
+    const strokeWidth = this.props.strokeWidth ? this.props.strokeWidth : '3';
+    const { width, height } = this.state;
 
     let firstPoint : boolean = true;
     let previous : {
       x : number,
       y : number
     };
-
+  //  console.log(this.props);
     const minValue = Math.min(...this.props.stockData);
     const maxValue = Math.max(...this.props.stockData) - minValue;
     // step between each value point on horizontal (x) axis
@@ -140,7 +115,7 @@ class Line extends Component {
       // save current x and y coordinates for the next point
       previous = {
         x,
-        y
+        y,
       };
       firstPoint = false;
     });
@@ -152,40 +127,43 @@ class Line extends Component {
   };
 
   render() {
-    const {fillColor, strokeColor, strokeWidth, xVal} = this.props;
-    const {width, height} = this.state;
+    // const { width, height } = this.state;
+    const strokeColor = 'white';
+    const fillColor = 'white';
+    const strokeWidth = 1;
+    // const width = Dimensions.get('window').width;
+  //  console.log("Width: ",this.state.width);
     return (
       <View style={styles.container} onLayout={this.onLayout}>
-
-        <Surface width={width} height={height}>
-          <Group x={0} y={height}>
+        <Surface width={this.state.width} height={30}>
+          <Group x={0} y={30}>
             <Shape
               d={this.buildPath(this.props.stockData)}
-              fill={fillColor}
+            //  fill={fillColor}
               stroke={strokeColor}
-              strokeWidth={strokeWidth}/>
-
+              strokeWidth={strokeWidth}
+            />
           </Group>
-          <StraightLine xVal={xVal}/>
-
         </Surface>
 
       </View>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // align at the bottom of the container so when animated it rises to the top
-    justifyContent: 'flex-end'
-  }
+    justifyContent: 'flex-end',
+  },
 });
-
+/*
 function mapStateToProps(state) {
-  return {filter: state.stockFilterReducer.filter, stockList: state.stockFilterReducer.stockList, stockData: state.stockFilterReducer.stockData};
+  return {
+  filter: state.stockFilterReducer.filter,
+  stockData: state.stockFilterReducer.stockData};
 }
 
-export default connect(mapStateToProps, { sendValueFromPoint })(Line);
+export default connect(mapStateToProps, { sendValueFromPoint })(MiniLine);
+*/
+export default MiniLine;

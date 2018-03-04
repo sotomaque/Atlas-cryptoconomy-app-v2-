@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import { View, StyleSheet, ScrollView, Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
@@ -7,18 +7,13 @@ import { StockLineChartWrapper } from '../../components/StockLineChart';
 import { Header } from '../../components/Header';
 import { sendChartData, resetChart } from '../../actions';
 import coinList	from '../../../app/lib/coin-list';
-// import { sendTickerAndName } from '../../actions';
-
-// import  Icon  from 'react-native-vector-icons/FontAwesome';
-
 
 class CoinFullPage extends Component {
-	// state = { isOn: true };
 
 
 	componentWillMount() {
-		return cryptoApi.getHistoricalData({
-			filter: 'DAY',
+	return cryptoApi.getHistoricalData({
+			filter: this.props.filter,
 			coinName: `${this.props.ticker}`,
 		})
 			.then((res) => {
@@ -41,7 +36,7 @@ class CoinFullPage extends Component {
 		this.props.navigation.goBack();
 	}
 	render() {
-			// const width = Dimensions.get('window').width; // full device width, captured at runtime
+	// const width = Dimensions.get('window').width; // full device width, captured at runtime
       const {
   //    ticker,
       name,
@@ -61,7 +56,7 @@ class CoinFullPage extends Component {
 									</View>
 									<ScrollView scrollEnabled={this.props.scrollEnabled}>
 											<View>
-												<StockLineChartWrapper />
+												<StockLineChartWrapper heightFixed={(Dimensions.get('window').height) * 0.525} />
 											</View>
 											<View>
 												<Text style={styles.statsLabel}>Stats</Text>
@@ -93,7 +88,13 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   const { name, ticker } = state.coinPageReducer;
 	const scrollEnabled = state.guiInfo.scrollingEnabled;
-  return { name, ticker, scrollEnabled };
+	const { filter } = state.stockFilterReducer;
+  return {
+		name,
+		ticker,
+		scrollEnabled,
+		filter,
+	};
 };
 
 export default connect(mapStateToProps, { sendChartData, resetChart })(CoinFullPage);

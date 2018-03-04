@@ -6,7 +6,7 @@ import {
 	RESET_CHART,
 	SWITCH_SCROLLING,
 	CHANGE_SIGN_IN,
-	UPDATE_PORTFOLIO,
+	CHANGE_FILTER_VALUE,
 } from '../config/constants.js';
 import coinList from '../../app/lib/coin-list.js';
 
@@ -34,6 +34,12 @@ export function sendValueFromPoint(val) {
 	};
 }
 
+export function changeFilter(val) {
+	return {
+		type: CHANGE_FILTER_VALUE,
+		payload: val,
+	};
+}
 // Sends value from selected point in a graph.
 export function sendStockListData(val) {
 	return {
