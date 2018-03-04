@@ -17,14 +17,14 @@ const Header = (props) => {
           <TouchableOpacity onPress={() => leftFunction()}>
             <Icon
               name={nameLeft}
-              size={20}
+              size={22}
               color="#fff"
             />
           </TouchableOpacity>
 
           <Text style={styles.textStyle}>{props.headerText}</Text>
             <TouchableOpacity onPress={() => rightFunction()}>
-              <Icon name={nameRight} size={20} color="#fff" />
+              <Icon name={nameRight} size={22} color="#fff" />
             </TouchableOpacity>
         </View>
     );
