@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import { View, StyleSheet, ScrollView, Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
@@ -61,7 +61,7 @@ class CoinFullPage extends Component {
 									</View>
 									<ScrollView scrollEnabled={this.props.scrollEnabled}>
 											<View>
-												<StockLineChartWrapper />
+												<StockLineChartWrapper heightFixed={(Dimensions.get('window').height) * 0.525} />
 											</View>
 											<View>
 												<Text style={styles.statsLabel}>Stats</Text>

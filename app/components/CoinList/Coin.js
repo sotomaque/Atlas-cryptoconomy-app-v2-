@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import MiniLine from '../chart/MiniLine.js';
 // import { connect } from 'react-redux';
 // import  Icon  from 'react-native-vector-icons/FontAwesome';
 
-
+// WE SHOULD AT SOME POINT MAKE '$' A CONSTANT THAT CAN BE CHANGED
+// SO PEOPLE CAN USE OTHER CURRENCIES.
 export class Coin extends Component {
   props: {
       symbol: string,
@@ -36,7 +38,7 @@ export class Coin extends Component {
     // console.log('Prices :',price,priceInt);
     const priceHoldings = (price * quantity).toLocaleString();
     const totalPriceSymbol = (quantity ? `($${priceHoldings})` : '');
-    const priceOrPercent = (priceOverPercent ? `${(price * 1).toLocaleString()}` : `${percentChange}`);
+    const priceOrPercent = (priceOverPercent ? `$${(price * 1).toLocaleString()}` : `${percentChange}`);
 			return (
           <View style={{ paddingBottom: 10 }}>
             <View style={styles.row}>
@@ -52,8 +54,20 @@ export class Coin extends Component {
                   </Text>
                 </View>
               </TouchableOpacity>
-
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingLeft: 15,
+                width: Dimensions.get('window').width / 2.5,
+              }}
+              >
+              <MiniLine
+                stockData={[0, 1, 2, 4, 5]}
+              />
+              </View>
               <TouchableOpacity
+                width={100}
                 style={styles.right}
                 onPress={() => this.props.onPressPrice()}
               >
@@ -78,7 +92,6 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-
   },
   right: {
     flex: 1,

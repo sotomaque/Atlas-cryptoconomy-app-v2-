@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Dimensions, PanResponder } from 'react-native';
 import { connect } from 'react-redux';
-import Chart from '../chart';
+import Chart from '../Chart';
 import StockLineFilter from './StockLineFilter';
 import { StockLineTicker } from './StockLineTicker';
 // import CoinList from '../CoinList/CoinList';
@@ -59,7 +59,12 @@ export class StockLineChart extends Component {
 		return this.props.selectedPoint;
 	}
 
+	props: {
+		heightFixed: number
+	};
+
 	render() {
+			const height = this.props.heightFixed ? this.props.heightFixed : 240;
 			const width = Dimensions.get('window').width; // full device width, captured at runtime
 			return (
 				<View style={{ flexDirection: 'column', width }}>
@@ -73,7 +78,7 @@ export class StockLineChart extends Component {
 						/>
 					</View>
 
-					<View style={{ height: 240 }} {...this.panResponder.panHandlers}>
+					<View style={{ height }} {...this.panResponder.panHandlers}>
 						<Chart
 							xVal={this.state.xVal}
 							data={this.props.stockData}
