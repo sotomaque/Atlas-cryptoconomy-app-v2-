@@ -1,11 +1,14 @@
-
+/**
+* This page stores all the basic function that talk to the backend endpoints
+* Additional workflow logic should not been place in this file
+*/
 const restApi = {
   LOCAL_DEFAULT_URL: 'https://d1jh47jzv2.execute-api.us-east-1.amazonaws.com/dev/',
   GET_CURRENCY_PAIR: 'products/currency-pairs/Coinbase',
   PORTFOLIO_SERVICE: 'portfolios',
   TRANSACTION_SERVICE: 'transactions',
 
-  //
+  // saveTransaction
   saveTransaction(transactions, callback) {
     transactions = {
       userId: '123',
