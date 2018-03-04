@@ -36,6 +36,7 @@ export default class Search extends Component {
                   iOSHideShadow
                   placeholderTextColor='white'
                   showOnLoad
+                  focusOnLayout={false}
                   handleChangeText={text => this.setState({ searchText: text })}
                   onBack={() => this.props.navigation.goBack()}
 

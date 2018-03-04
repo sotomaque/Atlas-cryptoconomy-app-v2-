@@ -85,5 +85,7 @@
       <string>fbauth2</string>
       <string>fbshareextension</string>
     </array>
+    <key>CodePushDeploymentKey</key>
+    <string>18uMyutDTG9KBPwTZSuCxZ7sdrnxd807b042-998c-41f8-9a15-587222085f37</string>
   </dict>
 </plist>
