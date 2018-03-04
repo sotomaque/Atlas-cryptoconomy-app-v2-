@@ -8,11 +8,13 @@ export class Coin extends Component {
   props: {
       symbol: string,
       name: string,
-      priceChange: number,
+      price: number,
   //    change: number,
     //  active: boolean,
+      percentChange: number,
       onPress: Function,
-      onPressPrice: Function
+      onPressPrice: Function,
+      priceOverPercent: bool,
     };
 
 	render() {
@@ -20,32 +22,48 @@ export class Coin extends Component {
       const {
       symbol,
       name,
-      priceChange,
+      percentChange,
+      quantity,
+      price,
+      priceOverPercent,
     } = this.props;
-			return (
-          <View>
-            <View style={styles.row}>
-              <TouchableOpacity
-                  onPress={() => this.props.onPress()}
-              >
-              <Text style={styles.text} numberOfLines={1}>
-                {name}
-              </Text>
 
-              <View style={styles.row}>
-                <Text style={[styles.text, styles.name]} numberOfLines={1}>
-                  {symbol}
+    // If quantity specified, prefix that to ticker
+    const quantSymbol = (quantity ? `${quantity} ${symbol}` : symbol);
+
+    // const holdingPrice = price * quantity;
+    // const priceInt = price.slice(1);
+    // console.log('Prices :',price,priceInt);
+    const priceHoldings = (price * quantity).toLocaleString();
+    const totalPriceSymbol = (quantity ? `($${priceHoldings})` : '');
+    const priceOrPercent = (priceOverPercent ? `${(price * 1).toLocaleString()}` : `${percentChange}`);
+			return (
+          <View style={{ paddingBottom: 10 }}>
+            <View style={styles.row}>
+
+              <TouchableOpacity onPress={() => this.props.onPress()}>
+                <Text style={styles.text} numberOfLines={1}>
+                  {name}
                 </Text>
-              </View>
+
+                <View style={styles.row}>
+                  <Text style={[styles.text, styles.name]} numberOfLines={1}>
+                    {quantSymbol}
+                  </Text>
+                </View>
               </TouchableOpacity>
 
-              <View style={styles.right}>
-                <TouchableOpacity onPress={() => this.props.onPressPrice()}>
-                  <Text style={styles.text} numberOfLines={1}>
-                    {priceChange}
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+                style={styles.right}
+                onPress={() => this.props.onPressPrice()}
+              >
+                <Text style={styles.text} numberOfLines={1}>
+                  {priceOrPercent}
+                </Text>
+                <Text style={{ color: '#FBFCFC' }}>
+                  {totalPriceSymbol}
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
 			);
@@ -64,7 +82,7 @@ const styles = StyleSheet.create({
   },
   right: {
     flex: 1,
-    alignSelf: 'flex-end',
+    justifyContent: 'flex-start',
     alignItems: 'flex-end',
   },
   text: {
@@ -77,6 +95,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '300',
-    paddingLeft: 5,
+    paddingLeft: 0,
   },
 });

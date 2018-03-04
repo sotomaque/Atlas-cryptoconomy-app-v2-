@@ -12,6 +12,8 @@ import coinList	from '../../../app/lib/coin-list';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
 
 const userCoinTickerList = ['BTC', 'ETH', 'XRP'];
+const userCoinHoldingList = { BTC: 3.5, NEO: 10 };
+
 class CoinList extends Component {
 	state = {
 		isPriceDisplayed: true,
@@ -50,17 +52,7 @@ class CoinList extends Component {
 			});
 	}
 
-	priceOrPercent(item) {
-		if (item !== undefined) {
-			if (this.state.isPriceDisplayed === true) {
-			return item.price;
-			}
-			return item.percentChange;
-		}
-		return null;
-	}
 	grabChart(ticker, name) {
-
 		this.props.resetChart();
 		this.props.changeCoin(ticker);	// Sets filter to usew with selectedCoin
 		this.props.sendTickerAndName(ticker, name);
@@ -74,10 +66,9 @@ class CoinList extends Component {
 				style={{
 				borderRadius: 10,
 				padding: 10,
-				width: (width / 1.1),
-				justifyContent: 'center',
+				width,
+				justifyContent: 'space-around',
 				marginLeft: 0,
-				flex: 1,
 				}}
 			>
 				<FlatList
@@ -86,14 +77,16 @@ class CoinList extends Component {
 					keyExtractor={item => item.ticker}
 					extraData={this.state.isPriceDisplayed}
 					renderItem={({ item }) => (
-					<View>
+					<View style={{ marginRight: 0 }}>
 						<Coin
 							name={item.name}
 							symbol={item.ticker}
-							priceChange={this.priceOrPercent(item)}
-							change={item.percentChange}
+							quantity={userCoinHoldingList[item.ticker]}
+							percentChange={item.percentChange}
 							onPress={() => this.grabChart(item.ticker, item.name)}
 							onPressPrice={() => this.onTogglePrice(item)}
+							price={item.price}
+							priceOverPercent={this.state.isPriceDisplayed}
 						/>
 					</View>
 					)}

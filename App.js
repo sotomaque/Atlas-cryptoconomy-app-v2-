@@ -50,7 +50,7 @@ return (
 };
 
 export default class App extends Component {
-      state = { hasSeenIntro: false };
+      state = { hasSeenIntro: true };
     // Added the remote bugger to stop the "Remote debugger is in a
     // background tab which may cause apps to perform slowly." from popping
     // up whenever the app is ran in the simulator.
