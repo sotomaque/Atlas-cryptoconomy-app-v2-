@@ -115,6 +115,6 @@ export default connect(
 		changeCoin,
 		sendTickerAndName,
 		resetToUserHistory,
-		resetChart
+		resetChart,
 	},
 	)(CoinList);
