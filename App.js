@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'; // Added Redux-Perist Config
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { persistStore } from 'redux-persist'; // See configureStore for persist settings
 import firebase from 'firebase';
+import AppIntroSlider from 'react-native-app-intro-slider';
 import { configureStore } from './app/config/configureStore';
 import InitRouter from './app/screens/InitRouter.js';
 // import cryptoApi from './app/lib/crypto-compare-api';
@@ -16,18 +17,40 @@ const perst = persistStore(
   () => {},
 );
 
+const slides = [
+  {
+    key: 'somethun',
+    title: 'Title 1',
+    text: 'Description.\nSay something cool',
+    backgroundColor: '#59b2ab',
+  },
+  {
+    key: 'somethun-dos',
+    title: 'Title 2',
+    text: 'Other cool stuff',
+    backgroundColor: '#febe29',
+  },
+  {
+    key: 'somethun1',
+    title: 'Title 3',
+    text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
+    backgroundColor: '#22bcb5',
+  },
+];
+
+// This function is called while PersistGate grabs the local data from device
+// Consider it a place holder, we should have a pic of the logo when loading
+
+const loadingComp = () => {
+return (
+ <View style={{ flex: 1, justifyContent: 'center' }}>
+   <ActivityIndicator size="large" color="#0000ff" />
+ </View>
+ );
+};
+
 export default class App extends Component {
-
-    // This function is called while PersistGate grabs the local data from device
-    // Consider it a place holder, we should have a pic of the logo when loading
-     loadingFunc() {
-     return (
-      <View style={{ flex: 1, justifyContent: 'center' }}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-      );
-    }
-
+      state = { hasSeenIntro: false };
     // Added the remote bugger to stop the "Remote debugger is in a
     // background tab which may cause apps to perform slowly." from popping
     // up whenever the app is ran in the simulator.
@@ -45,12 +68,25 @@ export default class App extends Component {
       firebase.initializeApp(config);
     }
 
+    onDone = () => {
+    this.setState({ hasSeenIntro: true });
+    }
+    grabIntroOrRouter() {
+      if (this.state.hasSeenIntro === false) {
+        return (
+          <AppIntroSlider
+            slides={slides}
+            onDone={this.onDone}
+          />
+        );
+      }
+      return (<InitRouter />);
+    }
     render() {
         return (
-
           <Provider store={store}>
-              <PersistGate loading={this.loadingFunc()} persistor={perst}>
-                <InitRouter />
+              <PersistGate loading={loadingComp()} persistor={perst}>
+                {this.grabIntroOrRouter()}
               </PersistGate>
           </Provider>
 
