@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-
+import CodePush from 'react-native-code-push';
 // app imports
 import { StockLineChartWrapper } from '../components/StockLineChart';
 import { Header } from '../components/Header';
@@ -12,6 +12,11 @@ import { scrollingisEnabled } from '../actions';
 
 // import PortfolioRouter from './PortfolioStack.js';
 import restApi from '../lib/rest-api';
+
+const CodePushConfig = {
+  updateDialog: true,
+  installMode: CodePush.InstallMode.IMMEDIATE,
+};
 
 class Portfolio extends Component {
   // state = { isOn: true };
@@ -26,6 +31,10 @@ class Portfolio extends Component {
   setScrolling(val) {
     this.props.scrollingisEnabled(val);
   }
+
+  checkForUpdates = () => {
+     CodePush.sync(CodePushConfig);
+   }
 
   render() {
         return (
