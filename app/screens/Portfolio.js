@@ -9,9 +9,8 @@ import { StockLineChartWrapper } from '../components/StockLineChart';
 import { Header } from '../components/Header';
 import CoinList from '../components/CoinList/CoinList';
 import { scrollingisEnabled } from '../actions';
-
+import portfolioWorkflow from '../lib/portfolio-workflow';
 // import PortfolioRouter from './PortfolioStack.js';
-import restApi from '../lib/rest-api';
 
 const CodePushConfig = {
   updateDialog: true,
@@ -20,12 +19,10 @@ const CodePushConfig = {
 
 class Portfolio extends Component {
   // state = { isOn: true };
-  constructor(props) {
-    super(props);
-    restApi.saveTransaction();
-  }
 
   componentWillMount() {
+    // sync up portfolio
+    portfolioWorkflow.syncPortfolio(this.props.portfolio, 'qianwang');
   }
 
   setScrolling(val) {
@@ -87,6 +84,7 @@ function mapStateToProps(store) {
   return {
 		filter: store.stockFilterReducer.filter,
 		scrollEnabledValue: store.guiInfo.scrollingEnabled,
+    portfolio: store.portfolioReducer,
   };
 }
 

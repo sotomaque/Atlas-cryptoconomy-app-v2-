@@ -6,6 +6,7 @@ import persistedState from './persistedState';
 import guiInfo from './guiInfo';
 import stockFilterReducer from './stockerFilter';
 import coinPageReducer from './coinPageReducer.js';
+import portfolioReducer from './portfolioReducer.js';
 
 const rootReducer = {
     userInfo,
@@ -13,6 +14,7 @@ const rootReducer = {
     guiInfo,
     stockFilterReducer,
     coinPageReducer,
+    portfolioReducer,
 };
 
 export default rootReducer;

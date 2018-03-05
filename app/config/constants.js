@@ -12,6 +12,10 @@ export const SET_ADJUSTED_CHART = 'set_adjusted_chart';
 export const SEND_VALUE_FROM_POINT = 'send_value_from_point';
 
 
+// portfolio action types
+export const UPDATE_PORTFOLIO = 'update_portfolio';
+export const SYNC_PORTFOLIO = 'sync_portfolio';
+
 export const CHART_TIME_INTERVAL = {
   DAY: 'TODAY',
   WEEK: 'PAST WEEK',
