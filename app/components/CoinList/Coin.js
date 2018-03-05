@@ -60,8 +60,8 @@ export class Coin extends Component {
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
-                paddingLeft: 15,
-                width: Dimensions.get('window').width / 2.5,
+                paddingLeft: 35,
+                width: Dimensions.get('window').width / 2.3,
               }}
               >
               <MiniLine

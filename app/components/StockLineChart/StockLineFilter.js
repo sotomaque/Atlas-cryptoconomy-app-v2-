@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
 import { StockLineFilterStyles } from './styles';
-import { sendChartData, changeFilter } from '../../actions';
+import { sendChartData, changeFilter, resetData } from '../../actions';
 
 import cryptoApi from '../../../app/lib/crypto-compare-api';
 
@@ -38,49 +38,70 @@ class StockLineFilter extends Component {
 					<View style={container}>
 
 						<FilterButton
-							onPressButton={() => this.onFilterStockChart({ filter: 'DAY' })}
+							onPressButton={() => {
+								this.onFilterStockChart({ filter: 'DAY' });
+								this.props.resetData('DAY');
+							}}
 							text='1D'
 							name='DAY'
 							filter={this.props.filter}
 						/>
 
 						<FilterButton
-							onPressButton={() => this.onFilterStockChart({ filter: 'WEEK' })}
+							onPressButton={() => {
+								this.onFilterStockChart({ filter: 'WEEK' });
+								this.props.resetData('WEEK');
+							}}
 							text='1W'
 							name='WEEK'
 							filter={this.props.filter}
 						/>
 
 						<FilterButton
-							onPressButton={() => this.onFilterStockChart({ filter: 'MONTH' })}
+							onPressButton={() => {
+								this.onFilterStockChart({ filter: 'MONTH' });
+								this.props.resetData('MONTH');
+							}}
 							text='1M'
 							name='MONTH'
 							filter={this.props.filter}
 						/>
 
 						<FilterButton
-							onPressButton={() => this.onFilterStockChart({ filter: '3MONTH' })}
+							onPressButton={() => {
+								this.onFilterStockChart({ filter: '3MONTH' });
+								this.props.resetData('3MONTH');
+							}}
 							text='3M'
 							name='3MONTH'
 							filter={this.props.filter}
 						/>
 
 						<FilterButton
-							onPressButton={() => this.onFilterStockChart({ filter: '6MONTH' })}
+							onPressButton={() => {
+								this.onFilterStockChart({ filter: '6MONTH' });
+								this.props.resetData('6MONTH');
+							}}
 							text='6M'
 							name='6MONTH'
 							filter={this.props.filter}
 						/>
 
 						<FilterButton
-							onPressButton={() => this.onFilterStockChart({ filter: '1YEAR' })}
+							onPressButton={() => {
+								this.onFilterStockChart({ filter: '1YEAR' });
+								this.props.resetData('1YEAR');
+							}}
 							text='1Y'
 							name='1YEAR'
 							filter={this.props.filter}
 						/>
 
 						<FilterButton
-							onPressButton={() => this.onFilterStockChart({ filter: 'MAX' })}
+							onPressButton={() => {
+								this.onFilterStockChart({ filter: 'MAX' });
+								this.props.resetData('MAX');
+							}}
 							text='MAX'
 							name='MAX'
 							filter={this.props.filter}
@@ -115,4 +136,4 @@ const filterStyle = StyleSheet.create({
         // borderBottomColor: 'white'
     },
 });
-export default connect(mapStateToProps,	{ sendChartData, changeFilter })(StockLineFilter);
+export default connect(mapStateToProps,	{ sendChartData, changeFilter, resetData })(StockLineFilter);
