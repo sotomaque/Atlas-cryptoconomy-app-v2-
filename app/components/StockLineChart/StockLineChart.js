@@ -50,6 +50,16 @@ export class StockLineChart extends Component {
 			*/
 	}
 
+	getPointFromArray() {
+		const widthArray = (this.props.stockData.length / (Dimensions.get('window').width));
+		let elementIndex = Math.round(widthArray * this.state.xVal) - 1;
+		if (elementIndex < 0) elementIndex = 0;
+		if (this.state.xVal < 1) {
+			this.state.xVal = -10;
+			return this.props.endPoint;
+		}
+		return this.props.stockData[elementIndex];
+	}
 	getPointToSend() {
 		// || this.props.isOn === false
 		if (this.state.xVal < 1) {
@@ -71,7 +81,7 @@ export class StockLineChart extends Component {
 
 					<View>
 						<StockLineTicker
-							ticker={this.getPointToSend()}
+							ticker={this.getPointFromArray()}
 							chartAmountChange={this.props.chartAmountChange}
 							chartPercentChange={this.props.chartPercentChange}
 							chartTimeInterval={this.props.chartTimeInterval}

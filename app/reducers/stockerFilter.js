@@ -4,6 +4,7 @@ import {
 	CHANGE_FILTER_VALUE,
 	RESET_TO_USER_TRANSACTIONS,
 	RESET_CHART,
+	SEND_VALUE_FROM_POINT,
 } from '../config/constants.js';
 
 const initialState = {
@@ -73,7 +74,7 @@ export default function stockFilterReducer(state = initialState, action) {
 					chartTimeInterval: action.payload.chartTimeInterval,
 				};
 				}
-		case 'SEND_VALUE_FROM_POINT':
+		case SEND_VALUE_FROM_POINT:
 				return {
 					...state,
 					selectedPoint: action.payload,

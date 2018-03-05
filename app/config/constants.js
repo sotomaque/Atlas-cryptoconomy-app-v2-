@@ -8,6 +8,9 @@ export const SWITCH_SCROLLING = 'switch_scrolling';
 export const CHANGE_FILTER_VALUE = 'change_filter_value';
 export const RESET_MINI_CHART_DATA = 'reset_mini_chart_data';
 export const DID_REST_MINI_CHART_DATA = 'did_reset_mini_chart_data';
+export const SET_ADJUSTED_CHART = 'set_adjusted_chart';
+export const SEND_VALUE_FROM_POINT = 'send_value_from_point';
+
 
 export const CHART_TIME_INTERVAL = {
   DAY: 'TODAY',

@@ -9,6 +9,8 @@ import {
 	CHANGE_FILTER_VALUE,
 	RESET_MINI_CHART_DATA,
 	DID_REST_MINI_CHART_DATA,
+	SET_ADJUSTED_CHART,
+	SEND_VALUE_FROM_POINT,
 } from '../config/constants.js';
 import coinList from '../../app/lib/coin-list.js';
 
@@ -31,7 +33,7 @@ export function sendChartData(val, filter) {
 // Sends value from selected point in a graph.
 export function sendValueFromPoint(val) {
 	return {
-		type: 'SEND_VALUE_FROM_POINT',
+		type: SEND_VALUE_FROM_POINT,
 		payload: val,
 	};
 }
@@ -107,5 +109,12 @@ export function resetData(filter) {
 export function didResetData() {
 	return {
 		type: DID_REST_MINI_CHART_DATA,
+	};
+}
+
+export function setAdjugestedChart(value) {
+	return {
+		type: SET_ADJUSTED_CHART,
+		payload: value,
 	};
 }

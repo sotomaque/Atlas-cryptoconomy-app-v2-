@@ -9,8 +9,6 @@ import { sendChartData, resetChart } from '../../actions';
 import coinList	from '../../../app/lib/coin-list';
 
 class CoinFullPage extends Component {
-
-
 	componentWillMount() {
 	return cryptoApi.getHistoricalData({
 			filter: this.props.filter,
@@ -49,7 +47,6 @@ class CoinFullPage extends Component {
 										<Header
 											headerText={name}
                       nameLeft="arrow-circle-left"
-                      nameRight="search"
                       onPressLeft={() => this.goBack()}
                       onPressRight={() => {}}
 										/>

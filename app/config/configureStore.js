@@ -8,7 +8,7 @@ import reducersImport from '../reducers';
 const persistConfig = {
   key: 'rootReducer',
   storage,
-  whitelist: ['userInfo' ] // only persists what's in userInfo right now. -Pedro
+  whitelist: ['userInfo'], // only persists what's in userInfo right now. -Pedro
 };
 const reducers = persistCombineReducers(persistConfig, reducersImport);
 export function configureStore() {

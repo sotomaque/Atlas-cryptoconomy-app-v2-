@@ -39,32 +39,32 @@ let cryptoApi = {
 			case 'DAY':
 				filter 		= 	'minute';
 				aggreate	= 	'7';
-				limit			=	'200';
+				limit			=	'100';
 				break;
 			case 'WEEK':
 				filter		=	'hour';
 				aggreate	= 	'1';
-				limit			=	'168';
+				limit			=	'100';
 				break;
 			case 'MONTH':
 				filter 		=	'hour';
 				aggreate	= '3';
-				limit			=	'243';
+				limit			=	'100';
 				break;
 			case '3MONTH':
 				filter		= 'hour';
 				aggreate	= '9';
-				limit			=	'243';
+				limit			=	'100';
 				break;
 			case '6MONTH':
 				filter		= 'day';
 				aggreate	= '1';
-				limit			=	'180';
+				limit			=	'100';
 				break;
 			case '1YEAR':
 				filter		=	'day';
 				aggreate	=	'1';
-				limit			=	'365';
+				limit			=	'100';
 				break;
 			case 'MAX':
 				filter		= 'day';

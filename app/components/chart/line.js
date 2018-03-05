@@ -3,7 +3,7 @@ import { Dimensions, LayoutAnimation, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Group, Path, Surface, Shape } from 'react-native/Libraries/ART/ReactNativeART';
 import { StraightLine } from './StraightLine.js';
-import { sendValueFromPoint } from '../../actions';
+import { sendValueFromPoint, setAdjugestedChart } from '../../actions';
 
 class Line extends Component {
   static defaultProps = {
@@ -20,24 +20,27 @@ class Line extends Component {
     // chart raises from the bottom to the top of the container
     height: 0,
     arrayClosest: [],
-    selectedVal: -1
+    selectedVal: -1,
   };
 
-  componentWillMount() {
-    this.updateArrayClosest();
+  componentDidMount() {
+  this.updateArrayClosest();
   }
 
   componentWillUpdate() {
     //  this.setState({ height: 0 });
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    //  console.log('Num: ', this.getClosestTo(this.state.arrayClosest,
-    // this.props.xVal));
-    this.state.selectedVal = this.getClosestTo(this.state.arrayClosest, this.props.xVal);
-    this
-      .props
-      .sendValueFromPoint(this.state.selectedVal);
-    this.updateArrayClosest();
+  //  this.state.selectedVal = this.getClosestTo(this.state.arrayClosest, this.props.xVal);
+  //  this
+    //  .props
+    //  .sendValueFromPoint(this.state.selectedVal);
+
+  //  this.props.sendValueFromPoint(5);
   }
+
+componentDidUpdate() {
+  //  this.updateArrayClosest();
+}
 
   onLayout = (event : Object) => {
     // pull out width and height out of event.nativeEvent.layout
@@ -45,31 +48,17 @@ class Line extends Component {
       nativeEvent: {
         layout: {
           width,
-          height
-        }
-      }
+          height,
+        },
+      },
     } = event;
-    // update the state
-    this.setState({width, height});
+    // up,date the state
+    this.setState({ width, height });
   };
-  getClosestTo(array, goal) {
-    let selected = 10000;
-    let obj;
 
-    array.forEach((num) => {
-      const diff = Math.abs(num.xPos - goal);
-
-      if (diff < selected) {
-        selected = diff;
-        obj = num;
-      }
-    });
-
-    return obj.yVal;
-  }
   updateArrayClosest() {
-    const {width} = this.state;
-
+    const { width } = this.state;
+    console.log('this . props . stock data ugh: ', this.props.stockData);
     this.state.arrayClosest = [];
     // step between each value point on horizontal (x) axis
     const stepX = width / (this.props.stockData.length - 1 || 1);
@@ -78,14 +67,14 @@ class Line extends Component {
       .stockData
       .forEach((number, index) => {
         const x = index * stepX;
+        console.log('Array: ', this.state.arrayClosest);
         this.state.arrayClosest = [
           ...this.state.arrayClosest, {
             xPos: x,
-            yVal: number
-          }
+            yVal: number,
+          },
         ];
       });
-    //  console.log('Array: ', this.state.arrayClosest);
   }
 
   props : {
@@ -163,11 +152,10 @@ class Line extends Component {
               d={this.buildPath(this.props.stockData)}
               fill={fillColor}
               stroke={strokeColor}
-              strokeWidth={strokeWidth}/>
-
+              strokeWidth={strokeWidth}
+            />
           </Group>
-          <StraightLine xVal={xVal}/>
-
+          <StraightLine xVal={xVal} />
         </Surface>
 
       </View>
@@ -185,7 +173,8 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  return {filter: state.stockFilterReducer.filter, stockList: state.stockFilterReducer.stockList, stockData: state.stockFilterReducer.stockData};
+   const { stockData } = state.stockFilterReducer;
+   return { stockData };
 }
 
-export default connect(mapStateToProps, { sendValueFromPoint })(Line);
+export default connect(mapStateToProps, { sendValueFromPoint, setAdjugestedChart })(Line);
