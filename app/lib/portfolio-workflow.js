@@ -1,6 +1,6 @@
 // this file stores workflow function that should be call from the gui
-import restApi from './rest-api';
 import thunk from 'redux-thunk';
+import restApi from './rest-api';
 import { store } from '../../app/config/configureStore';
 import { UPDATE_PORTFOLIO, SYNC_PORTFOLIO } from '../config/constants.js';
 
@@ -42,7 +42,7 @@ const portfolioWorkflow = {
       console.log('syncPortfolio update portfolio');
       restApi.updatePortfolio(portfolio, (savedPortfolio) => {
         console.log('syncPortfolio return from updatePortfolio', savedPortfolio);
-        store.dispath({ type: SYNC_PORTFOLIO, payload: savedPortfolio });
+        store.dispatch({ type: SYNC_PORTFOLIO, payload: savedPortfolio });
       });
     }
   },
