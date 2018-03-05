@@ -1,8 +1,8 @@
 /*******************************************************************************
  * @author Qian
- * 
+ *
  * @functions getHistoricalData
- * 
+ *
  */
 let cryptoApi = {
 
@@ -17,7 +17,7 @@ let cryptoApi = {
 	 * @param option
 	 * @example getHistoricalData { coinName : 'BTC' ,filter : 'DAY' ,enableTime :
 	 *          true}
-	 * 
+	 *
 	 * @returns promise
 	 */
 	getHistoricalData(option, isUnprocessedData) {

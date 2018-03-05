@@ -10,6 +10,7 @@ export const CHANGE_FILTER_VALUE = 'change_filter_value';
 
 // portfolio action types
 export const UPDATE_PORTFOLIO = 'update_portfolio';
+export const SYNC_PORTFOLIO = 'sync_portfolio';
 
 export const CHART_TIME_INTERVAL = {
   DAY: 'TODAY',

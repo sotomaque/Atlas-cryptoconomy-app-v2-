@@ -11,11 +11,8 @@ const persistConfig = {
   whitelist: ['userInfo', 'portfolioReducer'], // only persists what's in userInfo right now. -Pedro
 };
 const reducers = persistCombineReducers(persistConfig, reducersImport);
-export function configureStore() {
-  const store = createStore(
+export const store = createStore(
    reducers,
    undefined,
    compose(applyMiddleware(thunk, logger))
   );
-  return store;
-}

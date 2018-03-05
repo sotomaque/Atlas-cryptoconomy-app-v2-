@@ -1,5 +1,5 @@
 // import coinList	from '../../app/lib/coin-list';
-import { UPDATE_PORTFOLIO } from '../config/constants.js';
+import { UPDATE_PORTFOLIO, SYNC_PORTFOLIO } from '../config/constants.js';
 
 const initialState = {
     userId: '',
@@ -8,10 +8,22 @@ const initialState = {
     coinList: [],
     createdAt: Date.now(),
     updatedAt: '',
+    lastSyncAt: '',
 };
 
 export default function portfolioReducer(state = initialState, action) {
   switch (action.type) {
+    case SYNC_PORTFOLIO: {
+      return {
+        ...state,
+        userId: action.payload.userId,
+        transactionList: action.payload.transactionList,
+        totalValueHeld: action.payload.totalValueHeld,
+        coinList: action.payload.coinList,
+        updatedAt: action.payload.updatedAt,
+        lastSyncAt: Date.now(),
+      };
+    }
 		case UPDATE_PORTFOLIO: {
       const currentCoin = state.coinList.filter((coin) => {
         return coin.coin === action.payload.txnCoin;

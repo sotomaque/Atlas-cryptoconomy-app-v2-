@@ -41,7 +41,7 @@ const restApi = {
 
     restApi.doPost(
       restApi.LOCAL_DEFAULT_URL + restApi.PORTFOLIO_SERVICE
-      , userId
+      , { userId }
       , callback,
     );
   },
@@ -63,13 +63,14 @@ const restApi = {
       return;
     }
     restApi.doPut(
-      restApi.LOCAL_DEFAULT_URL + restApi.PORTFOLIO_SERVICE
-      , callback,
+      restApi.LOCAL_DEFAULT_URL + restApi.PORTFOLIO_SERVICE,
+      portfolio,
+      callback,
     );
   },
 
   doPost(url, payload, callback) {
-    console.log(url, payload);
+    console.log(url, JSON.stringify(payload));
     fetch(url, {
       body: JSON.stringify(payload),
       headers: {
