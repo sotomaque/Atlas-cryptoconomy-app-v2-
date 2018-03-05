@@ -97,9 +97,10 @@ export function changeLoggedIn(value) {
 	};
 }
 
-export function resetData() {
+export function resetData(filter) {
 	return {
 		type: RESET_MINI_CHART_DATA,
+		payload: filter,
 	};
 }
 

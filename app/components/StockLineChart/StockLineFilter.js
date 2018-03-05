@@ -40,7 +40,7 @@ class StockLineFilter extends Component {
 						<FilterButton
 							onPressButton={() => {
 								this.onFilterStockChart({ filter: 'DAY' });
-								this.props.resetData();
+								this.props.resetData('DAY');
 							}}
 							text='1D'
 							name='DAY'
@@ -50,7 +50,7 @@ class StockLineFilter extends Component {
 						<FilterButton
 							onPressButton={() => {
 								this.onFilterStockChart({ filter: 'WEEK' });
-								this.props.resetData();
+								this.props.resetData('WEEK');
 							}}
 							text='1W'
 							name='WEEK'
@@ -60,7 +60,7 @@ class StockLineFilter extends Component {
 						<FilterButton
 							onPressButton={() => {
 								this.onFilterStockChart({ filter: 'MONTH' });
-								this.props.resetData();
+								this.props.resetData('MONTH');
 							}}
 							text='1M'
 							name='MONTH'
@@ -70,7 +70,7 @@ class StockLineFilter extends Component {
 						<FilterButton
 							onPressButton={() => {
 								this.onFilterStockChart({ filter: '3MONTH' });
-								this.props.resetData();
+								this.props.resetData('3MONTH');
 							}}
 							text='3M'
 							name='3MONTH'
@@ -80,7 +80,7 @@ class StockLineFilter extends Component {
 						<FilterButton
 							onPressButton={() => {
 								this.onFilterStockChart({ filter: '6MONTH' });
-								this.props.resetData();
+								this.props.resetData('6MONTH');
 							}}
 							text='6M'
 							name='6MONTH'
@@ -90,7 +90,7 @@ class StockLineFilter extends Component {
 						<FilterButton
 							onPressButton={() => {
 								this.onFilterStockChart({ filter: '1YEAR' });
-								this.props.resetData();
+								this.props.resetData('1YEAR');
 							}}
 							text='1Y'
 							name='1YEAR'
@@ -100,7 +100,7 @@ class StockLineFilter extends Component {
 						<FilterButton
 							onPressButton={() => {
 								this.onFilterStockChart({ filter: 'MAX' });
-								this.props.resetData();
+								this.props.resetData('MAX');
 							}}
 							text='MAX'
 							name='MAX'

@@ -42,7 +42,7 @@ class CoinList extends Component {
 	}
 
 	componentWillReceiveProps() {
-		if (this.props.resetData) {
+		if (this.props.should_reset_data) {
 			this.getPriceArray();
 		}
 	}
@@ -65,7 +65,7 @@ class CoinList extends Component {
 	getPriceArray() {
 		this.state.userCoinList.map((item, index) => {
 			return cryptoApi.getHistoricalData({
-				filter: this.props.filter,
+				filter: this.props.miniFilter,
 				coinName: `${item.key}`,
 			})
 				.then((res) => {
@@ -126,13 +126,17 @@ class CoinList extends Component {
 }
 
 function mapStateToProps(store) {
+	// usually having all these points leads to needless re-renders
+	// but because the miniline data isn't stored in Redux, this is the
+	// best way to assure that it is reset. Keep or else it wont work.
   return {
 		filter: store.stockFilterReducer.filter,
 		stockList: store.stockFilterReducer.stockList,
 		stockData: store.stockFilterReducer.stockData,
 		selectedPoint: store.stockFilterReducer.selectedPoint,
 		endPoint: store.stockFilterReducer.endPoint,
-		resetData: store.guiInfo.should_reset_data,
+		should_reset_data: store.guiInfo.should_reset_data,
+		miniFilter: store.guiInfo.minifilter,
   };
 }
 

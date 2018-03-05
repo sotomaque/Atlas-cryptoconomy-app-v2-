@@ -8,6 +8,7 @@ const initialState = {
   scrollingEnabled: true,
   should_reset_data: false, // resets data on mini-graphs
   did_reset_data: true,
+  minifilter: 'DAY', // filter used by the charts in CoinList
 };
 
 export default function userInfoReducer(state = initialState, action) {
@@ -15,7 +16,12 @@ export default function userInfoReducer(state = initialState, action) {
     case SWITCH_SCROLLING:
       return { ...state, scrollingEnabled: action.payload };
     case RESET_MINI_CHART_DATA:
-      return { ...state, should_reset_data: true, did_reset_data: false };
+      return {
+        ...state,
+        should_reset_data: true,
+        did_reset_data: false,
+        minifilter: action.payload,
+      };
     case DID_REST_MINI_CHART_DATA:
       return { ...state, should_reset_data: false, did_reset_data: true };
     default:
