@@ -1,5 +1,4 @@
 // this file stores workflow function that should be call from the gui
-import thunk from 'redux-thunk';
 import restApi from './rest-api';
 import { store } from '../../app/config/configureStore';
 import { UPDATE_PORTFOLIO, SYNC_PORTFOLIO } from '../config/constants.js';
