@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, Text, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
@@ -12,7 +12,12 @@ class CoinFullPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-
+			mktCap: '',
+			totalSupply: '',
+			rank: '',
+			hourPercentChange: '',
+			dayPercentChange: '',
+			weekPercentChange: '',
 		};
 	}
 	componentWillMount() {
@@ -26,7 +31,18 @@ class CoinFullPage extends Component {
 
 	coinList.getCoinListDetail(this.props.ticker, coinList.IS_DISPLAY_ALL)
 			.then((res) => {
+				const detailData = res[this.props.ticker].USD;
 				console.log('getCoinListDetail', res);
+				this.setState(() => {
+					return {
+						mktCap: detailData.MKTCAP,
+						totalSupply: detailData.SUPPLY,
+						rank: detailData.MKTCAP,
+						hourPercentChange: detailData.CHANGEPCT24HOUR,
+						dayPercentChange: detailData.CHANGEPCTDAY,
+						weekPercentChange: detailData.CHANGEPCTDAY,
+					};
+				});
 			});
 	}
 
@@ -65,6 +81,14 @@ class CoinFullPage extends Component {
 									<ScrollView scrollEnabled={this.props.scrollEnabled}>
 											<View>
 												<StockLineChartWrapper heightFixed={(Dimensions.get('window').height) * 0.525} />
+											</View>
+											<View>
+												<Text>Mkt Cap {this.state.mktCap}</Text>
+												<Text>Total Supply {this.state.totalSupply}</Text>
+												<Text>Rank {this.state.rank}</Text>
+												<Text>1Hour {this.state.hourPercentChange}%</Text>
+												<Text>1Day {this.state.dayPercentChange}%</Text>
+												<Text>1Week {this.state.weekPercentChange}%</Text>
 											</View>
 									</ScrollView>
 								</LinearGradient>
