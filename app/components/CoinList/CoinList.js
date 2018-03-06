@@ -92,7 +92,14 @@ class CoinList extends Component {
 			<View
 				style={{
 				borderRadius: 10,
-				padding: 10,
+				padding: 0,
+				shadowColor: '#000000',
+				shadowOffset: {
+					width: 0,
+					height: 2,
+				},
+				shadowRadius: 5,
+				shadowOpacity: 0.5,
 				width,
 				justifyContent: 'space-around',
 				marginLeft: 0,
@@ -104,7 +111,13 @@ class CoinList extends Component {
 					keyExtractor={item => item.ticker}
 					extraData={[this.props.resetData]}
 					renderItem={({ item }) => (
-					<View style={{ marginRight: 0 }}>
+					<View style={{
+						marginRight: 0,
+						backgroundColor: 'white',
+						borderBottomWidth: 1,
+						borderBottomColor: '#E5E7E9',
+						}}
+					>
 						<Coin
 							name={item.name}
 							symbol={item.ticker}

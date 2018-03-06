@@ -128,8 +128,8 @@ class MiniLine extends Component {
 
   render() {
     // const { width, height } = this.state;
-    const strokeColor = 'white';
-    const fillColor = 'white';
+    const strokeColor = '#27AE60';
+    const fillColor = '#27AE60';
     const strokeWidth = 1;
     // const width = Dimensions.get('window').width;
   //  console.log("Width: ",this.state.width);

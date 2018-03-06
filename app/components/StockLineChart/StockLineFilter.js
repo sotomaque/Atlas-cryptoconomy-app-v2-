@@ -8,9 +8,10 @@ import { sendChartData, changeFilter, resetData } from '../../actions';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
 
 const FilterButton = (props) => {
-		const color = (props.name === props.filter ? 'black' : 'white');
+		const color = (props.name === props.filter ? 'white' : 'rgba(159,171,182,1.0)');
+		const borderBottomWidth = (color === 'white' ? 1 : 0);
     return (
-			<View>
+			<View style={{ borderBottomWidth, borderBottomColor: 'white' }}>
 				<Text
 					onPress={props.onPressButton}
 					style={[filterStyle.text, { color }]}

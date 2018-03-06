@@ -35,14 +35,12 @@ export class Coin extends Component {
     // If quantity specified, prefix that to ticker
     const quantSymbol = (quantity ? `${quantity} ${symbol}` : symbol);
 
-    // const holdingPrice = price * quantity;
-    // const priceInt = price.slice(1);
-    // console.log('Prices :',price,priceInt);
     const priceHoldings = (price * quantity).toLocaleString();
+
     const totalPriceSymbol = (quantity ? `($${priceHoldings})` : '');
     const priceOrPercent = (priceOverPercent ? `$${(price * 1).toLocaleString()}` : `${percentChange}`);
 			return (
-          <View style={{ paddingBottom: 10 }}>
+          <View style={{ padding: 20 }}>
             <View style={styles.row}>
 
               <TouchableOpacity onPress={() => this.props.onPress()}>
@@ -51,7 +49,7 @@ export class Coin extends Component {
                 </Text>
 
                 <View style={styles.row}>
-                  <Text style={[styles.text, styles.name]} numberOfLines={1}>
+                  <Text style={[styles.text, styles.name, { fontSize: 14 }]} numberOfLines={1}>
                     {quantSymbol}
                   </Text>
                 </View>
@@ -76,7 +74,7 @@ export class Coin extends Component {
                 <Text style={styles.text} numberOfLines={1}>
                   {priceOrPercent}
                 </Text>
-                <Text style={{ color: '#FBFCFC' }}>
+                <Text style={[styles.text, { color: '#616A6B', fontSize: 14 }]} numberOfLines={1}>
                   {totalPriceSymbol}
                 </Text>
               </TouchableOpacity>
@@ -101,13 +99,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   text: {
-    color: '#FFFFFF',
+    color: '#616A6B',
     fontFamily: 'Avenir',
     fontSize: 16,
     fontWeight: '500',
   },
   name: {
-    color: '#FFFFFF',
+    color: '#616A6B',
     fontSize: 16,
     fontWeight: '300',
     paddingLeft: 0,
