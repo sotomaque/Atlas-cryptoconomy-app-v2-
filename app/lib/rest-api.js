@@ -46,7 +46,7 @@ const restApi = {
     );
   },
 
-  // createPortfolio
+  // getPortfolio
   getPortfolio(userId, callback) {
     if (!userId) {
       return;
@@ -57,7 +57,7 @@ const restApi = {
     );
   },
 
-  // createPortfolio
+  // updatePortfolio
   updatePortfolio(portfolio, callback) {
     if (!portfolio) {
       return;

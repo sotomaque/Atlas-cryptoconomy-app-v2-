@@ -10,14 +10,14 @@ import {
 const initialState = {
 	filter: 'DAY',
 	selectedCoin: 'BTC',
-	stockList: [0],
+	stockList: [0], // we dont need
 	stockData: [0, 0],
 	selectedPoint: 0,	// Selected Value, an x-value of the graph that is grabbed from the PanResponder
 	endPoint: 0,
 	// this data is for the changes under the ticker
-	chartAmountChange: 0,
-	chartPercentChange: 0,
-	chartTimeInterval: '',
+	chartAmountChange: 0, // we dont need
+	chartPercentChange: 0, // we dont need
+	chartTimeInterval: '', // we dont need
 };
 
 export default function stockFilterReducer(state = initialState, action) {

@@ -9,13 +9,24 @@ import { sendChartData, resetChart } from '../../actions';
 import coinList	from '../../../app/lib/coin-list';
 
 class CoinFullPage extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+
+		};
+	}
 	componentWillMount() {
-	return cryptoApi.getHistoricalData({
+	cryptoApi.getHistoricalData({
 			filter: this.props.filter,
 			coinName: `${this.props.ticker}`,
 		})
 			.then((res) => {
 				this.props.sendChartData(res, 'DAY');
+			});
+
+	coinList.getCoinListDetail(this.props.ticker, coinList.IS_DISPLAY_ALL)
+			.then((res) => {
+				console.log('getCoinListDetail', res);
 			});
 	}
 
@@ -54,9 +65,6 @@ class CoinFullPage extends Component {
 									<ScrollView scrollEnabled={this.props.scrollEnabled}>
 											<View>
 												<StockLineChartWrapper heightFixed={(Dimensions.get('window').height) * 0.525} />
-											</View>
-											<View>
-												<Text style={styles.statsLabel}>Stats</Text>
 											</View>
 									</ScrollView>
 								</LinearGradient>
