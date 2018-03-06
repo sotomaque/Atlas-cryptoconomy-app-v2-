@@ -10,7 +10,6 @@ import {
 const initialState = {
 	filter: 'DAY',	// Necessary, decides time frame for chart.
 	selectedCoin: 'BTC',	// Necessary, decides what chart displays.
-	stockList: [0],
 	stockData: [0, 0],
 	selectedPoint: 0,	// Selected Value, an x-value of the graph that is grabbed from the PanResponder
 	endPoint: 0,
