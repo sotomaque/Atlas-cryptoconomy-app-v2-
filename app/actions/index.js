@@ -79,13 +79,13 @@ export function resetToUserHistory() {
 	};
 }
 
-export function resetChart() {
+export function resetChart() {	// Sets stockData array to [0]
 	return {
 		type: RESET_CHART,
 	};
 }
 
-export function scrollingisEnabled(value) {
+export function scrollingisEnabled(value) {	// Used when user pans on chart
 	return {
 		type: SWITCH_SCROLLING,
 		payload: value,
@@ -99,14 +99,14 @@ export function changeLoggedIn(value) {
 	};
 }
 
-export function resetData(filter) {
+export function resetData(filter) { // first in flow to get mini-graphs
 	return {
 		type: RESET_MINI_CHART_DATA,
 		payload: filter,
 	};
 }
 
-export function didResetData() {
+export function didResetData() {	// last in flow to get mini-graphs
 	return {
 		type: DID_REST_MINI_CHART_DATA,
 	};

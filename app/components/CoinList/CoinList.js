@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 // import { LineChart } from "react-native-svg-charts";
 // import { CoinListStyles } from './styles';
-import { sendChartData, resetChart, sendStockListData, changeCoin, sendTickerAndName, resetToUserHistory, didResetData } from '../../actions';
+import { sendChartData, resetChart, changeCoin, sendTickerAndName, resetToUserHistory, didResetData } from '../../actions';
 import { Coin } from './Coin.js';
 import coinList	from '../../../app/lib/coin-list';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
@@ -26,7 +26,6 @@ class CoinList extends Component {
 		// coinList.getCoinListDetail(userCoinTickerList, coinList.IS_DISPLAY_ALL)
 		coinList.getCoinListDetail(userCoinTickerList)
 			.then((res) => {
-		//		this.props.sendStockListData(res);
 				res.map((item) => {
 					// this.priceHistory = [...this.priceHistory, item.ticker: [0, 1]];
 					return this.setState({ userCoinList: [...this.state.userCoinList, item] });
@@ -88,6 +87,7 @@ class CoinList extends Component {
 
 	render() {
 		const width = Dimensions.get('window').width;
+		console.log('Coinlist Re-rendered');
 		return (
 			<View
 				style={{
@@ -126,15 +126,10 @@ class CoinList extends Component {
 }
 
 function mapStateToProps(store) {
-	// usually having all these points leads to needless re-renders
-	// but because the miniline data isn't stored in Redux, this is the
-	// best way to assure that it is reset. Keep or else it wont work.
+	// stockData not actually used, but important in making sure
   return {
 		filter: store.stockFilterReducer.filter,
-		stockList: store.stockFilterReducer.stockList,
 		stockData: store.stockFilterReducer.stockData,
-		selectedPoint: store.stockFilterReducer.selectedPoint,
-		endPoint: store.stockFilterReducer.endPoint,
 		should_reset_data: store.guiInfo.should_reset_data,
 		miniFilter: store.guiInfo.minifilter,
   };
@@ -144,7 +139,6 @@ export default connect(
 	mapStateToProps,
 	{
 		sendChartData,
-		sendStockListData,
 		changeCoin,
 		sendTickerAndName,
 		resetToUserHistory,

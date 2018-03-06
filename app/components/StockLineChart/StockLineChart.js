@@ -37,16 +37,8 @@ export class StockLineChart extends Component {
 		});
 	}
 
-	componentDidMount() { /*
-		return coinList
-		.getUserHistoryData()
-			.then((res) => {
-				this.props.sendChartData(res);
-				this.setState({
-					stockList: res,
-				});
-			});
-			*/
+	componentDidMount() {
+
 	}
 
 	getPointFromArray() {

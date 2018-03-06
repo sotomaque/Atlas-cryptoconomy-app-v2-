@@ -25,11 +25,11 @@ class CoinFullPage extends Component {
 		// spomething better than coinList.getUserHistoryData
 		// as a way of grabbing userTransaction history, hopefully
 		// it'll be on Redux by then.
-		this.props.resetChart();
+		this.props.resetChart(); // resetChart sets stockData array to [0]
 		coinList
 			.getUserHistoryData()
 				.then((res) => {
-					this.props.sendChartData(res, 'DAY');
+					this.props.sendChartData(res, 'DAY');	// Toggles it back to day
 				});
 		this.props.navigation.goBack();
 	}

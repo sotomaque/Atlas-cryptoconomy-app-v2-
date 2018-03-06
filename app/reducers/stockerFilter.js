@@ -8,8 +8,8 @@ import {
 } from '../config/constants.js';
 
 const initialState = {
-	filter: 'DAY',
-	selectedCoin: 'BTC',
+	filter: 'DAY',	// Necessary, decides time frame for chart.
+	selectedCoin: 'BTC',	// Necessary, decides what chart displays.
 	stockList: [0],
 	stockData: [0, 0],
 	selectedPoint: 0,	// Selected Value, an x-value of the graph that is grabbed from the PanResponder
@@ -34,36 +34,6 @@ export default function stockFilterReducer(state = initialState, action) {
 				selectedCoin: action.payload,
 			};
 		}
-    case 'DAY':
-				return {
-					...state,
-					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: state.filter }),
-				};
-    case 'WEEK':
-        return {
-					...state,
-					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: state.filter }),
-				};
-    case 'MONTH':
-        return {
-					...state,
-					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: state.filter }),
-				};
-    case '3MONTH':
-        return {
-					...state,
-					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: state.filter }),
-				};
-    case '6MONTH':
-        return {
-					...state,
-					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: state.filter }),
-				};
-    case '1YEAR':
-        return {
-					...state,
-					stockList: cryptoApi.getHistoricalData({ coinName: 'BTC', filter: state.filter }),
-				};
 		case 'SEND_DATA': {
 				return {
 					...state,
@@ -79,21 +49,7 @@ export default function stockFilterReducer(state = initialState, action) {
 					...state,
 					selectedPoint: action.payload,
 				};
-		case 'SEND_STOCK_LIST_DATA': {
-				return {
-					...state,
-					stockList: action.payload,
-				};
-		}
 		case RESET_TO_USER_TRANSACTIONS: {
-			/*
-			coinList
-						.getUserHistoryData().then((res) => {
-				return {
-					...state,
-					stockList: res,
-				};
-			}); */
 			break;
 		}
 		case RESET_CHART: {
