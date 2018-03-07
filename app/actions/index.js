@@ -10,7 +10,6 @@ import {
 	RESET_MINI_CHART_DATA,
 	DID_REST_MINI_CHART_DATA,
 	SET_ADJUSTED_CHART,
-	SEND_VALUE_FROM_POINT,
 } from '../config/constants.js';
 import coinList from '../../app/lib/coin-list.js';
 
@@ -27,14 +26,6 @@ export function sendChartData(val, filter) {
 	return {
 		type: 'SEND_DATA',
 		payload,
-	};
-}
-
-// Sends value from selected point in a graph.
-export function sendValueFromPoint(val) {
-	return {
-		type: SEND_VALUE_FROM_POINT,
-		payload: val,
 	};
 }
 

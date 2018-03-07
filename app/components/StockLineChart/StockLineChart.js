@@ -12,7 +12,6 @@ import { sendChartData, scrollingisEnabled } from '../../actions';
 
 export class StockLineChart extends Component {
 	state = {
-		stockList: [],
 		stockData: [],
 		xVal: -10,
 	}
@@ -51,14 +50,6 @@ export class StockLineChart extends Component {
 		}
 		return this.props.stockData[elementIndex];
 	}
-	getPointToSend() {
-		// || this.props.isOn === false
-		if (this.state.xVal < 1) {
-			this.state.xVal = -10;
-			return this.props.endPoint;
-			}
-		return this.props.selectedPoint;
-	}
 
 	props: {
 		heightFixed: number
@@ -67,14 +58,23 @@ export class StockLineChart extends Component {
 	render() {
 			const height = this.props.heightFixed ? this.props.heightFixed : 240;
 			const width = Dimensions.get('window').width; // full device width, captured at runtime
+
+			const pointSelected = this.getPointFromArray();
+			const initPoint = this.props.stockData[0];
+			const amountChange = (pointSelected - initPoint).toFixed(2);
+			const percentChange = (((pointSelected - initPoint) * 100) / initPoint).toFixed(2);
+
+		//	console.log('init Point: ', initPoint, 'pointSelected: ', pointSelected, 'percentChange: ', percentChange);
+			// percentChange: `${((value.USD.PRICE - value.USD.OPENDAY)
+			// * 100 / value.USD.OPENDAY).toFixed(2)}%`,
 			return (
 				<View style={{ flexDirection: 'column', width }}>
 
 					<View>
 						<StockLineTicker
-							ticker={this.getPointFromArray()}
-							chartAmountChange={this.props.chartAmountChange}
-							chartPercentChange={this.props.chartPercentChange}
+							ticker={pointSelected}
+							chartAmountChange={amountChange}
+							chartPercentChange={percentChange}
 							chartTimeInterval={this.props.chartTimeInterval}
 						/>
 					</View>
@@ -101,12 +101,8 @@ export class StockLineChart extends Component {
 function mapStateToProps(store) {
   return {
 		filter: store.stockFilterReducer.filter,
-		stockList: store.stockFilterReducer.stockList,
 		stockData: store.stockFilterReducer.stockData,
-		selectedPoint: store.stockFilterReducer.selectedPoint,
 		endPoint: store.stockFilterReducer.endPoint,
-		chartAmountChange: store.stockFilterReducer.chartAmountChange,
-		chartPercentChange: store.stockFilterReducer.chartPercentChange,
 		chartTimeInterval: store.stockFilterReducer.chartTimeInterval,
 		scrollEnabledValue: store.guiInfo.scrollingEnabled,
   };

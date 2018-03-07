@@ -9,9 +9,6 @@ export const CHANGE_FILTER_VALUE = 'change_filter_value';
 export const RESET_MINI_CHART_DATA = 'reset_mini_chart_data';
 export const DID_REST_MINI_CHART_DATA = 'did_reset_mini_chart_data';
 export const SET_ADJUSTED_CHART = 'set_adjusted_chart';
-export const SEND_VALUE_FROM_POINT = 'send_value_from_point';
-
-
 // portfolio action types
 export const UPDATE_PORTFOLIO = 'update_portfolio';
 export const SYNC_PORTFOLIO = 'sync_portfolio';

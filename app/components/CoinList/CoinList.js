@@ -12,7 +12,7 @@ import coinList	from '../../../app/lib/coin-list';
 import cryptoApi from '../../../app/lib/crypto-compare-api';
 
 const userCoinTickerList = ['BTC', 'ETH', 'XRP'];
-const userCoinHoldingList = { BTC: 3.5, NEO: 10 };
+const userCoinHoldingList = { BTC: 0.5, NEO: 10 };
 
 class CoinList extends Component {
 	state = {
@@ -71,11 +71,9 @@ class CoinList extends Component {
 				.then((res) => {
 					const arr = this.state.userCoinList;
 					const newItem = item;
-					// percentChange: `${((value.USD.PRICE - value.USD.OPENDAY)
-					// * 100 / value.USD.OPENDAY).toFixed(2)}%`,
+
 					newItem.priceArray = res;
 					newItem.percentChange = `${(((res.slice(-1)[0] - res[0]) * 100) / res[0]).toFixed(2)}%`;
-					console.log('new item: ', newItem);
 					arr[index] = newItem;
 					this.setState({ userCoinList: arr });
 				});

@@ -4,14 +4,12 @@ import {
 	CHANGE_FILTER_VALUE,
 	RESET_TO_USER_TRANSACTIONS,
 	RESET_CHART,
-	SEND_VALUE_FROM_POINT,
 } from '../config/constants.js';
 
 const initialState = {
 	filter: 'DAY',	// Necessary, decides time frame for chart.
 	selectedCoin: 'BTC',	// Necessary, decides what chart displays.
 	stockData: [0, 0],
-	selectedPoint: 0,	// Selected Value, an x-value of the graph that is grabbed from the PanResponder
 	endPoint: 0,
 	// this data is for the changes under the ticker
 	chartAmountChange: 0, // we dont need
@@ -43,11 +41,6 @@ export default function stockFilterReducer(state = initialState, action) {
 					chartTimeInterval: action.payload.chartTimeInterval,
 				};
 				}
-		case SEND_VALUE_FROM_POINT:
-				return {
-					...state,
-					selectedPoint: action.payload,
-				};
 		case RESET_TO_USER_TRANSACTIONS: {
 			break;
 		}

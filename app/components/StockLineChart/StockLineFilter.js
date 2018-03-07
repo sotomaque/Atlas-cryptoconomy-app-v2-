@@ -116,9 +116,7 @@ class StockLineFilter extends Component {
 function mapStateToProps(store) {
   return {
 		filter: store.stockFilterReducer.filter,
-		stockList: store.stockFilterReducer.stockList,
 		stockData: store.stockFilterReducer.stockData,
-		selectedPoint: store.stockFilterReducer.selectedPoint,
 		endPoint: store.stockFilterReducer.endPoint,
 		selectedCoin: store.stockFilterReducer.selectedCoin,
   };
