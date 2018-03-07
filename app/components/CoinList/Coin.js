@@ -38,6 +38,10 @@ export class Coin extends Component {
     const priceHoldings = (price * quantity).toLocaleString();
 
     const totalPriceSymbol = (quantity ? `($${priceHoldings})` : '');
+    let lineColor = '#F9E79F'; // stagnant
+    console.log('per: ', percentChange.slice(0, -1));
+     lineColor = percentChange.slice(0, -1) < 0 ? '#E74C3C' : lineColor; // red
+     lineColor = percentChange.slice(0, -1) > 0 ? '#58D68D' : lineColor; // green
     const priceOrPercent = (priceOverPercent ? `$${(price * 1).toLocaleString()}` : `${percentChange}`);
 			return (
           <View style={{ padding: 20 }}>
@@ -64,6 +68,7 @@ export class Coin extends Component {
               >
               <MiniLine
                 stockData={stockPoints}
+                colorLine={lineColor}
               />
               </View>
               <TouchableOpacity

@@ -67,6 +67,7 @@ class MiniLine extends Component {
     fillColor: string,
     strokeColor: string,
     strokeWidth: number,
+    colorLine: string,
     stockData: Object
   };
 
@@ -128,8 +129,11 @@ class MiniLine extends Component {
 
   render() {
     // const { width, height } = this.state;
-    const strokeColor = '#27AE60';
-    const fillColor = '#27AE60';
+
+    const colorLineColor = this.props.colorLine;
+    const strokeColor = colorLineColor;
+    const fillColor = colorLineColor;
+        console.log('oh', strokeColor);
     const strokeWidth = 1;
     // const width = Dimensions.get('window').width;
   //  console.log("Width: ",this.state.width);
