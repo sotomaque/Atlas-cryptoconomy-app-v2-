@@ -28,6 +28,7 @@ class CoinList extends Component {
 			.then((res) => {
 				res.map((item) => {
 					// this.priceHistory = [...this.priceHistory, item.ticker: [0, 1]];
+					console.log('item print: ', item);
 					return this.setState({ userCoinList: [...this.state.userCoinList, item] });
 				});
 				this.getPriceArray();
@@ -70,7 +71,11 @@ class CoinList extends Component {
 				.then((res) => {
 					const arr = this.state.userCoinList;
 					const newItem = item;
+					// percentChange: `${((value.USD.PRICE - value.USD.OPENDAY)
+					// * 100 / value.USD.OPENDAY).toFixed(2)}%`,
 					newItem.priceArray = res;
+					newItem.percentChange = `${(((res.slice(-1)[0] - res[0]) * 100) / res[0]).toFixed(2)}%`;
+					console.log('new item: ', newItem);
 					arr[index] = newItem;
 					this.setState({ userCoinList: arr });
 				});
@@ -110,7 +115,6 @@ class CoinList extends Component {
 					data={this.state.userCoinList}
 					keyExtractor={item => item.ticker}
 					extraData={[this.props.resetData]}
-					onPress={() => console.log('aaa')}
 					renderItem={({ item }) => (
 					<View style={{
 						marginRight: 0,
