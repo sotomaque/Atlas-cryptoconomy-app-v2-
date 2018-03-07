@@ -132,11 +132,8 @@ class MiniLine extends Component {
 
     const colorLineColor = this.props.colorLine;
     const strokeColor = colorLineColor;
-    const fillColor = colorLineColor;
-        console.log('oh', strokeColor);
+//  const fillColor = colorLineColor;
     const strokeWidth = 1;
-    // const width = Dimensions.get('window').width;
-  //  console.log("Width: ",this.state.width);
     return (
       <View style={styles.container} onLayout={this.onLayout}>
         <Surface width={this.state.width} height={30}>

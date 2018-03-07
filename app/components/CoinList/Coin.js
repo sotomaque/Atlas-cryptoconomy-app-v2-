@@ -39,15 +39,18 @@ export class Coin extends Component {
 
     const totalPriceSymbol = (quantity ? `($${priceHoldings})` : '');
     let lineColor = '#F9E79F'; // stagnant
-    console.log('per: ', percentChange.slice(0, -1));
      lineColor = percentChange.slice(0, -1) < 0 ? '#E74C3C' : lineColor; // red
      lineColor = percentChange.slice(0, -1) > 0 ? '#58D68D' : lineColor; // green
     const priceOrPercent = (priceOverPercent ? `$${(price * 1).toLocaleString()}` : `${percentChange}`);
 			return (
-          <View style={{ padding: 20 }}>
+          <TouchableOpacity
+            onPress={() => this.props.onPress()}
+            activeOpacity={0.5}
+            style={{ padding: 20 }}
+          >
             <View style={styles.row}>
 
-              <TouchableOpacity onPress={() => this.props.onPress()}>
+              <View >
                 <Text style={styles.text} numberOfLines={1}>
                   {name}
                 </Text>
@@ -57,7 +60,7 @@ export class Coin extends Component {
                     {quantSymbol}
                   </Text>
                 </View>
-              </TouchableOpacity>
+              </View>
               <View style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
@@ -84,7 +87,7 @@ export class Coin extends Component {
                 </Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </TouchableOpacity>
 			);
     }
 }

@@ -87,7 +87,7 @@ class CoinList extends Component {
 
 	render() {
 		const width = Dimensions.get('window').width;
-		console.log('Coinlist Re-rendered');
+
 		return (
 			<View
 				style={{
@@ -110,6 +110,7 @@ class CoinList extends Component {
 					data={this.state.userCoinList}
 					keyExtractor={item => item.ticker}
 					extraData={[this.props.resetData]}
+					onPress={() => console.log('aaa')}
 					renderItem={({ item }) => (
 					<View style={{
 						marginRight: 0,
