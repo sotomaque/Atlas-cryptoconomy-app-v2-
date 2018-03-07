@@ -14,6 +14,7 @@ export class StockLineChart extends Component {
 	state = {
 		stockData: [],
 		xVal: -10,
+		timer: 0,
 	}
 
 	componentWillMount() {
@@ -22,16 +23,23 @@ export class StockLineChart extends Component {
 			onMoveShouldSetPanResponderCapture: () => true,
 			onPanResponderRelease: () => {
 				this.setState({ xVal: -10 });
+				this.setState({ timer: 0 });
 				this.props.scrollingisEnabled(true);
+				console.log('release');
 			},
 			onPanResponderGrant: () => {
-				this.props.scrollingisEnabled(false);
+
+
 			},
 			onPanResponderMove: (e, gesture) => {
 				const { nativeEvent } = e;
-				if (Math.abs(gesture.dx) > 5) {
-					this.setState({ xVal: nativeEvent.locationX });
-				}
+					this.setState({ timer: this.state.timer + 1 });
+
+					if(this.state.timer > 5) {
+						this.props.scrollingisEnabled(false);
+						this.setState({ xVal: nativeEvent.locationX });
+					}
+
 			},
 		});
 	}

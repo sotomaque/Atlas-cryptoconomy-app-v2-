@@ -9,6 +9,7 @@ import { sendChartData, resetChart } from '../../actions';
 import coinList	from '../../../app/lib/coin-list';
 
 class CoinFullPage extends Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {

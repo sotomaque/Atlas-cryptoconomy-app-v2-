@@ -109,7 +109,7 @@ class CoinList extends Component {
 				}}
 			>
 				<FlatList
-
+					scrollEnabled={this.props.scrollEnabledValue}
 					data={this.state.userCoinList}
 					keyExtractor={item => item.ticker}
 					extraData={[this.props.resetData]}
@@ -148,6 +148,7 @@ function mapStateToProps(store) {
 		stockData: store.stockFilterReducer.stockData,
 		should_reset_data: store.guiInfo.should_reset_data,
 		miniFilter: store.guiInfo.minifilter,
+		scrollEnabledValue: store.guiInfo.scrollingEnabled,
   };
 }
 
