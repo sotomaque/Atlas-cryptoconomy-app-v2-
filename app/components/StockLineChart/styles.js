@@ -35,9 +35,9 @@ export const StockLineTickerStyles = StyleSheet.create({
         fontSize: 30,
         color: "#fff"
     },
+
     tickerAuxillary: {
         fontSize: 12,
-        color: "#55FF40",
         marginRight: 5
     },
     tickerFilterText: {

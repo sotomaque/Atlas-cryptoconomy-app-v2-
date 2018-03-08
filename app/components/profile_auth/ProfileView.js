@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import { View, StyleSheet, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 // import cryptoApi from '../../../app/lib/crypto-compare-api';
@@ -7,7 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Header } from '../../components/Header';
 // import { sendChartData, resetChart } from '../../actions';
 // import coinList	from '../../../app/lib/coin-list';
-// import { sendTickerAndName } from '../../actions';
+ import { changeLoggedIn } from '../../actions';
 
 // import  Icon  from 'react-native-vector-icons/FontAwesome';
 
@@ -21,6 +21,7 @@ class ProfileView extends Component {
     nav: Object,
   };
 	goBack() {
+    console.log(this);
 		this.props.nav.goBack();
 	}
 
@@ -38,11 +39,16 @@ class ProfileView extends Component {
 									</View>
 									<ScrollView
 										contentContainerStyle={styles.tempScrollViewStyle}
-										scrollEnabled={this.props.scrollEnabled}
 									>
 											<Text style={styles.tempTextStyle}>
 												Signed in!
 											</Text>
+											<Text style={styles.tempTextStyle}>
+												{this.props.isSignedIn}
+											</Text>
+											<TouchableOpacity onPress={() => this.props.changeLoggedIn(false)}>
+												<Text>Sign Out</Text>
+											</TouchableOpacity>
 									</ScrollView>
 								</LinearGradient>
 				</View>
@@ -78,9 +84,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const { name, ticker } = state.coinPageReducer;
-	const scrollEnabled = state.guiInfo.scrollingEnabled;
-  return { name, ticker, scrollEnabled };
+  const { isSignedIn } = state.userInfo;
+  return { isSignedIn };
 };
 
-export default connect(mapStateToProps, { })(ProfileView);
+export default connect(mapStateToProps, { changeLoggedIn })(ProfileView);

@@ -10,12 +10,11 @@ import { sendChartData, scrollingisEnabled } from '../../actions';
 // import cryptoApi from '../../../app/lib/crypto-compare-api';
 // import coinList	from '../../../app/lib/coin-list';
 
-
 export class StockLineChart extends Component {
 	state = {
-		stockList: [],
 		stockData: [],
 		xVal: -10,
+		timer: 0,
 	}
 
 	componentWillMount() {
@@ -24,56 +23,71 @@ export class StockLineChart extends Component {
 			onMoveShouldSetPanResponderCapture: () => true,
 			onPanResponderRelease: () => {
 				this.setState({ xVal: -10 });
+				this.setState({ timer: 0 });
 				this.props.scrollingisEnabled(true);
+				console.log('release');
 			},
 			onPanResponderGrant: () => {
-				this.props.scrollingisEnabled(false);
+
+
 			},
 			onPanResponderMove: (e, gesture) => {
 				const { nativeEvent } = e;
-				if (Math.abs(gesture.dx) > 5) {
-					this.setState({ xVal: nativeEvent.locationX });
-				}
+					this.setState({ timer: this.state.timer + 1 });
+
+					if(this.state.timer > 5) {
+						this.props.scrollingisEnabled(false);
+						this.setState({ xVal: nativeEvent.locationX });
+					}
+
 			},
 		});
 	}
 
-	componentDidMount() { /*
-		return coinList
-		.getUserHistoryData()
-			.then((res) => {
-				this.props.sendChartData(res);
-				this.setState({
-					stockList: res,
-				});
-			});
-			*/
+	componentDidMount() {
+
 	}
 
-	getPointToSend() {
-		// || this.props.isOn === false
+	getPointFromArray() {
+		const widthArray = (this.props.stockData.length / (Dimensions.get('window').width));
+		let elementIndex = Math.round(widthArray * this.state.xVal) - 1;
+		if (elementIndex < 0) elementIndex = 0;
 		if (this.state.xVal < 1) {
 			this.state.xVal = -10;
 			return this.props.endPoint;
-			}
-		return this.props.selectedPoint;
+		}
+		return this.props.stockData[elementIndex];
 	}
 
+	props: {
+		heightFixed: number
+	};
+
 	render() {
+			const height = this.props.heightFixed ? this.props.heightFixed : 240;
 			const width = Dimensions.get('window').width; // full device width, captured at runtime
+
+			const pointSelected = this.getPointFromArray();
+			const initPoint = this.props.stockData[0];
+			const amountChange = (pointSelected - initPoint).toFixed(2);
+			const percentChange = (((pointSelected - initPoint) * 100) / initPoint).toFixed(2);
+
+		//	console.log('init Point: ', initPoint, 'pointSelected: ', pointSelected, 'percentChange: ', percentChange);
+			// percentChange: `${((value.USD.PRICE - value.USD.OPENDAY)
+			// * 100 / value.USD.OPENDAY).toFixed(2)}%`,
 			return (
 				<View style={{ flexDirection: 'column', width }}>
 
 					<View>
 						<StockLineTicker
-							ticker={this.getPointToSend()}
-							chartAmountChange={this.props.chartAmountChange}
-							chartPercentChange={this.props.chartPercentChange}
+							ticker={pointSelected}
+							chartAmountChange={amountChange}
+							chartPercentChange={percentChange}
 							chartTimeInterval={this.props.chartTimeInterval}
 						/>
 					</View>
 
-					<View style={{ height: 240 }} {...this.panResponder.panHandlers}>
+					<View style={{ height }} {...this.panResponder.panHandlers}>
 						<Chart
 							xVal={this.state.xVal}
 							data={this.props.stockData}
@@ -95,12 +109,8 @@ export class StockLineChart extends Component {
 function mapStateToProps(store) {
   return {
 		filter: store.stockFilterReducer.filter,
-		stockList: store.stockFilterReducer.stockList,
 		stockData: store.stockFilterReducer.stockData,
-		selectedPoint: store.stockFilterReducer.selectedPoint,
 		endPoint: store.stockFilterReducer.endPoint,
-		chartAmountChange: store.stockFilterReducer.chartAmountChange,
-		chartPercentChange: store.stockFilterReducer.chartPercentChange,
 		chartTimeInterval: store.stockFilterReducer.chartTimeInterval,
 		scrollEnabledValue: store.guiInfo.scrollingEnabled,
   };

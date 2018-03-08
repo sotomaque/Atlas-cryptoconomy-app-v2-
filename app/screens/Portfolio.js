@@ -3,24 +3,35 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-
+import CodePush from 'react-native-code-push';
 // app imports
 import { StockLineChartWrapper } from '../components/StockLineChart';
 import { Header } from '../components/Header';
 import CoinList from '../components/CoinList/CoinList';
 import { scrollingisEnabled } from '../actions';
-
+import portfolioWorkflow from '../lib/portfolio-workflow';
 // import PortfolioRouter from './PortfolioStack.js';
+
+const CodePushConfig = {
+  updateDialog: true,
+  installMode: CodePush.InstallMode.IMMEDIATE,
+};
 
 class Portfolio extends Component {
   // state = { isOn: true };
 
   componentWillMount() {
+    // sync up portfolio
+    portfolioWorkflow.syncPortfolio(this.props.portfolio, 'qianwang');
   }
 
   setScrolling(val) {
     this.props.scrollingisEnabled(val);
   }
+
+  checkForUpdates = () => {
+     CodePush.sync(CodePushConfig);
+   }
 
   render() {
         return (
@@ -32,7 +43,7 @@ class Portfolio extends Component {
                       nameLeft="user-circle"
                       nameRight="search"
                       onPressLeft={() => this.props.navigation.navigate('profile')}
-                      onPressRight={() => {}}
+                      onPressRight={() => this.props.navigation.navigate('search')}
                     />
                   </View>
                     <ScrollView
@@ -73,6 +84,7 @@ function mapStateToProps(store) {
   return {
 		filter: store.stockFilterReducer.filter,
 		scrollEnabledValue: store.guiInfo.scrollingEnabled,
+    portfolio: store.portfolioReducer,
   };
 }
 

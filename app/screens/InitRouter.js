@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 // Import Components to set to different Routes.
 import Portfolio from './Portfolio.js';
-import PortfolioStack from './PortfolioStack.js';
+import PortfolioStack from './portfolio/PortfolioStack.js';
 // import ProfileScreen from './ProfileScreen.js';
 // import PaperTradingScreen from './PaperTradingScreen.js';
 

@@ -7,13 +7,20 @@
     "test": "jest"
   },
   "dependencies": {
+    "adm-zip": "^0.4.7",
     "ajv": "^6.2.0",
     "art": "^0.10.1",
     "firebase": "^4.10.1",
+    "npm": "^5.7.1",
+    "plist": "^2.1.0",
     "react": "16.2.0",
     "react-cryptocoins": "^1.0.11",
     "react-native": "0.53.0",
+    "react-native-app-intro-slider": "^0.2.4",
+    "react-native-code-push": "^5.2.2",
+    "react-native-fbsdk": "^0.7.0",
     "react-native-linear-gradient": "^2.4.0",
+    "react-native-searchbar": "^1.14.0",
     "react-native-svg": "^6.2.1",
     "react-native-svg-charts": "^3.0.1",
     "react-native-vector-icons": "^4.5.0",
@@ -22,7 +29,8 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.9.1",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "xcode": "^1.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
