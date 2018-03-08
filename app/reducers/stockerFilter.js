@@ -12,9 +12,6 @@ const initialState = {
 	stockData: [0, 0],
 	endPoint: 0,
 	// this data is for the changes under the ticker
-	chartAmountChange: 0, // we dont need
-	chartPercentChange: 0, // we dont need
-	chartTimeInterval: '', // we dont need
 };
 
 export default function stockFilterReducer(state = initialState, action) {
@@ -36,9 +33,6 @@ export default function stockFilterReducer(state = initialState, action) {
 					...state,
 					stockData: action.payload.stockData,
 					endPoint: action.payload.stockData.slice(-1).pop(),
-					chartAmountChange: action.payload.chartAmountChange,
-					chartPercentChange: action.payload.chartPercentChange,
-					chartTimeInterval: action.payload.chartTimeInterval,
 				};
 				}
 		case RESET_TO_USER_TRANSACTIONS: {

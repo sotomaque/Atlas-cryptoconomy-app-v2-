@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity, Text, TextInput, Image } from 'react-native';
 import { connect } from 'react-redux';
 import FBSDK from 'react-native-fbsdk';
 import firebase, { FacebookAuthProvider } from 'firebase';
 import LinearGradient from 'react-native-linear-gradient';
 import { Header } from '../../components/Header';
 
+const logo = require('../../assets/Logo.png');
+
 const signInAndSignUpButtons = (nav) => {
 	return (
-	<View style={{ alignItems: 'flex-end' }}>
+	<View style={{ alignItems: 'center', padding: 20 }}>
 	<TouchableOpacity
 		style={{
 			padding: 15,
@@ -63,21 +65,56 @@ class ProfileView extends Component {
 								<LinearGradient colors={['#1294D5', '#125AD5']} style={styles.linearGradient}>
 									<View>
 										<Header
-											headerText='Profile'
+											headerText=''
                       nameLeft="arrow-circle-left"
                       onPressRight={() => {}}
                       onPressLeft={() => this.goBack()}
 										/>
 									</View>
-									<ScrollView
-										contentContainerStyle={styles.tempScrollViewStyle}
+									<View
 										scrollEnabled={this.props.scrollEnabled}
-										style={{ flex: 1 }}
+										style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}
 									>
-											<Text style={styles.tempTextStyle}>
-												Sign up to get cool new features!
+										<Image
+											source={logo}
+											style={{ justifyContent: 'flex-start' }}
+										/>
+										<View style={{
+											borderRadius: 10,
+											backgroundColor: 'white',
+											height: '65%',
+											width: '90%',
+											shadowColor: '#000000',
+											shadowOffset: {
+												width: 0,
+												height: 2,
+											},
+											shadowRadius: 5,
+											shadowOpacity: 0.5,
+										}}
+										>
+
+											<Text style={styles.formLabelStyle}>
+												E-Mail
 											</Text>
+											<TextInput
+											autoCorrect={false}
+											autoCapitalize='none'
+											onChangeText={text => this.setState({ email: text })}
+											style={styles.formInputStyle}
+											/>
+											<Text style={styles.formLabelStyle}>
+												Password
+											</Text>
+											<TextInput
+												style={styles.formInputStyle}
+												autoCorrect={false}
+												autoCapitalize='none'
+												secureTextEntry
+												onChangeText={text => this.setState({ pass: text })}
+											/>
 											{signInAndSignUpButtons(this.props.navigation)}
+										</View>
 											<LoginButton
 												publishPermissions={['publish_actions']}
 												onLoginFinished={
@@ -89,7 +126,8 @@ class ProfileView extends Component {
 														} else {
 															AccessToken.getCurrentAccessToken().then((token) => {
 																console.log('token: ', token);
-																const cred = firebase.auth.FacebookAuthProvider.credential(token.accessToken);
+																const cred = firebase.auth.FacebookAuthProvider
+																.credential(token.accessToken);
 																firebase.auth().signInWithCredential(cred).then((user) => {
 																		console.log('User finally got :', user);
 																	});
@@ -99,47 +137,14 @@ class ProfileView extends Component {
 													}
 													onLogoutFinished={() => alert('logout.')}
 											/>
-									</ScrollView>
+									</View>
 								</LinearGradient>
 				</View>
 			);
     }
 }
 
-/*
-<TouchableOpacity
-	onPress={() =>
-		firebase.auth().signInWithPopup(provider)
-		.then(function(result) { console.log('nice'); })
-	}
->
-	<Text>
-		sign in
-	</Text>
-</TouchableOpacity>
-*/
-// firebase.auth().signInWithPopup(provider).then(function(result) {
-/*
-<LoginButton
-	publishPermissions={['publish_actions']}
-	onLoginFinished={
-		(error, result) => {
-			if (error) {
-				alert('login has error: ', result.error);
-			} else if (result.isCancelled) {
-				alert('login is cancelled.');
-			} else {
-				AccessToken.getCurrentAccessToken().then((token) => {
-					FacebookAuthProvider.getCredential(token);
-					const credential = provider.credential(token);
-						console.log(token);
-					});
-				}
-			}
-		}
-		onLogoutFinished={() => alert('logout.')}
-/>
-*/
+
 const styles = StyleSheet.create({
     portfolioContainer: {
         flex: 1,
@@ -162,8 +167,25 @@ const styles = StyleSheet.create({
 		tempTextStyle: {
 			fontSize: 18,
 			fontWeight: '600',
-			color: 'white',
+			color: 'black',
 			textAlign: 'center',
+		},
+		formLabelStyle: {
+			fontSize: 16,
+			color: '#BDC3C7',
+			marginBottom: 1,
+			fontWeight: 'bold',
+			marginLeft: 20,
+			paddingBottom: 15,
+			paddingTop: 20,
+		},
+		formInputStyle: {
+		fontSize: 18,
+		marginLeft: 20,
+		marginRight: 40,
+		borderBottomColor: '#BDC3C7',
+		borderBottomWidth: 1,
+		paddingBottom: 5,
 		},
 });
 
