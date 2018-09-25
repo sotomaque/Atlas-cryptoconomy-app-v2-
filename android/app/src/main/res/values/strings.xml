@@ -1,5 +1,3 @@
 <resources>
-    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">IRS2cFhT768Nw21h0clNlLGbpoIad807b042-998c-41f8-9a15-587222085f37</string>
     <string name="app_name">portfolio</string>
-    <string name="facebook_app_id">397200990745085</string>
 </resources>
